@@ -1,0 +1,8 @@
+vendor
+var
+
+#local php IDE env folder
+.idea
+
+#local configuration
+app/config/parameters.yml

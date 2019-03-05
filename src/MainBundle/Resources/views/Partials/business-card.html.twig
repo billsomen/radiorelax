@@ -1,0 +1,48 @@
+<section class="pt-page pt-page-4" data-id="business">
+  <div class="border-block-top-110"></div>
+  <div class="section-inner">
+    <div class="section-title-block">
+      <div class="section-title-wrapper">
+        <h2 class="section-title">{{ 'business.card.title'|trans }}</h2>
+        <h5 class="section-description">{{ 'business.card.phrase'|trans }}</h5>
+      </div>
+    </div>
+    
+    <!-- Portfolio Content -->
+    <div class="portfolio-content">
+      
+      <!-- Portfolio filter -->
+      <ul id="portfolio_filters" class="portfolio-filters">
+        <li class="active">
+          <a class="filter btn btn-sm btn-link active" data-group="all">All</a>
+        </li>
+        <li class="active">
+          <a class="filter btn btn-sm btn-link active" data-group="all">Custom</a>
+        </li>
+      </ul>
+      <!-- End of Portfolio filter -->
+      
+      <!-- Portfolio Grid -->
+      <div id="portfolio_grid" class="portfolio-grid portfolio-masonry masonry-grid-3">
+        <!-- Portfolio Item 1 -->
+        {% for i in 1..10 %}
+          <figure class="item" data-groups='["all", "media"]'>
+            {#<a class="ajax-page-load" href="{{ asset('partials/portfolio-'~i~'.html') }}">#}
+            <a class="ajax-page-load" href="{{ path('api_business_card', {'id': i }) }}"  onclic="showPop(event, '{{ i }}')">
+              <img src="{{ asset('images/business-cards/1.jpg') }}" alt="business-card-{{ i }}">
+              <div>
+                <h5 class="name">1-Modern-business-card-template-with-abstract-design {{ i }}</h5>
+                <small>{{ "business.card.title"|trans ~i }}</small>
+                <i class="pe-7s-icon pe-7s-display2"></i>
+              </div>
+            </a>
+          </figure>
+        {% endfor %}
+        <!-- /Portfolio Item 12 -->
+      </div>
+      <!-- /Portfolio Grid -->
+    
+    </div>
+    <!-- /Portfolio Content -->
+  </div>
+</section>

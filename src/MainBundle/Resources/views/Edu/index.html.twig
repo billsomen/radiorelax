@@ -1,0 +1,115 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}
+  {{ app_name }} | {{ 'edu.title'|trans }}
+{% endblock %}
+
+{% block body_inner %}
+  <div id="page" class="page">
+    <!-- Header -->
+    <header id="site_header" class="header mobile-menu-hide header-color-light">
+      <div class="my-photo tilt-effect">
+        <a class="pt-trigger" href="#material" data-animation="21">
+          <img src="{{ asset('images/b-logo-min.png') }}" alt="image">
+        </a><!-- href value = data-id without # of .pt-page. -->
+      </div>
+      
+      <div class="site-title-block">
+        <div>
+          <a href="{{ path('edu_homepage', {'_locale': 'fr', '_fragment': "tools"}) }}" style="text-decoration: none">
+            <img src="{{ asset('images/fr.png') }}" width="25" />
+            <span>fr</span>
+          </a>
+          <span>|</span>
+          <a href="{{ path('edu_homepage', {'_locale': 'en', '_fragment': "tools"}) }}" style="text-decoration: none">
+            <span>en</span>
+            <img src="{{ asset('images/uk.png') }}" width="25"/>
+          </a>
+        </div>
+      </div>
+      
+      <!-- Navigation -->
+      <div class="site-nav">
+        <!-- Main menu -->
+        <ul id="nav" class="site-main-menu">
+          <li>
+            <a class="pt-trigger" href="#tools" data-animation="17"><i class="menu-icon pe-7s-icon pe-7s-tools"></i>{{ 'edu.tools.title'|trans }}</a>
+          </li>
+          <li>
+            <a class="pt-trigger" href="#material" data-animation="19"><i class="menu-icon pe-7s-icon pe-7s-display1"></i>{{ 'edu.material.title'|trans }}</a>
+          </li>
+          <li>
+            <a class="pt-trigger" href="#contact" data-animation="20"><i class="menu-icon pe-7s-icon pe-7s-mail"></i>{{ 'app.contact.title'|trans }}</a>
+          </li>
+          <li>
+            <a href="{{ path('main_homepage') }}" style="text-decoration: none" onclick="document.location = '{{ path('main_homepage') }}'">
+              <i class="menu-icon pe-7s-icon pe-7s-back"></i>
+              <span>{{ 'button.go_back'|trans }}</span>
+            </a>
+          </li>
+
+        </ul>
+        <!-- /Main menu -->
+      </div>
+      <!-- Navigation -->
+    </header>
+    <!-- /Header -->
+    
+    <!-- Mobile Header -->
+    <div class="mobile-header mobile-visible">
+      <div class="mobile-logo-container">
+        <div class="mobile-site-title">{{ app_name }}</div>
+      </div>
+      
+      <a class="menu-toggle mobile-visible">
+        <i class="fa fa-bars"></i>
+      </a>
+    </div>
+    <!-- /Mobile Header -->
+    
+    <!-- Arrows Nav -->
+    <div class="lmpixels-arrows-nav">
+      <div class="lmpixels-arrow-left"><i class="pe-7s-icon pe-7s-angle-left"></i></div>
+      <div class="lmpixels-arrow-right"><i class="pe-7s-icon pe-7s-angle-right"></i></div>
+    </div>
+    <!-- /Arrows Nav -->
+    
+    <!-- Main Content -->
+    <div id="main" class="site-main">
+      <!-- Page changer wrapper -->
+      <div class="pt-wrapper" style="background-image: url({{ asset('images/main_bg_light.jpg') }});">
+        <!-- Subpages -->
+        <div class="subpages">
+          <!-- Tools Subpage -->
+          {% include "@Main/Partials/tools.html.twig" %}
+          <!-- End of Tools Subpage -->
+          
+          <!-- Material Subpage -->
+          {% include "@Main/Partials/material.html.twig" %}
+          <!-- End Material Subpage -->
+          
+          <!-- Contact Subpage -->
+          {% include "@Main/Partials/contact.html.twig" %}
+          <!-- End Contact Subpage -->
+        </div>
+      </div>
+      <!-- /Page changer wrapper -->
+    </div>
+    <!-- /Main Content -->
+  </div>
+{% endblock %}
+
+{% block javascripts %}
+  <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+  <script src="{{ asset('js/pages-switcher.js') }}"></script>
+  <script src="{{ asset('js/imagesloaded.pkgd.min.js') }}"></script>
+  <script src="{{ asset('js/validator.js') }}"></script>
+  <script src="{{ asset('js/jquery.shuffle.min.js') }}"></script>
+  <script src="{{ asset('js/masonry.pkgd.min.js') }}"></script>
+  <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+  <script src="{{ asset('js/jquery.magnific-popup.min.js') }}"></script>
+  <script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+  <script src="{{ asset('js/tilt.jquery.min.js') }}"></script>
+  <script src="{{ asset('js/jquery.hoverdir.js') }}"></script>
+  <script src="{{ asset('js/main.js') }}"></script>
+{% endblock %}

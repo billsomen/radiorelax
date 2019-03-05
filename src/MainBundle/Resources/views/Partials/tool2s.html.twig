@@ -1,0 +1,179 @@
+<section class="pt-page pt-page-2" data-id="tools">
+  <div class="border-block-top-110"></div>
+  <div class="section-inner">
+    <div class="section-title-block">
+      <div class="section-title-wrapper clearfix">
+        <h2 class="section-title">{{ 'edu.tools.title'|trans }}</h2>
+        <h5 class="section-description">{{ 'edu.tools.phrase'|trans }}</h5>
+      </div>
+    </div>
+    
+    <!-- Services block -->
+    <div class="block-title">
+      <h3>{{ 'app.about.services.title'|trans }}</h3>
+    </div>
+    
+    <div class="row">
+      <div class="col-sm-6 col-md-3 subpage-block">
+        <div class="service-block">
+          <div class="service-info">
+            <i class="service-icon pe-7s-icon pe-7s-browser"></i>
+            <h4>{{ 'app.about.services.web.title'|trans }}</h4>
+            <p>{{ 'app.about.services.web.content'|trans }}</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-sm-6 col-md-3 subpage-block">
+        <div class="service-block">
+          <div class="service-info">
+            <i class="service-icon pe-7s-icon pe-7s-pen"></i>
+            <h4>{{ 'app.about.services.copywriter.title'|trans }}</h4>
+            <p>{{ 'app.about.services.copywriter.content'|trans }}</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-sm-6 col-md-3 subpage-block">
+        <div class="service-block">
+          <div class="service-info">
+            <i class="service-icon pe-7s-icon pe-7s-cart"></i>
+            <h4>{{ 'app.about.services.ecommerce.title'|trans }}</h4>
+            <p>{{ 'app.about.services.ecommerce.content'|trans }}</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-sm-6 col-md-3 subpage-block">
+        <div class="service-block">
+          <div class="service-info">
+            <i class="service-icon pe-7s-icon pe-7s-graph1"></i>
+            <h4>{{ 'app.about.services.marketing.title'|trans }}</h4>
+            <p>{{ 'app.about.services.marketing.content'|trans }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End of Services block -->
+    
+    <!-- Clients block -->
+    {# TODO : Later :)
+    <div class="block-title">
+      <h3>{{ 'app.about.clients.title'|trans }}</h3>
+    </div>
+    
+    <div class="row">
+      {% for i in 1..6 %}
+        <div class="col-sm-4 col-md-2 subpage-block">
+          <div class="client-block">
+            <a href="#" target="_blank"><img src="images/clients/client_{{ i }}.png" alt="image"></a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>#}
+    <!-- End of Clients block -->
+    
+    {#
+    TODO: Later
+    <div class="row">
+      <div class="col-sm-12 col-md-12 subpage-block">
+        <div class="block-title">
+          <h3>{{ 'app.about.testimonials.title'|trans }}</h3>
+        </div>
+        <div class="testimonials owl-carousel">
+          <!-- Testimonial 1 -->
+          {% for i in 1..3 %}
+            <div class="testimonial-item">
+              <!-- Testimonial Content -->
+              <div class="testimonial-content">
+                <div class="testimonial-text">
+                  <p>"{{ 'app.about.testimonials.array.1.content'|trans }}"</p>
+                </div>
+              </div>
+              <!-- /Testimonial Content -->
+              <!-- Testimonial Author -->
+              <div class="testimonial-credits">
+                <!-- Picture -->
+                <div class="testimonial-picture">
+                  <img src="images/testimonials/testimonial_photo_{{ loop.index }}.jpg" alt="">
+                </div>
+                <!-- /Picture -->
+                <!-- Testimonial author information -->
+                <div class="testimonial-author-info">
+                  <p class="testimonial-author">{{ 'app.about.testimonials.array.1.author.name'|trans }}</p>
+                  <p class="testimonial-firm">{{ 'app.about.testimonials.array.1.author.job'|trans }}</p>
+                </div>
+              </div>
+              <!-- /Testimonial author information -->
+            </div>
+          {% endfor %}
+          <!-- End of Testimonial 1 -->
+        </div>
+      </div>
+    </div>#}
+    
+    <!-- Fun facts block -->
+    <div class="block-title">
+      <h3>{{ 'app.about.fun_facts.title'|trans }}</h3>
+    </div>
+    
+    <div class="row">
+      <div class="col-sm-6 col-md-3 subpage-block">
+        <div class="fun-fact-block gray-bg">
+          <i class="pe-7s-icon pe-7s-smile"></i>
+          <h4>{{ 'app.about.fun_facts.happy_clients.title'|trans }}</h4>
+          <span class="fun-value">{{ 'app.about.fun_facts.happy_clients.content'|trans }}</span>
+        </div>
+      </div>
+      
+      <div class="col-sm-6 col-md-3 subpage-block tilt-effect">
+        <div class="fun-fact-block">
+          <i class="pe-7s-icon pe-7s-alarm"></i>
+          <h4>{{ 'app.about.fun_facts.working_hours.title'|trans }}</h4>
+          <span class="fun-value">{{ 'app.about.fun_facts.working_hours.content'|trans }}</span>
+        </div>
+      </div>
+      
+      <div class="col-sm-6 col-md-3 subpage-block tilt-effect">
+        <div class="fun-fact-block gray-bg">
+          <i class="pe-7s-icon pe-7s-medal"></i>
+          <h4>{{ 'app.about.fun_facts.awards_won.title'|trans }}</h4>
+          <span class="fun-value">{{ 'app.about.fun_facts.awards_won.content'|trans }}</span>
+        </div>
+      </div>
+      
+      <div class="col-sm-6 col-md-3 subpage-block tilt-effect">
+        <div class="fun-fact-block">
+          <i class="pe-7s-icon pe-7s-coffee"></i>
+          <h4>{{ 'app.about.fun_facts.coffee_consumed.title'|trans }}</h4>
+          <span class="fun-value">{{ 'app.about.fun_facts.coffee_consumed.content'|trans }}</span>
+        </div>
+      </div>
+      
+      <div class="col-sm-6 col-md-3 subpage-block tilt-effect">
+        <div class="fun-fact-block">
+          <i class="pe-7s-icon pe-7s-map-2"></i>
+          <h4>{{ 'app.about.fun_facts.country_visited.title'|trans }}</h4>
+          <span class="fun-value">{{ 'app.about.fun_facts.country_visited.content'|trans }}</span>
+        </div>
+      </div>
+      
+      <div class="col-sm-6 col-md-3 subpage-block tilt-effect">
+        <div class="fun-fact-block gray-bg">
+          <i class="pe-7s-icon pe-7s-plane"></i>
+          <h4>{{ 'app.about.fun_facts.kilometers_traveled.title'|trans }}</h4>
+          <span class="fun-value">{{ 'app.about.fun_facts.kilometers_traveled.content'|trans }}</span>
+        </div>
+      </div>
+      
+      <div class="col-sm-6 col-md-3 subpage-block tilt-effect">
+        <div class="fun-fact-block">
+          <i class="pe-7s-icon pe-7s-speaker"></i>
+          <h4>{{ 'app.about.fun_facts.language_spoken.title'|trans }}</h4>
+          <span class="fun-value">{{ 'app.about.fun_facts.language_spoken.content'|trans }}</span>
+        </div>
+      </div>
+    </div>
+    <!-- End of Fun fucts block -->
+  </div>
+</section>

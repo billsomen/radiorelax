@@ -1,0 +1,105 @@
+<section class="pt-page pt-page-5" data-id="contact">
+  <div class="border-block-top-110"></div>
+  <div class="section-inner">
+    <div class="section-title-block">
+      <div class="section-title-wrapper">
+        <h2 class="section-title">{{ 'app.contact.title'|trans }}</h2>
+        <h5 class="section-description">{{ 'app.contact.phrase'|trans }}</h5>
+      </div>
+    </div>
+    
+    <div class="row">
+      
+      {#<iframe src="https://etsmtl365-my.sharepoint.com/personal/bill-diego_ngongang-somen_1_ens_etsmtl_ca/_layouts/15/Doc.aspx?sourcedoc={805d1d42-3545-4bab-b59b-eb0f80b34812}&amp;action=embedview&amp;wdAr=1.7777777777777777" width="350px" height="221px" frameborder="0">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office Online</a>.</iframe>#}
+      <div class="col-sm-6 col-md-6 subpage-block">
+        <div class="block-title">
+          <h3>{{ 'app.contact.phrase'|trans }}</h3>
+        </div>
+        <p>{{ 'app.contact.desc'|trans }}</p>
+        <div class="contact-info-block">
+          <div class="ci-icon">
+            <i class="pe-7s-icon pe-7s-map-marker"></i>
+          </div>
+          <div class="ci-text">
+            {% for i in 1..4 %}
+              <h5>{{ ('app.about.profile.address.line'~i)|trans }}</h5>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="contact-info-block">
+          <div class="ci-icon">
+            <i class="pe-7s-icon pe-7s-mail"></i>
+          </div>
+          <div class="ci-text">
+            <h5><a href="mailto:{{ "app.about.profile.email_service.content"|trans }}">{{ 'app.about.profile.email_service.content'|trans }}</a></h5>
+            <h5><a href="mailto:{{ "app.about.profile.email_perso.content"|trans }}">{{ 'app.about.profile.email_perso.content'|trans }}</a></h5>
+          </div>
+        </div>
+        <div class="contact-info-block">
+          <div class="ci-icon">
+            <i class="pe-7s-icon pe-7s-call"></i>
+          </div>
+          <div class="ci-text">
+            <h5><a href="tel:{{ "app.about.profile.phone.content"|trans }}">{{ 'app.about.profile.phone.content'|trans }}</a></h5>
+          </div>
+        </div>
+        <div class="contact-info-block">
+          <div class="ci-icon">
+            <i class="pe-7s-icon pe-7s-check"></i>
+          </div>
+          <div class="ci-text">
+            <h5>{{ 'app.about.profile.freelance.title'|trans }} {{ 'app.about.profile.freelance.content'|trans }}</h5>
+          </div>
+        </div>
+        <div class="contact-info-block">
+          <div class="ci-icon">
+            <i class="pe-7s-icon pe-7s-check"></i>
+          </div>
+          <div class="ci-text">
+            <h5>{{ 'app.about.profile.consulting.title'|trans }} {{ 'app.about.profile.consulting.content'|trans }}</h5>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-sm-6 col-md-6 subpage-block">
+        <div class="block-title">
+          <h3>{{ 'app.contact.calendy_title'|trans }}</h3>
+        </div>
+        <!-- Calendly inline widget begin -->
+        <div class="calendly-inline-widget" data-url="https://calendly.com/billsomen" style="min-width:340px;height:400px;"></div>
+        <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
+        <!-- Calendly inline widget end -->
+        {#<form id="contact-form" method="post" action="contact_form/contact_form.php">#}
+        {#<form id="contact-form" method="post" action="#" novalidate readonly>
+          
+          <div class="messages"></div>
+          
+          <div class="controls">
+            <div class="form-group">
+              <input disabled id="form_name" type="text" name="name" class="form-control" placeholder="{{ 'form.full_name'|trans }}" required="required" data-error="Name is required.">
+              <div class="form-control-border"></div>
+              <i class="form-control-icon pe-7s-user"></i>
+              <div class="help-block with-errors"></div>
+            </div>
+            
+            <div class="form-group">
+              <input disabled id="form_email" type="email" name="email" class="form-control" placeholder="{{ 'form.email_adress'|trans }}" required="required" data-error="Valid email is required.">
+              <div class="form-control-border"></div>
+              <i class="form-control-icon pe-7s-mail"></i>
+              <div class="help-block with-errors"></div>
+            </div>
+            
+            <div class="form-group">
+              <textarea disabled id="form_message" name="message" class="form-control" placeholder="{{ 'form.message'|trans }}" rows="4" required="required" data-error="Please, leave me a message."></textarea>
+              <div class="form-control-border"></div>
+              <i class="form-control-icon pe-7s-comment"></i>
+              <div class="help-block with-errors"></div>
+            </div>
+            
+            <input type="submit" class="button btn-send" value="{{ 'button.send_message'|trans }}" disabled>
+          </div>
+        </form>#}
+      </div>
+    </div>
+  </div>
+</section>

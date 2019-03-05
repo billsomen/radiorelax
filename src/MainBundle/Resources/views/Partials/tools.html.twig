@@ -1,0 +1,54 @@
+<section class="pt-page pt-page-4" data-id="tools">
+  <div class="border-block-top-110"></div>
+  <div class="section-inner">
+    <div class="section-title-block">
+      <div class="section-title-wrapper">
+        <h2 class="section-title">{{ 'edu.tools.title'|trans }}</h2>
+        <h5 class="section-description">{{ 'edu.tools.phrase'|trans }}</h5>
+      </div>
+    </div>
+    
+    <!-- Portfolio Content -->
+    <div class="portfolio-content">
+      
+      <!-- Portfolio filter -->
+      <ul id="portfolio_filters" class="portfolio-filters">
+        <li class="active">
+          <a class="filter btn btn-sm btn-link active" data-group="all">All</a>
+        </li>
+        <li>
+          <a class="filter btn btn-sm btn-link" data-group="media">Media</a>
+        </li>
+        <li>
+          <a class="filter btn btn-sm btn-link" data-group="illustration">Illustration</a>
+        </li>
+        <li>
+          <a class="filter btn btn-sm btn-link" data-group="video">Video</a>
+        </li>
+      </ul>
+      <!-- End of Portfolio filter -->
+      
+      <!-- Portfolio Grid -->
+      <div id="portfolio_grid" class="portfolio-grid portfolio-masonry masonry-grid-3">
+        {#<iframe width="600" height="400" frameborder="0" src="https://www.mindmeister.com/maps/public_map_shell/1215544233/plan-cr-er-un-site-internet-comme-un-pro?width=600&height=400&z=auto&t=anBnUjmapA&live_update=1" scrolling="no" style="overflow: hidden; margin-bottom: 5px;">Your browser is not able to display frames. Please visit <a href="https://www.mindmeister.com/1215544233/plan-cr-er-un-site-internet-comme-un-pro?t=anBnUjmapA" target="_blank">Plan - Créer un site internet comme un pro</a> on MindMeister.</iframe><div class="mb-5"><a href="https://www.mindmeister.com/1215544233/plan-cr-er-un-site-internet-comme-un-pro?t=anBnUjmapA" target="_blank">Plan - Créer un site internet comme un pro</a> by <a href="https://www.mindmeister.com/users/channel/33076421" target="_blank">Bill Diego Ngongang Somen</a></div>#}
+        <!-- Portfolio Item 1 -->
+        {% for i in 1..1 %}
+          <figure class="item" data-groups='["all", "media"]'>
+            <a class="ajax-page-load" href="{{ asset('partials/portfolio-'~i~'.html') }}">
+              <img src="https://us.123rf.com/450wm/erickn/erickn1302/erickn130200006/17754471-3d-yellow-grey-coming-soon-text-on-white.jpg?ver=6" alt="">
+              <div>
+                <h5 class="name">Project Name {{ i }}</h5>
+                <small>Media {{ i }}</small>
+                <i class="pe-7s-icon pe-7s-display2"></i>
+              </div>
+            </a>
+          </figure>
+        {% endfor %}
+        <!-- /Portfolio Item 12 -->
+      </div>
+      <!-- /Portfolio Grid -->
+    
+    </div>
+    <!-- /Portfolio Content -->
+  </div>
+</section>

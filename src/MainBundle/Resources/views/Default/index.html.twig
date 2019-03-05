@@ -1,0 +1,196 @@
+{% extends "::base.html.twig" %}
+
+{% block body_inner %}
+  <div id="page" class="page">
+    <!-- Header -->
+    <header id="site_header" class="header mobile-menu-hide header-color-light">
+      <div class="my-photo tilt-effect">
+        <a class="pt-trigger" href="#home" data-animation="21">
+          <img src="{{ asset('images/main_photo.jpg') }}" alt="image">
+        </a><!-- href value = data-id without # of .pt-page. -->
+      </div>
+      
+      <div class="site-title-block">
+        <a href="#home" style="text-decoration: none"><h1 class="site-title">
+            {{ app_name | slice(0, 4) }}
+            {{ app_name | slice(4) }}
+          </h1></a>
+        <div>
+          <a href="{{ path('main_homepage', {'_locale': 'fr'}) }}" style="text-decoration: none">
+            <img src="{{ asset('images/fr.png') }}" width="25" />
+            <span>fr</span>
+          </a>
+          <span>|</span>
+          <a href="{{ path('main_homepage', {'_locale': 'en'}) }}" style="text-decoration: none">
+            <span>en</span>
+            <img src="{{ asset('images/uk.png') }}" width="25"/>
+          </a>
+        </div>
+      </div>
+      
+      <!-- Navigation -->
+      <div class="site-nav">
+        <!-- Main menu -->
+        <ul id="nav" class="site-main-menu">
+          <li>
+            <a class="pt-trigger" href="#home" data-animation="21"><i class="menu-icon pe-7s-icon pe-7s-home"></i>{{ 'app.home.title'|trans }}</a><!-- href value = data-id without # of .pt-page. -->
+          </li>
+          <li>
+            <a class="pt-trigger" href="#about_me" data-animation="17"><i class="menu-icon pe-7s-icon pe-7s-user"></i>{{ 'app.about.title'|trans }}</a>
+          </li>
+          {#<li>
+            <a class="pt-trigger" href="#business" data-animation="15"><i class="menu-icon pe-7s-icon pe-7s-portfolio"></i>Business
+            <span style="position: absolute; top: 0; background-color: #8bcf00; color: white; border-radius: 0%; font-weight: bold; font-size: 1em; padding: 3px">New</span>
+            </a>
+          </li>#}
+          <li>
+            <a class="pt-trigger" href="#resume" data-animation="18"><i class="menu-icon pe-7s-icon pe-7s-id"></i>{{ 'app.resume.title'|trans }}</a>
+          </li>
+          <li>
+            <a class="pt-trigger" href="#contact" data-animation="20"><i class="menu-icon pe-7s-icon pe-7s-mail"></i>{{ 'app.contact.title'|trans }}</a>
+          </li>
+          <li>
+            <a href="{{ path('edu_homepage') }}" onclick="document.location = '{{ path('edu_homepage') }}#tools'"><i class="menu-icon pe-7s-icon pe-7s-study"></i>{{ 'edu.title'|trans }}</a>
+          </li>
+        </ul>
+        <!-- /Main menu -->
+      </div>
+      <!-- Navigation -->
+    </header>
+    <!-- /Header -->
+    
+    <!-- Mobile Header -->
+    <div class="mobile-header mobile-visible">
+      <div class="mobile-logo-container">
+        <div class="mobile-site-title">{{ app_name }}</div>
+      </div>
+      
+      <a class="menu-toggle mobile-visible">
+        <i class="fa fa-bars"></i>
+      </a>
+    </div>
+    <!-- /Mobile Header -->
+    
+    <!-- Arrows Nav -->
+    <div class="lmpixels-arrows-nav">
+      <div class="lmpixels-arrow-left"><i class="pe-7s-icon pe-7s-angle-left"></i></div>
+      <div class="lmpixels-arrow-right"><i class="pe-7s-icon pe-7s-angle-right"></i></div>
+    </div>
+    <!-- /Arrows Nav -->
+    
+    <!-- Main Content -->
+    <div id="main" class="site-main">
+      <!-- Page changer wrapper -->
+      <div class="pt-wrapper" style="background-image: url({{ asset('images/main_bg_light.jpg') }});">
+        <!-- Subpages -->
+        <div class="subpages">
+          <!-- Home Subpage -->
+          {% include "@Main/Partials/home.html.twig" %}
+          <!-- End of Home Subpage -->
+          
+          <!-- About Me Subpage -->
+          {% include "@Main/Partials/about.html.twig" %}
+          <!-- End of About Me Subpage -->
+          
+          <!-- Resume Subpage -->
+          {% include "@Main/Partials/resume.html.twig" %}
+          <!-- End Resume Subpage -->
+         
+          <!-- Portfolio Subpage -->
+          {#{% include "@Main/Partials/portfolio.html.twig" %}#}
+          <!-- /Portfolio Subpage -->
+          
+          <!-- Business Card Subpage -->
+          {% include "@Main/Partials/business-card.html.twig" %}
+          <!-- End Business Card Subpage -->
+          
+          <!-- Contact Subpage -->
+          {% include "@Main/Partials/contact.html.twig" %}
+          <!-- End Contact Subpage -->
+        </div>
+      </div>
+      <!-- /Page changer wrapper -->
+    </div>
+    <!-- /Main Content -->
+  </div>
+{% endblock %}
+
+{% block javascripts %}
+  <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+  <script src="{{ asset('js/pages-switcher.js') }}"></script>
+  <script src="{{ asset('js/imagesloaded.pkgd.min.js') }}"></script>
+  <script src="{{ asset('js/validator.js') }}"></script>
+  <script src="{{ asset('js/jquery.shuffle.min.js') }}"></script>
+  <script src="{{ asset('js/masonry.pkgd.min.js') }}"></script>
+  <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+  <script src="{{ asset('js/jquery.magnific-popup.min.js') }}"></script>
+  <script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+  <script src="{{ asset('js/tilt.jquery.min.js') }}"></script>
+  <script src="{{ asset('js/jquery.hoverdir.js') }}"></script>
+  <script src="{{ asset('js/main.js') }}"></script>
+  {#<script src="https://www.paypal.com/sdk/js?client-id=sb"></script>#}
+  {#<script>paypal.Buttons().render('body');</script>#}
+  
+  {#<script>
+    paypal.Buttons({
+      createOrder: function(data, actions) {
+        // Set up the transaction
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              value: '0.99'
+            }
+          }]
+        });
+      },
+      onApprove: function(data, actions) {
+        // Capture the funds from the transaction
+        return actions.order.capture().then(function(details) {
+          // Show a success message to your buyer
+          alert('Transaction completed by ' + details.payer.name.given_name);
+        });
+      }
+    }).render('#paypal-button-container');
+  </script>#}
+  
+  <script>
+    /*$('.text-x').onclick(function (e) {
+      e.preventDefault();
+      alert(544);
+    });*/
+    /* showPop = (e, id) => {
+       e.preventDefault();
+       alert(id);
+     };*/
+    /*function showPop(e, id) {
+      e.preventDefault();
+      let url = '{ path('api_business_card', {'id':'xxx'}) }}';
+      url = url.replace(/xxx/g, id);
+      $.get( url, function( data ) {
+        /!*$.magnificPopup.open({
+          items: {
+            src: ''+data
+          },
+          removalDelay: 300,
+          mainClass: 'mfp-fade',
+          gallery: {
+            enabled: true
+          },
+          type: 'inline'
+        }, 0);*!/
+        
+        $.magnificPopup.open({
+          items: {
+            src: ''+data
+          },
+          removalDelay: 300,
+          mainClass: 'mfp-fade',
+          gallery: {
+            enabled: true
+          },
+          type: 'inline'
+        }, 0);
+      });
+    }*/
+  </script>
+{% endblock %}

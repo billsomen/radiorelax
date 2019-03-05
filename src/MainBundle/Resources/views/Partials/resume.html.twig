@@ -1,0 +1,90 @@
+<section class="pt-page pt-page-3" data-id="resume">
+  <div class="border-block-top-110"></div>
+  <div class="section-inner">
+    <div class="section-title-block">
+      <div class="section-title-wrapper">
+        <h2 class="section-title">{{ 'app.resume.title'|trans }}</h2>
+        <h5 class="section-description">{{ 'app.resume.phrase'|trans }}</h5>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-sm-6 col-md-4 subpage-block">
+        <div class="block-title">
+          <h3>{{ 'app.resume.experience.title'|trans }}</h3>
+        </div>
+        <div class="timeline">
+          <!-- Single event -->
+          {% for key, value in translations.app.resume.experience.array %}
+            <div class="timeline-event te-primary">
+              <h5 class="event-date">{{ ('app.resume.experience.array.'~key~'.period')|trans |upper}}</h5>
+              <h4 class="event-name">{{ ('app.resume.experience.array.'~key~'.title')|trans |upper}}</h4>
+              <span class="event-description">{{ ('app.resume.experience.array.'~key~'.sub_title')|trans |upper}}</span>
+              <p>
+                {{ ('app.resume.experience.array.'~key~'.content')|trans }}
+              </p>
+              {% set ref = (('app.resume.experience.array.'~key~'.ref')|trans) %}
+              {% if ref != "0" %}
+                <p>
+                  -
+                  <a href="http://{{ ref }}" target="_blank">
+                    <i>
+                      {{ ref }}
+                    </i>
+                  </a>
+                </p>
+              {% endif %}
+            </div>
+          {% endfor %}
+          <!-- Single event -->
+        </div>
+      </div>
+      
+      <div class="col-sm-6 col-md-4 subpage-block">
+        <div class="block-title">
+          <h3>{{ 'app.resume.education.title'|trans }}</h3>
+        </div>
+        <div class="timeline">
+          <!-- Single event -->
+          {% for key, value in translations.app.resume.education.array %}
+            <div class="timeline-event te-primary">
+              <h5 class="event-date">{{ ('app.resume.education.array.'~key~'.period')|trans |upper}}</h5>
+              <h4 class="event-name">{{ ('app.resume.education.array.'~key~'.title')|trans |upper}}</h4>
+              <span class="event-description">{{ ('app.resume.education.array.'~key~'.sub_title')|trans |upper}}</span>
+              <p>{{ ('app.resume.education.array.'~key~'.content')|trans }}</p>
+            </div>
+          {% endfor %}
+          <!-- Single event -->
+        </div>
+      </div>
+      
+      <div class="col-sm-6 col-md-4 subpage-block">
+        {% for key, value in translations.app.resume.skills.array %}
+          <div class="block-title">
+            <h3>{{ ('app.resume.skills.array.'~key~'.title')|trans }}</h3>
+          </div>
+          {#Loop over skills#}
+          {% for key2, value2 in value.array %}
+            <div class="skills-info">
+              <h4>{{ ('app.resume.skills.array.'~key~'.array.'~key2~'.title')|trans }}</h4>
+              <div class="skill-container">
+                <div class="skill-percentage skill-{{ ('app.resume.skills.array.'~key~'.array.'~key2~'.ratio')|trans }}"></div>
+              </div>
+            </div>
+          {% endfor %}
+        {% endfor %}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-12">
+        <div class="download-cv-block">
+          {% if locale == "fr"%}
+            <a class="button" target="_blank" href="{{ asset('files/FR-Resume-Bill-Somen-vETS_20190128.pdf') }}" download="{{ app_name }}-FR-Resume-vETS_20190128.pdf">{{ 'button.download_cv'|trans }}</a>
+          {% else %}
+            <a class="button" target="_blank" href="{{ asset('files/resume_Bill-Somen-11-2018v2.pdf') }}" download="{{ app_name }}-Resume-Nov_2018_v2">{{ 'button.download_cv'|trans }}</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
