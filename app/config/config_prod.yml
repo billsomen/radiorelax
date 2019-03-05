@@ -70,7 +70,7 @@ doctrine_mongodb:
     default:
       server: "%database_url%"
       options: {}
-  default_database: heroku_7l6hkbtz
+  default_database: "%database_name%"
   document_managers:
     default:
       auto_mapping: true

@@ -13,7 +13,7 @@ class DefaultController extends Controller
   {
     $dm = $this->get("doctrine.odm.mongodb.document_manager");
     $user = new TempUser();
-    $user->setEmail('ngongangsomen@gmail.com');
+    $user->setName('ngongangsomen@gmail.com');
     $dm->persist($user);
     $dm->flush();
 
