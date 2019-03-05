@@ -8,8 +8,15 @@
 
 namespace XS\UserBundle\Document;
 
-
+use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use CoreBundle\Document\Artist;
+
+/**
+ * Class Profiles
+ * @MongoDB\EmbeddedDocument()
+ * @package XS\UserBundle\Document
+ */
+
 
 class Profiles
 {

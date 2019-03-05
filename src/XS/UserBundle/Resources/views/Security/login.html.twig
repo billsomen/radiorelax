@@ -1,9 +1,13 @@
 {% extends "@XSUser/base.html.twig" %}
+
 {% block title %}
-  {{ "xs_user."~page~".title"|trans }}
+  {{ ("xs_user."~page~".title")|trans }}
 {% endblock %}
+
+{% block sub_title %}{{ ("xs_user."~page~".title")|trans }}{% endblock %}
+
 {% block page_content %}
-  <div class="card bg-danger shadow border-0">
+  <div class="card bg-white shadow border-0">
     <div class="card-body px-lg-5 py-lg-5">
       {#language switcher#}
       <div class="mb-3" style="display: flex; padding-bottom: 3px">
@@ -11,7 +15,7 @@
           <div style="margin: auto">
             <a href="{{ path(page, {'_locale': lang}) }}" title="{{ ("locale.language."~lang~".title")|trans }}">
               <img src="{{ asset('assets/images/'~lang~'.png') }}" alt="{{  ("locale.language."~lang~".title")|trans }}" width="40">
-              <span class="text-white">{{ ("locale.language."~lang~".title")|trans }}</span>
+              <span class="text-black-50">{{ ("locale.language."~lang~".title")|trans }}</span>
             </a>
           </div>
         {% endfor %}
@@ -19,14 +23,15 @@
       {#language switcher#}
       
       <div class="text-center text-muted mb-4">
+        
         {% for flashMessage in app.session.flashbag.get('notice') if flashMessage %}
-          <div class="alert alert-success text-center">
+          <div class="alert alert-success alert-dismissible text-center">
             <small>{{ flashMessage }}</small>
           </div>
         {% endfor %}
         
         {% for flashMessage in app.session.flashbag.get('error') if flashMessage %}
-          <div class="alert alert-white text-center">
+          <div class="alert alert-danger alert-dismissible text-center">
             <small>{{ flashMessage }}</small>
           </div>
         {% endfor %}

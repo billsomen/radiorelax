@@ -46,8 +46,7 @@
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
               <a class="nav-link nav-link-icon text-red" href="#soon">
-                <i class="ni ni-planet"></i>
-                <span class="nav-link-inner--text">Accueil</span>
+                <span class="nav-link-inner--text">{{ 'app.home.title'|trans }}</span>
               </a>
             </li>
           </ul>
@@ -61,7 +60,7 @@
           <div class="row justify-content-center">
             <div class="col-lg-5 col-md-6">
               <h1 class="text-red">{{ 'xs_user.login.welcome'|trans }}</h1>
-              <p class="text-lead text-red">{{ app_name }}</p>
+              <p class="text-lead text-red">{% block sub_title %}{{ app_name }}{% endblock %}</p>
             </div>
           </div>
         </div>

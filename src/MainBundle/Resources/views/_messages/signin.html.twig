@@ -1,0 +1,8 @@
+<p>
+  {{ "xs_user._message.signin" |trans({'%nickname%': user.nickname, '%app_name%': app_name}) | raw }}:
+</p>
+<ul>
+  <li><u>{{ "xs_user.user.email"|trans }}:</u> {{ user.username }}</li>
+  <li><u>{{ "xs_user.user.password"|trans }}:</u> {{ password }}</li>
+  <li><u>{{ "xs_user.user.link"|trans }} :</u> <a href="{{ absolute_url(path("main_homepage", {'_locale': _locale})) }}">{{ app_name }}</a></li>
+</ul>

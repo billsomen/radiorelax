@@ -80,7 +80,7 @@ public function getJoinedNumber(){
   }
   
   public function __construct(){
-    $this->country_code = '+';
+    $this->country_code = '+1';
   }
   
 }

@@ -1,24 +1,46 @@
 # To get started with security, check out the documentation:
-# http://symfony.com/doc/current/security.html
+# http://symfony.com/doc/current/book/security.html
+services:
+  mongodb.provider:
+    parent: doctrine_mongodb.odm.security.user.provider
+    arguments: [XS\UserBundle\Document\User, username]
+
 security:
+  encoders:
+    Symfony\Component\Security\Core\User\User: sha512
+    XS\UserBundle\Document\User: sha512
 
-    # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
-    providers:
-        in_memory:
-            memory: ~
+  role_hierarchy:
+    ROLE_ADMIN: ROLE_USER, ROLE_BLED, ROLE_EDU_ADMIN, ROLE_BLED_ADMIN
+    ROLE_BLED: ROLE_USER
+    ROLE_EDU_ADMIN: ROLE_USER
+    ROLE_BLED_ADMIN: ROLE_USER, ROLE_BLED
 
-    firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
+  # http://symfony.com/doc/current/book/security.html
+  # where-do-users-come-from-user-providers >
+  providers:
+    main_db:
+      id: mongodb.provider
 
-        main:
-            anonymous: ~
-            # activate different ways to authenticate
+  firewalls:
+    # disables authentication for assets and the profiler, adapt it according to your needs
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
 
-            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
+    main:
+      pattern: ^/
+      anonymous: ~
+      provider: main_db
+      form_login:
+        login_path: login
+        check_path: login_check
+        always_use_default_target_path: true
+#        csrf_token_generator: security.csrf.token_manager
 
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
-            #form_login: ~
+      logout:
+        path: logout
+        target: radio_relax_coming_soon_homepage
+
+  access_control:
+  - { path: ^/admin/, roles: ROLE_USER }

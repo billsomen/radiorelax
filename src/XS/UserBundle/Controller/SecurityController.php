@@ -3,20 +3,13 @@
 
 namespace XS\UserBundle\Controller;
 
-use AppBundle\Service\Locale;
-use ReCaptcha\ReCaptcha;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\SecurityContext;
-use Symfony\Component\Security\Core\Util\SecureRandom;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-use XS\MboadjossBundle\Document\Telegram;
 use XS\UserBundle\Document\User;
 use XS\UserBundle\Form\UserType;
 
@@ -489,48 +482,55 @@ class SecurityController extends Controller{
     ));
   }
 
-  public function signinAction(Request $request){
+  public function isUserExist(User $user){
+//    Vérifie si 'lutilisateur existe déjà dans la base de données
+    $dm = $this->get('doctrine.odm.mongodb.document_manager');
+    return false; empty(
+      $dm->getRepository("XSUserBundle:User")->findOneBy(array(
+        'username' => $user->getUsername()
+      ))
+    );
+  }
+
+  public function signinAction(Request $request, $_locale){
     $dm = $this->get('doctrine.odm.mongodb.document_manager');
     $user = new User();
 
     $form = $this->createForm(UserType::class, $user);
     $status_message = null;
-    $status = 'error';
     if($request->isMethod('POST')){
       $form->handleRequest($request);
       if($form->isValid()){
-        $user_checker = new \AppBundle\Service\User();
-        if(!$user_checker->checkUserAnyway($dm, $user)){
+        if(!$this->isUserExist($user)){
           $user->setConfirmed(false);
           $code = rand(10000, 99999);
           $user->setConfirmationCode($code);
+          $user->setEmail($user->getUsername());
 
           $factory = $this->get('security.encoder_factory');
           $encoder = $factory->getEncoder($user);
           $password = $encoder->encodePassword($code, $user->getSalt());
           $user->setPassword($password);
-//                    todo: Fin de la generation du code...
-          try{
-            $insert_user = new \AppBundle\Service\User();
-            $insert_user->_insert_user($dm, $user, null, 1);
-            $status_message = ' Inscription terminée avec succès. Un mot de passe vous a été transmis par Mail.';
-            $status = 'notice';
-            $forward_user = true;
-            $user->setEmail($user->getUsername());
 
+          $dm->persist($user);
+          $dm->flush();routin
+
+          $status = 'notice';
+          $status_message = $this->get('translator')->trans('xs_user.signin.flashbag.mail.complete');
+          $this->addFlash($status, $status_message);
+          try{
 //              On émet le Mail
             $receiver = $user->getUsername();
             $sender = $this->getParameter("mailer_user");
             $message = \Swift_Message::newInstance()
-              ->setSubject('Inscription Terminée!')
-//              ->setFrom([$sender => $this->getParameter("app_name")])
+              ->setSubject($status_message)
               ->setFrom([$sender => $this->getParameter("app_name")])
               ->setTo(array($receiver, $this->getParameter("mailer_user")))
-//              ->setTo(array($receiver, $this->getParameter("app_mail_admin")))
               ->setBody(
                 $this->renderView(
-                  '@XSMboadjoss/Message/registration2.html.twig',array(
+                  '@Main/_messages/signin.html.twig',array(
                     'user' => $user,
+                    '_locale' => $_locale,
                     'password' => $code
                   )
                 ),
@@ -538,24 +538,29 @@ class SecurityController extends Controller{
               )
             ;
             $r = $this->get('mailer')->send($message);
+//            Mail sent
+            $status_message = $this->get('translator')->trans('flashbags.mail.success');
+            $this->addFlash($status, $status_message);
+
           }catch(\Exception $exception){
             $status = 'error';
-            $status_message = "Désolé, aucune adresse Email n'a été configurée pour cette Application";
+            $status_message = $this->get('translator')->trans('flashbags.mail.error');
             $this->addFlash($status, $status_message);
           }
         }
         else{
-          $status_message = 'Adresse Email déjà existante';
+          $status = 'error';
+          $status_message = $this->get('translator')->trans('xs_user.user.is.already_exist');
+          $this->addFlash($status, $status_message);
         }
-
       }
       else{
-        $status_message = "Le formulaire d'inscription a été mal rempli. Merci de recommencer SVP!";
+        $status = 'error';
+//        $status_message = $this->get('translator')->trans('flashbags.form.bad');
+        $status_message = $this->get('translator')->trans('xs_user.user.is.already_exist');
+        $this->addFlash($status, $status_message);
       }
     }
-
-    $this->addFlash($status, $status_message);
-//    return $this->redirectToRoute('radio_relax_core_homepage');
 
     $authUtils = $this->get('security.authentication_utils');
     $error = $authUtils->getLastAuthenticationError(true);
