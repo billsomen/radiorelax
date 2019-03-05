@@ -1,0 +1,37 @@
+<div class="media">
+  <div class="media-left">
+    <a href="javascript:;">
+      <img alt="" class="img-circle" src="{{ asset('assets/layouts/layout3/img/sections/10xedu.png') }}" width="50">
+    </a>
+  </div>
+  <div class="media-body">
+    <h4 class="media-heading">
+      {#<a href="javascript:;">{{ comment.author.nickname }}</a>#}
+      <span class="c-date">{{ comment.dateAdd | time_diff }}</span>
+    </h4>
+    {{ comment.content }}
+    <div class="col-md-12">
+      <div class=" pull-left">
+        {% set comment_liked = 0 %}
+        {% for like in comment.likes if like.user.id == app.user.id %}
+          {% set comment_liked = 1 %}
+        {% endfor %}
+
+        {% include 'XSCoreBundle:Envy:_showLike.html.twig' with {'obj_name':obj_name, 'obj_id':obj_id, 'comment_id':comment.localId, 'object':comment, 'liked':comment_liked} %}
+        <small><i class="fa fa-circle"></i></small>
+        <a type="button" style="text-decoration: none"  class="if_reply" href="javascript:;" target_comment="{{ obj_id~'_'~comment.localId }}">
+          <i class="icon-action-redo"></i> <span class="hidden-xs hidden-sm">Répondre</span>
+          <span class="badge badge-info" id="count_comments_{{ obj_id }}_replies_{{ comment.localId }}"> {{ comment.comments | length }} </span>
+        </a>
+        {{ render(controller('XSCoreBundle:Comment:add', {'obj_name':obj_name, 'obj_id':obj_id, 'comment_id':comment.localId})) }}
+        <table class="table table-hover">
+          <tbody>
+          {% for reply in comment.comments | reverse %}
+            {% include 'XSCoreBundle:Comment:_showResponse.html.twig' with {'reply':reply} %}
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

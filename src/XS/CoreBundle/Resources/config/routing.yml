@@ -1,0 +1,73 @@
+#Permet d'ajouter un nouveau commentaire.
+#L'objet sur lequel ajouter est deja mis en session.
+comments_add:
+    path: /comments/_add.{obj_name}.{obj_id}.{comment_id}
+    defaults: { _controller: XSCoreBundle:Comment:add, comment_id:0 }
+
+comments_add_to_question:
+    path: /comments/_addToQuestion.{obj_id}.{id_question}.{comment_id}
+    defaults: { _controller: XSCoreBundle:Comment:addToQuestion, comment_id:0 }
+
+comments_add_min:
+    path: /comments/_add_min.{obj_name}.{obj_id}
+    defaults: { _controller: XSCoreBundle:Comment:addMin }
+
+#Permet d'ajouter un nouveau reviewaire.
+#L'objet sur lequel ajouter est deja mis en session.
+reviews_add:
+    path: /reviews/_add.{target_name}.{target_id}
+    defaults: { _controller: XSCoreBundle:Review:add }
+#
+#reviews_add_to_question:
+#    path: /reviews/_addToQuestion.{target_id}.{id_question}.{review_id}
+#    defaults: { _controller: XSCoreBundle:Review:addToQuestion, review_id:0 }
+#
+#reviews_add_min:
+#    path: /reviews/_add_min.{target_name}.{target_id}
+#    defaults: { _controller: XSCoreBundle:Review:addMin }
+
+#Envy:view, like, dislike... (Un clic c'est un like, n'y a pas de double action pour l'instant)
+envy_like:
+    path: /envy/_add_like.{obj_name}.{obj_id}.{comment_id}
+    defaults: { _controller: XSCoreBundle:Envy:like, comment_id:0 }
+
+rate_add:
+    path: /rate/_add.{obj_name}.{obj_id}.{value}
+    defaults: { _controller: XSCoreBundle:Rate:add }
+
+image_crop:
+    path: /image/crop
+    defaults: { _controller: XSCoreBundle:Image:crop }
+
+image_admin_add:
+    path: /image/admin/add
+    defaults: { _controller: XSCoreBundle:Image:adminAdd }
+#Calendar
+
+calendar_session_json:
+    path: /calendars/session/{tutor_id}/{id}
+    defaults: { _controller: XSCoreBundle:Calendar:jsonShowSession }
+
+calendar_entries_json:
+    path: /calendars/{type}/{id}/_entries
+    defaults: { _controller: XSCoreBundle:Calendar:jsonEntries }
+
+
+#calendar_entries_json:
+#    path: /calendar/{id}/_entries
+#    defaults: { _controller: XSCoreBundle:Calendar:jsonEntries }
+
+
+#envy_dislike:
+#    path: /envy/add_dislike.{obj_name}.{obj_id}
+#    defaults: { _controller: XSCoreBundle:Envy:dislike }
+
+#
+#comments_add:
+#    pattern: /oauthRegister
+#    defaults: { _controller: XSUserBundle:Security:oauthRegister }
+#
+#envy_like:
+#    path: "@XSUserBundle/Resources/config/routingSecurityOAuth.yml"
+#    prefix:   /oauth
+

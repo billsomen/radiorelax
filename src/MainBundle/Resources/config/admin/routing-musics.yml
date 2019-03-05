@@ -1,0 +1,25 @@
+#Dashboard de gestion des musics
+admin_musics_homepage:
+#  Tous les musices
+  path:     /
+  defaults: { _controller: MainBundle:Music:index }
+
+admin_musics_new:
+#  Un musice : New
+  path:     /new/{id_album}
+  defaults: { _controller: MainBundle:Music:new }
+
+admin_musics_new_multiple:
+#  Un musice : New
+  path:     /new_multiple/{id_album}
+  defaults: { _controller: MainBundle:Music:newMultiple }
+
+admin_musics_show:
+  #  Un musice : View and Edit
+  path:     /{id}
+  defaults: { _controller: MainBundle:Music:show }
+
+admin_musics_remove:
+  #  Un musice : Delete
+  path:     /{id}/delete
+  defaults: { _controller: MainBundle:Music:remove }

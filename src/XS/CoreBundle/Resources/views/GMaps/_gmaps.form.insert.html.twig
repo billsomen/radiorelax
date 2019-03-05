@@ -1,0 +1,111 @@
+<table class="table table-light table-hover" id="gmaps_include">
+  <tr>
+    <td>Saisir l'Adresse</td>
+    <td colspan="2">
+      <input id="autocomplete" class="form-control" placeholder="Enter your address" onFocus="geolocate()" type="text"/>
+    </td>
+  </tr>
+  <tr>
+    <td>Addresse Finale</td>
+    <td colspan="2">
+      {{ form_widget(form.gmaps.formattedAddress, {'id': 'formatted_address'}) }}
+    </td>
+  </tr>
+  <tr style="display: none">
+    <td>Lat</td>
+    <td colspan="2">
+      {{ form_widget(form.gmaps.lat, {'id': 'lat'}) }}
+  </tr>
+  <tr style="display: none">
+    <td>Lng</td>
+    <td colspan="2">
+      {{ form_widget(form.gmaps.lng, {'id': 'lng'}) }}
+    </td>
+  </tr>
+
+  <tr style="display: none">
+    <td>Place Id</td>
+    <td colspan="2">
+      {{ form_widget(form.gmaps.placeId, {'id': 'place_id'}) }}
+    </td>
+  </tr>
+  <tr style="display: none">
+    <td>Route</td>
+    <td>
+      {{ form_widget(form.gmaps.snRoute, {'id': 'sn_route'}) }}
+    </td>
+    <td>
+      {{ form_widget(form.gmaps.lnRoute, {'id': 'ln_route'}) }}
+    </td>
+  </tr>
+
+  <tr style="display: none">
+    <td>Street Number</td>
+    <td>
+      {{ form_widget(form.gmaps.snStreetNumber, {'id': 'sn_street_number'}) }}
+    </td>
+    <td>
+      {{ form_widget(form.gmaps.lnStreetNumber, {'id': 'ln_street_number'}) }}
+    </td>
+  </tr>
+
+  <tr style="display: none">
+    <td>Premise</td>
+    <td>
+      {{ form_widget(form.gmaps.snPremise, {'id': 'sn_premise'}) }}
+    </td>
+    <td>
+      {{ form_widget(form.gmaps.lnPremise, {'id': 'ln_premise'}) }}
+    </td>
+  </tr>
+
+  <tr style="display: none">
+    <td>Locality</td>
+    <td>
+      {{ form_widget(form.gmaps.snLocality, {'id': 'sn_locality'}) }}
+    </td>
+    <td>
+      {{ form_widget(form.gmaps.lnLocality, {'id': 'ln_locality'}) }}
+    </td>
+  </tr>
+
+  <tr style="display: none">
+    <td>State</td>
+    <td>
+      {{ form_widget(form.gmaps.snAdministrativeAreaLevel1, {'id': 'sn_administrative_area_level_1'}) }}
+    </td>
+    <td>
+      {{ form_widget(form.gmaps.lnAdministrativeAreaLevel1, {'id': 'ln_administrative_area_level_1'}) }}
+    </td>
+  </tr>
+
+  <tr style="display: none">
+    <td>County or Region</td>
+    <td>
+      {{ form_widget(form.gmaps.snAdministrativeAreaLevel2, {'id': 'sn_administrative_area_level_2'}) }}
+    </td>
+    <td>
+      {{ form_widget(form.gmaps.lnAdministrativeAreaLevel2, {'id': 'ln_administrative_area_level_2'}) }}
+    </td>
+  </tr>
+
+  <tr style="display: none">
+    <td>Country</td>
+    <td>
+      {{ form_widget(form.gmaps.snCountry, {'id': 'sn_country'}) }}
+    </td>
+    <td>
+      {{ form_widget(form.gmaps.lnCountry, {'id': 'ln_country'}) }}
+    </td>
+  </tr>
+
+  <tr style="display: none">
+    <td>Postal_code</td>
+    <td>
+      {{ form_widget(form.gmaps.snPostalCode, {'id': 'sn_postal_code'}) }}
+    </td>
+    <td>
+      {{ form_widget(form.gmaps.lnPostalCode, {'id': 'ln_postal_code'}) }}
+    </td>
+  </tr>
+</table>

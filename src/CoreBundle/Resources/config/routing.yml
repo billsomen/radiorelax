@@ -1,0 +1,12 @@
+#TODO : SOON !
+#radio_relax_core_homepage:
+#  prefix:   /artists
+#  resource: "routing-artists.yml"
+
+radio_relax_core_artists:
+  prefix:   /artists
+  resource: "routing-artists.yml"
+#
+#radio_relax_profile_artiste:
+#  path:     /u/{namespace}
+#  defaults: { _controller: RadioRelaxCoreBundle:Core:artists }

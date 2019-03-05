@@ -1,0 +1,257 @@
+var AppCalendar = function() {
+  
+  return {
+    //main function to initiate the module
+    init: function() {
+      this.initCalendar();
+    },
+    
+    initCalendar: function() {
+      
+      if (!jQuery().fullCalendar) {
+        return;
+      }
+      
+      var date = new Date();
+      var d = date.getDate();
+      var m = date.getMonth();
+      var y = date.getFullYear();
+      
+      var h = {};
+      
+      if (App.isRTL()) {
+        if ($('#calendar').parents(".portlet").width() <= 720) {
+          $('#calendar').addClass("mobile");
+          h = {
+            right: 'title, prev, next',
+            center: '',
+            left: 'agendaDay, agendaWeek, month, today'
+          };
+        } else {
+          $('#calendar').removeClass("mobile");
+          h = {
+            right: 'title',
+            center: '',
+            left: 'agendaDay, agendaWeek, month, today, prev,next'
+          };
+        }
+      }
+      else {
+        if ($('#calendar').parents(".portlet").width() <= 720) {
+          $('#calendar').addClass("mobile");
+          h = {
+            left: 'title, prev, next',
+            center: '',
+            right: 'today,month,agendaWeek,agendaDay'
+          };
+        } else {
+          $('#calendar').removeClass("mobile");
+          h = {
+            left: 'title',
+            center: '',
+            right: 'prev,next,today,month,agendaWeek,agendaDay'
+          };
+        }
+      }
+      
+      var initDrag = function(el) {
+        // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+        // it doesn't need to have a start or end
+        var eventObject = {
+          title: $.trim(el.text()) // use the element's text as the event title
+        };
+        // store the Event Object in the DOM element so we can get to it later
+        el.data('eventObject', eventObject);
+        // make the event draggable using jQuery UI
+        el.draggable({
+          zIndex: 999,
+          revert: true, // will cause the event to go back to its
+          revertDuration: 0 //  original position after the drag
+        });
+      };
+      
+      var addEvent = function(title) {
+        title = title.length === 0 ? "Untitled Event" : title;
+        var html = $('<div class="external-event label label-default">' + title + '</div>');
+        jQuery('#event_box').append(html);
+        initDrag(html);
+      };
+      
+      $('#external-events div.external-event').each(function() {
+        initDrag($(this));
+      });
+      
+      $('#event_add').unbind('click').click(function() {
+        var title = $('#event_title').val();
+        // addEvent(title);
+        var eventObject = {
+          title: $.trim(title),
+          // start: new Date(y, m, 12, 9, 25),
+          // end: new Date(y, m, 13, 10, 30),
+          // allDay: true,
+          /* className: {
+             class: tooltips
+           },*/
+          description: 'This is a cool event',
+          start: '14:00', //starts at 10 on monday
+          end:   '15:00', //24+3 is handled correctly.
+          dow: [1],
+          ranges: [
+            {
+              start:new Date(2017, 9, 12, 9, 25),
+              end:new Date(2018, 6, 12, 9, 25),},
+          ],
+          backgroundColor: App.getBrandColor('red'),
+          url: 'http://google.com/'
+        };
+        $('#calendar').fullCalendar('renderEvent', eventObject, true);
+      });
+      
+      //predefined events
+      $('#event_box').html("");
+      var entries = '';
+      var path = '{{ path('calendar_entries_json', {'id': id, 'type': type}) }}';
+      $.get(path, function(data, status){
+        entries = data;
+        {#alert("Data: " + data + "\nStatus: " + status);#}
+      });
+      {#alert('{{ path('calendar_entries_json', {'id': calendar_id}) }}');#}
+      {# $.getJSON( "{{ path('calendar_entries_json', {'id': calendar_id}) }}" , function( data ) {
+         entries = data;
+       });#}
+      // addEvent("My Event 1");
+      // addEvent("My Event 2");
+      // addEvent("My Event 3");
+      // addEvent("My Event 4");
+      // addEvent("My Event 5");
+      // addEvent("My Event 6");
+      
+      
+      $('#calendar').fullCalendar('destroy'); // destroy the calendar
+      $('#calendar').fullCalendar({ //re-initialize the calendar
+        eventClick: function(calEvent, jsEvent, view) {
+          App.blockUI({
+            boxed: true,
+            message: 'Patientez SVP...',
+            target: $('#container-row'),
+            // animate: true
+          });
+          {#alert('Event: ' + calEvent.title);#}
+          {#alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);#}
+          {#alert('View: ' + view.name);#}
+          console.info('clicked', calEvent);
+
+          $('#modalEntry-title').text(calEvent.title);
+          var proto_entry = '{% include 'XSCoreBundle:Calendar:_proto_entry_tutoring.html.twig' %}';
+          proto_entry = proto_entry.replace(/__user_name__/g, calEvent.author_name);
+          proto_entry = proto_entry.replace(/__user_id__/g, calEvent.author_id);
+          proto_entry = proto_entry.replace(/__date__/g, calEvent.end);
+          proto_entry = proto_entry.replace(/__hour_start__/g, calEvent.start);
+          proto_entry = proto_entry.replace(/__hour_end__/g, calEvent.end);
+          proto_entry = proto_entry.replace(/__title__/g, calEvent.title);
+          proto_entry = proto_entry.replace(/__description__/g, calEvent.description);
+          $('#modalEntry-body').html(proto_entry);
+         {# $('#modalEntry-table').append("<tr>\n" +
+            "                <td>Monde</td>\n" +
+            "                <td>\n" +
+            "                  5\n" +
+            "                </td>\n" +
+            "              </tr>");#}
+          $('#modalEntry').modal('toggle');
+          $('#container-row').unblock();
+
+          // change the border color just for fun
+          $(this).css('color', 'red');
+        },
+        lang: 'fr',
+        {#locale: 'fr',#}
+        header: h,
+        defaultView: 'month', // change default view with available options from http://arshaw.com/fullcalendar/docs/views/Available_Views/
+        slotMinutes: 5,
+        editable: false,
+        'events': path,
+        eventRender: function(event, element){
+          {#return true;#}
+          {#console.log(event.end);#}
+          {#console.log(event.end_time);#}
+          {#var moment = $('#calendar').fullCalendar('getDate');#}
+          {#console.info('current', moment);#}
+          {#console.log(moment);#}
+          var moment2 = moment;
+          {#moment = moment.format('X');#}
+
+          {#console.info('e_ent', event.ranges.end_time);#}
+          if(event.ranges.start_time-moment < 0){
+            {#console.info('start_seen', event.title+'__'+moment2.format('YYYY-M-D H:m'));#}
+            {#console.info('soustraction', event.ranges.end_time-moment.format('X'));#}
+          }
+          if(event.ranges.end_time-moment > 0){
+            {#console.info('final_seen', event.title);#}
+            {#console.info('soustraction', event.ranges.end_time-moment.format('X'));#}
+            if(event.ranges.start_time-moment < 0){
+              {#console.info('final_seen', event.title);#}
+              {#console.info('soustraction', event.ranges.end_time-moment.format('X'));#}
+            }
+          }
+
+          {#console.log(event.ranges);#}
+
+
+        {#  return (event.ranges.filter(function(range){
+            return (moment(event.start).isBefore(range.end) &&
+              moment(event.end).isAfter(range.start));
+          }).length) > 0;#}
+
+          {#return (event.ranges.end_time-moment > 0 && event.ranges.start_time-moment < 0);#}
+          {#console.info('soustraction', event.ranges.end_time-moment.format('X'));#}
+          {#alert(event.event.ranges.start);#}
+          {#return (event.start_time < event.ranges.end_time && event.end_time>event.ranges.start_time);#}
+          {#return (event.start_time.isBefore(event.ranges.end_time) && event.end_time.isAfter(event.ranges.start_time));#}
+          {#(element).tooltip({
+            title: 'Test Tootips'
+          });
+          (element).tooltip({
+            title: 'Test Tootips'
+          });#}
+          {#console.log(element);#}
+          {#element.title = '555';#}
+          {#element.find('.fc-event-title').html(event.title);#}
+          {#element.find('span.fc-title').html(element.find('span.fc-title').text());#}
+          {#element.tit#}
+          element.qtip({
+            content: {
+              title: '<i><a href="#">[ '+event.subject+' ]</a></i> '+event.title,
+              text: event.description
+            },
+            position: {
+              my: 'bottom center',  // Position my top left...
+              at: 'top center', // at the bottom right of...
+              {#target: $('.selector') // my target#}
+            }
+          });
+          return (event['ranges'].filter(
+             function(range){
+               // test event against all the ranges
+               return (event.start.isBefore(range.end) &&
+                 event.end.isAfter(range.start));
+             }
+           ).length) > 0;
+          //if it isn't in one of the ranges, don't render it (by returning false)
+        },
+        /*eventRender: function(event, element) {
+          element.qtip({
+            content: event.description
+          });
+        },*/
+        droppable: false // this allows things to be dropped onto the calendar !!!
+      });
+      
+    }
+    
+  };
+  
+}();
+
+jQuery(document).ready(function() {
+  AppCalendar.init();
+});

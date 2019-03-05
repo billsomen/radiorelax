@@ -1,0 +1,55 @@
+/*xclip
+
+-------------------------------- */
+.cd-headline.clip span {
+  display: inline-block;
+  padding: .2em 0;
+}
+.cd-headline.clip .cd-words-wrapper {
+  overflow: hidden;
+  vertical-align: top;
+}
+.cd-headline.clip .cd-words-wrapper::after {
+  background-color: #333;
+  content: "";
+  height: 90%;
+  position: absolute;
+  right: 0;
+  top: 4px;
+  width: 4px;
+}
+.cd-headline.clip b {
+  opacity: 0;
+}
+.cd-headline.clip b.is-visible {
+  opacity: 1;
+}
+
+/*Language module*/
+.option-language {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  z-index: 3000;
+  padding-right: 5px;
+}
+
+.thrust-us {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 3000;
+  padding-right: 5px;
+}
+
+.email-responses .alert-success{
+  padding: 5px;
+  border-radius: 5px;
+  background-color: green;
+}
+
+.email-responses .alert-danger{
+  padding: 5px;
+  border-radius: 5px;
+  background-color: red;
+}

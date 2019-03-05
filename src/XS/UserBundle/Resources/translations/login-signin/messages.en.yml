@@ -1,0 +1,10 @@
+xs_user:
+  login:
+    title: Login to access your account
+    welcome: Welcome
+    action: Login
+  signin:
+    title: Sign up and create a new account
+    welcome: Welcome
+    action: Sign up
+    hint: Sign up now

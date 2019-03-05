@@ -1,0 +1,96 @@
+{#todo: Ceci est aussi un espace que l'on met pour pouvoir faciliter les editiosn..#}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ app.user.nickname }} | Bled-Downloader
+{% endblock %}
+
+{% block header_bottom %}
+{% endblock %}
+
+{% block body %}
+    <div class="content">
+        <div class="content_top">
+            <div class="back-links">
+                <p><a href="{{ path('main_homepage') }}">Accueil</a>&gt;<a href="#" class="active">Mon compte</a></p>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="section group">
+            <div class="col span_2_of_3">
+                <div class="contact-form">
+                    <h2>Mon compte</h2>
+                    <form action="{{ path('xs_user_edit') }}" method="post">
+                        <div class="row">
+                            {{ form_errors(form) }}
+                        </div>
+                        {{ form_row(form._token) }}
+                        <div>
+                            <span><label>Nom</label></span>
+                            {{ form_widget(form.nickname, {'attr': {
+                                'class': 'form-control',
+                                'placeholder': app.user.nickname
+                            }}
+                            ) }}
+
+                            <span><label>Contact (+237)</label></span>
+                            {{ form_widget(form.telephones[0].number, {'attr': {
+                                'class': 'form-control'
+                            }}
+                            ) }}
+
+                            <span><label>Cameroun > Ville</label></span>
+                            {{ form_widget(form.localisation.town, {'attr': {
+                                'class': 'form-control select',
+                                'data-live-search': 'false'}}
+                            ) }}
+                            <span><label>Cameroun > Quartier</label></span>
+                            {{ form_widget(form.localisation.quarter, {'attr': {
+                                'class': 'form-control',
+                            }}
+                            ) }}
+
+                            <div class="clear"></div>
+                        </div>
+                        <div>
+                            <span><label>Genre</label></span>
+                            {{ form_widget(form.gender, {'attr': {
+                                'class': 'form-control select',
+                            }}
+                            ) }}
+
+                            <span><label>Date de naissance</label></span>
+                            {{ form_widget(form.birthdate, {'attr': {
+                                'class': 'form-control'
+                            }}
+                            ) }}
+
+
+                        </div>
+                        <div>
+                            <span><button type="submit" class="mybutton"> Enregistrer </button></span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col span_1_of_3">
+                <div class="contact_info">
+                    <h2>Retrouvez-nous</h2>
+                    <div class="map">
+                        <iframe width="100%" height="175" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3980.801637434308!2d11.496323314242069!3d3.852709749500174!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x108bcfbe9b4b8167%3A0x86b34283a0889fdd!2sRESTAURANT+CRADAT!5e0!3m2!1sen!2sus!4v1451696598188" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="company_address">
+                    <h2>Information :</h2>
+                    <p>Cameroun, Yaoundé</p>
+                    <p>Carrefour Cradat, A coté du glacier italien</p>
+                    <p><i class="fa fa-phone"></i> (+237) 695-949-869</p>
+                    <p>Email: <span><a href="mailto:bleddownloader@gmail.com">bleddownloader@gmail.com</a></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

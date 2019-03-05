@@ -1,0 +1,44 @@
+<table class="table table-striped table-bordered table-hover data-table">
+  <thead>
+  <tr>
+    <th> Matricule </th>
+    {#<th> <label><input type="checkbox">Matricule</label> </th>#}
+    <th> Identifiant </th>
+    <th> Nom </th>
+    <th> Prénom </th>
+    <th> Genre </th>
+    <th> Date de Naissance </th>
+    <th> Date d'ajout </th>
+    {#<th> Parents</th>#}
+  </tr>
+  </thead>
+  <tbody>
+  {% for user in users %}
+    <tr>
+      <td>
+        <div class="mt-checkbox-inline">
+          <label class="mt-checkbox">
+            <input type="checkbox" name="selected_users[]" value="{{ user.id }}">
+            {{ user.registrationNumber }}
+            <span></span>
+          </label>
+        </div>
+      </td>
+      <td>
+        <a href="{{ path('xs_manager_users_show', {'id': user.id}) }}">{{ user.nickname }}</a> - <i>{{ user.username }}</i>,
+      </td>
+      <td> {{ user.name }}</td>
+      <td> {{ user.surname }}</td>
+      <td> {{ user.gender }}</td>
+      <td title="{{ user.birthdate | time_diff }}">
+        {{ user.birthdate | date('d/m/Y') }}
+        {% if user.birthLocation %}
+          à <span title="{{ user.birthLocation.town ~'('~user.birthLocation.quarter~'), '~user.birthLocation.country }}">{{ user.birthLocation.town }}</span>
+        {% endif %}
+      </td>
+      <td> {{ user.dateAdd | time_diff }}</td>
+      {#<td> {{ user.author.nickname }} - <i>{{ user.author.username }}</i></td>#}
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>

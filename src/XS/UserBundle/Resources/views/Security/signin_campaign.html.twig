@@ -1,0 +1,14 @@
+<form action="{{ path('signin_campaign') }}" method="post" enctype="multipart/form-data">
+  {{ form_row(form._token) }}
+  <div class="styled-input agile-styled-input-top">
+    {{ form_widget(form.nickname) }}
+    <label>Nom</label>
+    <span></span>
+  </div>
+  <div class="styled-input">
+    {{ form_widget(form.username) }}
+    <label>Email</label>
+    <span></span>
+  </div>
+  <input type="submit" value="S'incrire">
+</form>

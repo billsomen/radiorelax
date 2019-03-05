@@ -1,0 +1,267 @@
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }} | Tous les Afrobusinessmen
+{% endblock %}
+{% block body %}
+    <div class="content-frame">
+        <!-- START CONTENT FRAME TOP -->
+        <div class="content-frame-top">
+            <div class="page-title">
+                <h2 title="Afrobusinessmen : les utilisateurs d'Afrobusiness"><span class="fa fa-user"></span>  Afrobusinessmen ( {{ users|length }} ) </h2>
+            </div>
+            <div class="pull-right">
+                <button class="btn btn-default content-frame-right-toggle"><span class="fa fa-bars"></span></button>
+            </div>
+        </div>
+
+        <!-- START CONTENT FRAME RIGHT -->
+        <div class="content-frame-right">
+            <div class="panel panel-default">
+                <div class="panel-heading ui-draggable-handle">
+                    <h3 class="panel-title"><a href="#" class="panel-collapse">Rechercher</a></h3>
+                    {#todo: Ce panneau doit monter...#}
+                    <ul class="panel-controls">
+                        <li><a style="background: deepskyblue" title="Réinitialiser tout." href="{{ path('xs_user_all') }}"><span class="fa fa-refresh"></span></a></li>
+                        <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <form role="form" class="col-md-12" method="post" action="{{
+                            path('xs_user_search', {
+                                'country': params.country,
+                                'town': params.town,
+                                'query': params.query,
+                                'sort_tag': params.sort_tag,
+                                'sort_by': params.sort_by,
+                                'page': params.page
+                            })}}">
+                                <div class="row">
+                                    {{ form_errors(form) }}
+                                </div>
+                                {{ form_row(form._token) }}
+                                {#<input type="text" class="form-control" title="Rechercher dans la boutique"  placeholder="Search : Blackberry / 5 mpx..."/>#}
+                                {{ form_widget(form.search, {'attr': {
+                                    'class': 'form-control',
+                                    'placeholder': "Nom de l'utilisateur"
+                                }})
+                                }}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading ui-draggable-handle">
+                    <h3 class="panel-title"><a href="#" class="panel-collapse">Pays ({{ groups.users.country | length }})</a></h3>
+                    <ul class="panel-controls">
+                        <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                    </ul>
+                </div>
+                <div class="panel-body list-group">
+                    {% for town in groups.users.country %}
+                        {#Eh oui, c'est hyper costaud :) #}
+                        <a class="list-group-item"
+                           href="{{
+                           path('xs_user_search', {
+                               'country': town['localisation.country'],
+                               'town': params.town,
+                               'query': params.query,
+                               'sort_tag': params.sort_tag,
+                               'sort_by': params.sort_by,
+                               'page': params.page
+                           })}}">
+                            {{ town['localisation.country'] }}
+                            <span class="badge badge-default">{{ town.total }}</span>
+                        </a>
+                    {% endfor %}
+                    {#<a href="#" class="list-group-item active">Quand on clik dessus, xa devient :: active :) </a>#}
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading ui-draggable-handle">
+                    <h3 class="panel-title"><a href="#" class="panel-collapse">Villes ({{ groups.users.town | length }})</a></h3>
+                    <ul class="panel-controls">
+                        <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                    </ul>
+                </div>
+                <div class="collapsed panel-body list-group">
+                    {% for town in groups.users.town %}
+                        <a class="list-group-item"
+                           href="{{
+                           path('xs_user_search', {
+                               'country': params.country,
+                               'town': town['localisation.town'],
+                               'query': params.query,
+                               'sort_tag': params.sort_tag,
+                               'sort_by': params.sort_by,
+                               'page': params.page
+                           })}}">
+                            {{ town['localisation.town'] }}
+                            <span class="badge badge-default">{{ town.total }}</span>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- END CONTENT FRAME RIGHT -->
+
+        <!-- START CONTENT FRAME BODY -->
+        <div class="content-frame-body content-frame-body-left">
+
+            <div class="pull-left push-up-10">
+                <ul class="list-tags">
+                    <li title="Accéder à mon profil"><a href="{{  path('xs_user_show', {'namespace': app.user.namespace}) }}"><i class="fa fa-user fa-1x"></i> Mon profil</a></li>
+                </ul>
+            </div>
+            <div class="pull-right push-up-10">
+                <div class="btn-group">
+                    {% set sort_btn = 'btn-primary' %}
+                    {% set sort = params.sort_tag~'-'~params.sort_by %}
+
+                    <a class="btn btn-default
+                    {% if  sort == 'nickname-asc' %}
+                    {{ sort_btn }}
+                    {% endif %}
+                    " href="{{
+                    path('xs_user_search', {
+                        'country': params.country,
+                        'town': params.town,
+                        'query': params.query,
+                        'sort_tag': 'nickname',
+                        'sort_by': 'asc',
+                        'page': params.page
+                    }) }}"
+                       title="Par nom asc.">
+                        <span class="fa fa-sort-alpha-asc fa-2x"></span>
+                    </a>
+
+                    <a class="btn btn-default
+                    {% if  sort == 'nickname-desc' %}
+                    {{ sort_btn }}
+                    {% endif %}
+                    " href="{{
+                    path('xs_user_search', {
+                        'country': params.country,
+                        'town': params.town,
+                        'query': params.query,
+                        'sort_tag': 'nickname',
+                        'sort_by': 'desc',
+                        'page': params.page
+                    }) }}"
+                       title="Par nom desc.">
+                        <span class="fa fa-sort-alpha-desc fa-2x"></span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="gallery">
+                <hr>
+                {% for user in users %}
+                    <div class="col-md-6 col-sm-2">
+                        <div class="panel panel-primary">
+                            <div class="panel-body panel-body-image">
+                                <a title="Visiter son profil" href="{{ path('xs_user_show', {'namespace': user.namespace}) }}"><img src="{{ user.profile.src }}" style="clip: auto" alt="Ocean"></a>
+                                <a title="Visiter son profil" href="{{ path('xs_user_show', {'namespace': user.namespace}) }}" class="panel-body-inform">
+                                    <span class="fa fa-eye"></span>
+                                </a>
+                            </div>
+                            <div class="panel-body">
+                                <i class="fa fa-user"></i> <b><a title="Visiter son profil" href="{{ path('xs_user_show', {'namespace': user.namespace}) }}">{{ user.nickname }}</a></b>
+                                <p>
+                                    <span class="fa fa-location-arrow"></span> {{ user.localisation.country }} | {{ user.localisation.town }}
+                                </p>
+                            </div>
+                            <div class="panel-footer text-muted" style="text-align: justify">
+                                <ul class="list-tags">
+                                    <li title="Visiter sa boutique."><a href="{{ path('main_stores_user', {'user_namespace': user.namespace}) }}"><span class="fa fa-home"></span> Boutique</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                {% endfor %}
+
+            </div>
+
+            <ul class="pagination pagination-sm pull-right push-down-20 push-up-20">
+                {#Bouton de fin#}
+
+                {% if params.page == 1 %}
+                    <li class="disabled">
+                        <a href="#">«</a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a
+                                href="{{
+                                path('xs_user_search', {
+                                    'country': params.country,
+                                    'town': params.town,
+                                    'query': params.query,
+                                    'sort_tag': params.sort_tag,
+                                    'sort_by': params.sort_by,
+                                    'page': 1
+                                }) }}"
+                                >«
+                        </a>
+                    </li>
+                {% endif %}
+
+
+                {#Boutons standards#}
+                {% for i in 1..groups.users.pages if i > 0%}
+                    {% if params.page == i %}
+                        <li class="active">
+                            <a href="#">{{ i }}</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a
+                                    href="{{
+                                    path('xs_user_search', {
+                                        'country': params.country,
+                                        'town': params.town,
+                                        'query': params.query,
+                                        'sort_tag': params.sort_tag,
+                                        'sort_by': params.sort_by,
+                                        'page': i
+                                    }) }}"
+                                    >
+                                {{ i }}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {#Bouton de fin#}
+
+                {% if params.page == groups.users.pages %}
+                    <li class="disabled">
+                        <a href="#">»</a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a
+                                href="{{
+                                path('xs_user_search', {
+                                    'country': params.country,
+                                    'town': params.town,
+                                    'query': params.query,
+                                    'sort_tag': params.sort_tag,
+                                    'sort_by': params.sort_by,
+                                    'page': groups.users.pages,
+                                }) }}"
+                                >»
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+        <!-- END CONTENT FRAME BODY -->
+    </div>
+{% endblock %}
+
+

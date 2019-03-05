@@ -1,0 +1,66 @@
+{% spaceless %}
+  <div class="modal-dialog" id="modalDialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title" id="modalEntry-title">__title__</h4>
+      </div>
+      <div class="modal-body" id="modalEntry-body">
+        <table class="table table-light">
+          <tr>
+            <td>Postuler</td>
+            <td><a class="btn btn-primary tooltips" title="Tarif de la séance : __price__">Réserver ma place</a> </td>
+          </tr>
+          {#<tr>
+            <td>Calendrier</td>
+            <td><a class="btn btn-primary tooltips" title="Ajouter à mon calendrier">Ajouter</a> </td>
+          </tr>
+          <tr>
+            <td>Message</td>
+            <td><a class="btn btn-primary tooltips" title="Envoyer un message au tuteur">Envoyer</a> </td>
+          </tr>#}
+          <tr>
+            <td>Tuteur</td>
+            <td><a href="{{ path('xs_mboadjoss_users_show', {'id': '__user_id__'}) }}">__user_name__</a></td>
+          </tr>
+          <tr>
+            <td>Type</td>
+            <td>__type__</td>
+          </tr>
+          <tr>
+            <td>Date</td>
+            <td>__date__</td>
+          </tr>
+          <tr>
+            <td>Heures</td>
+            <td>de __hour_start__ à __hour_end__</td>
+          </tr>
+          <tr>
+            <td>Etat</td>
+            <td>__status__</td>
+          </tr>
+          <tr>
+            <td>Thème</td>
+            <td>__title__</td>
+          </tr>
+          <tr>
+            <td>Places</td>
+            <td>__places_closed__ / __places_total__</td>
+          </tr>
+          <tr>
+            <td>Tarif</td>
+            <td>__price__</td>
+          </tr>
+          <tr>
+            <td>Description</td>
+            <td>__description__</td>
+          </tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn dark btn-outline pull-left" data-dismiss="modal">Fermer</button>
+        <button type="button" class="btn btn-primary pull-right" id="cart___entry_id__" onclick="addSessionToCart(\'__user_id__\', \'__entry_id__\')"><i class="icon-handbag"></i> <span class="hidden-sm hidden-xs"> Ajouter au </span>Panier</button>
+      </div>
+    </div>
+  </div>
+{% endspaceless %}

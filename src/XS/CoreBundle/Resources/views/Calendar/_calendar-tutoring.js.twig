@@ -1,0 +1,248 @@
+var AppCalendar = function() {
+  
+  return {
+    //main function to initiate the module
+    init: function() {
+      this.initCalendar();
+    },
+    
+    initCalendar: function() {
+      
+      if (!jQuery().fullCalendar) {
+        return;
+      }
+      
+      var date = new Date();
+      var d = date.getDate();
+      var m = date.getMonth();
+      var y = date.getFullYear();
+      
+      var h = {};
+      
+      if (App.isRTL()) {
+        if ($('#calendar').parents(".portlet").width() <= 720) {
+          $('#calendar').addClass("mobile");
+          h = {
+            right: 'title, prev, next',
+            center: '',
+            left: 'agendaDay, agendaWeek, month, today'
+          };
+        } else {
+          $('#calendar').removeClass("mobile");
+          h = {
+            right: 'title',
+            center: '',
+            left: 'agendaDay, agendaWeek, month, today, prev,next'
+          };
+        }
+      }
+      else {
+        if ($('#calendar').parents(".portlet").width() <= 720) {
+          $('#calendar').addClass("mobile");
+          h = {
+            left: 'title, prev, next',
+            center: '',
+            right: 'today,month,agendaWeek,agendaDay'
+          };
+        } else {
+          $('#calendar').removeClass("mobile");
+          h = {
+            left: 'title',
+            center: '',
+            right: 'prev,next,today,month,agendaWeek,agendaDay'
+          };
+        }
+      }
+      
+      var initDrag = function(el) {
+        // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+        // it doesn't need to have a start or end
+        var eventObject = {
+          title: $.trim(el.text()) // use the element's text as the event title
+        };
+        // store the Event Object in the DOM element so we can get to it later
+        el.data('eventObject', eventObject);
+        // make the event draggable using jQuery UI
+        el.draggable({
+          zIndex: 999,
+          revert: true, // will cause the event to go back to its
+          revertDuration: 0 //  original position after the drag
+        });
+      };
+      
+      var addEvent = function(title) {
+        title = title.length === 0 ? "Untitled Event" : title;
+        var html = $('<div class="external-event label label-default">' + title + '</div>');
+        jQuery('#event_box').append(html);
+        initDrag(html);
+      };
+      
+      $('#external-events div.external-event').each(function() {
+        initDrag($(this));
+      });
+      
+      $('#event_add').unbind('click').click(function() {
+        var title = $('#event_title').val();
+        // addEvent(title);
+        var eventObject = {
+          title: $.trim(title),
+          // start: new Date(y, m, 12, 9, 25),
+          // end: new Date(y, m, 13, 10, 30),
+          // allDay: true,
+          /* className: {
+             class: tooltips
+           },*/
+          description: 'This is a cool event',
+          start: '14:00', //starts at 10 on monday
+          end:   '15:00', //24+3 is handled correctly.
+          dow: [1],
+          ranges: [
+            {
+              start:new Date(2017, 9, 12, 9, 25),
+              end:new Date(2018, 6, 12, 9, 25),},
+          ],
+          backgroundColor: App.getBrandColor('red'),
+          url: 'http://google.com/'
+        };
+        $('#calendar').fullCalendar('renderEvent', eventObject, true);
+      });
+      
+      //predefined events
+      $('#event_box').html("");
+      var entries = '';
+      var path = '{{ path('calendar_entries_json', {'id': id, 'type': type}) }}';
+      $.get(path, function(data, status){
+        entries = data;
+      });
+      
+      
+      $('#calendar').fullCalendar('destroy'); // destroy the calendar
+      {#$('#calendar').fullCalendar({ //re-initialize the calendar
+        eventClick: function(calEvent, jsEvent, view) {
+          App.blockUI({
+            boxed: true,
+            message: 'Patientez SVP...',
+            target: $('#container-row'),
+            // animate: true
+          });
+          console.info('clicked', calEvent);
+
+          $('#modalEntry-title').text(calEvent.title);
+          var proto_entry = '{% include 'XSCoreBundle:Calendar:_proto_entry_tutoring.html.twig' %}';
+          proto_entry = proto_entry.replace(/__user_name__/g, calEvent.author_name);
+          proto_entry = proto_entry.replace(/__user_id__/g, calEvent.author_id);
+          proto_entry = proto_entry.replace(/__date__/g, calEvent.end);
+          proto_entry = proto_entry.replace(/__hour_start__/g, calEvent.start);
+          proto_entry = proto_entry.replace(/__hour_end__/g, calEvent.end);
+          proto_entry = proto_entry.replace(/__title__/g, calEvent.title);
+          proto_entry = proto_entry.replace(/__description__/g, calEvent.description);
+          $('#modalEntry-body').html(proto_entry);
+          $('#modalEntry').modal('toggle');
+          $('#container-row').unblock();
+
+          // change the border color just for fun
+          $(this).css('color', 'red');
+        },
+        lang: 'fr',
+        header: h,
+        defaultView: 'month', // change default view with available options from http://arshaw.com/fullcalendar/docs/views/Available_Views/
+        slotMinutes: 5,
+        editable: false,
+        'events': path,
+        eventRender: function(event, element){
+          element.qtip({
+            content: event.description
+          });
+          #}{#element.qtip({
+            content: {
+              title: '<b>[ '+event.start.format('LT')+' - '+1+' ]</b> <a href="#" title="Auteur">'+event.author_name+'</a>',
+              text: "<b>"+event.title+"</b><br/>"+event.description
+            },
+            position: {
+              my: 'bottom center',  // Position my top left...
+              at: 'top center', // at the bottom right of...
+              target: $('.selector') // my target
+            }
+          });#}{#
+          #}{#return true;#}{#
+          //if it isn't in one of the ranges, don't render it (by returning false)
+        },
+        droppable: false // this allows things to be dropped onto the calendar !!!
+      });#}
+
+      $('#calendar').fullCalendar({
+        lang: 'fr',
+        header: h,
+        defaultView: 'month', // change default view with available options from http://arshaw.com/fullcalendar/docs/views/Available_Views/
+        slotMinutes: 5,
+        editable: false,
+        'events': path,
+        eventClick: function(calEvent, jsEvent, view) {
+          App.blockUI({
+            {#boxed: true,#}
+            {#message: 'Patientez SVP...',#}
+            animate: true,
+            {#target: $('#container-row'),#}
+            // animate: true
+          });
+
+          {#{% if app.user %}#}
+          {#{% if app.user.id != id %}#}
+          {#This is not me, so I can add this to my cart#}
+          var path = "{{ path('calendar_session_json', {'id':'__session_id__', 'tutor_id':'__author_id__'}) }}";
+          path = path.replace(/__session_id__/g, calEvent.entry_id);
+          path = path.replace(/__author_id__/g, calEvent.author_id);
+          console.info('not_me');
+          $.get( path, function( data ) {
+            console.info('session_result', data);
+            $('#modalEntry').html(data);
+            $('#modalEntry').modal('show');
+
+            App.unblockUI();
+          });
+          $('#container-row').unblock();
+          {#{% endif %}#}
+        },
+        eventRender: function(event, element, view) {
+          element.qtip({
+            content: {
+              title: '<b>'+event.start.format('LT')+' - '+event.end.format('LT')+'</b>',
+              text:
+              {#'<p>' +#}
+              '<h6>'+event.title+'</h3><br>' +
+              '<u>Auteur:</u> <a href="#">'+event.author_name+'</a><br>' +
+              {#'<u>Période:</u>'+event.title+'<br>' +#}
+             {# '<li>Du: <b>'+event.author_name+'</u></li>' +
+              '<li>Au: <b>'+event.author_name+'</u></li>' +
+              '<li>Durée: <b>'+event.author_name+' h</u></li>' +
+              '<li>Places: <b>'+event.author_name+' h</u></li>' +
+              '<li>Thème: <b>'+event.author_name+' h</u></li>' +#}
+              '<u>Description:</u> <b>'+event.description+'</b>' {#+
+              '</p>'#}
+            },
+            position: {
+              my: 'bottom center',  // Position my top left...
+              at: 'top center', // at the bottom right of...
+              {#target: $('.selector') // my target#}
+            }
+          });
+          {# element.qtip({
+             content: {
+               title: { text: event.title },
+               text: "<b>"+event.title+"</b><br/>"+event.description
+             },
+
+           });#}
+          return true;
+        },
+      });
+      
+    }
+    
+  };
+  
+}();
+
+jQuery(document).ready(function() {
+  AppCalendar.init();
+});

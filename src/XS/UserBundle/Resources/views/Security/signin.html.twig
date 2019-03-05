@@ -1,0 +1,60 @@
+{% extends "@XSUser/base.html.twig" %}
+
+{% block title %}
+  {{ app_name }} | Inscription
+{% endblock %}
+{% block page_content %}
+  <div class="card bg-secondary shadow border-0">
+    <div class="card-body px-lg-5 py-lg-5">
+      <div class="text-center text-muted mb-4">
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+          <div class="alert alert-success text-center">
+            <small>{{ flashMessage }}</small>
+          </div>
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('error') %}
+          <div class="alert alert-danger text-center">
+            <small>{{ flashMessage }}</small>
+          </div>
+        {% endfor %}
+        {% if error and error.message %}
+          <div class="alert alert-danger">
+            {{ error.message }}
+          </div>
+        {% endif %}
+        {#<small>Bienvenue dans la Simulation GLPI</small>#}
+      </div>
+      <form role="form" action="{{ path('signin') }}" enctype="multipart/form-data" method="post">
+        {{ form_row(form._token) }}
+        <div class="form-group mb-3">
+          <div class="input-group input-group-alternative">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+            </div>
+            {{ form_widget(form.nickname) }}
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group input-group-alternative">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+            </div>
+            {{ form_widget(form.username) }}
+          </div>
+        </div>
+        <input type="hidden" name="_target_path" value="{{ path('xs_manager_homepage') }}" />
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary my-4">S'inscrire</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row mt-3">
+    {#<div class="col-6">
+      <a href="#" class="text-light"><small>Mot de passe oublié?</small></a>
+    </div>#}
+    <div class="col-6 text-right">
+      <a href="{{ path('login') }}" class="text-light"><small>Se connecter au compte</small></a>
+    </div>
+  </div>
+{% endblock %}

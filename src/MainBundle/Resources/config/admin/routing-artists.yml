@@ -1,0 +1,32 @@
+#Dashboard de gestion des artistes
+admin_artists_homepage:
+#  Tous les artistes
+  path:     /
+  defaults: { _controller: MainBundle:Artist:index }
+
+admin_artists_validate_temp:
+#  Valider un artiste temporaire et créer son compte
+#  Un mail sera envoyé, avec son lien d'artiste :)
+  path:     /tmp/{id}/validate
+  defaults: { _controller: MainBundle:Artist:validateTemp }
+
+admin_artists_reject_temp:
+#  Valider un artiste temporaire et créer son compte
+#  Un mail sera envoyé, avec son lien d'artiste :)
+  path:     /tmp/{id}/reject
+  defaults: { _controller: MainBundle:Artist:rejectTemp }
+
+admin_artists_new:
+#  Un artiste : New
+  path:     /new
+  defaults: { _controller: MainBundle:Artist:new }
+
+admin_artists_show:
+  #  Un artiste : View and Edit
+  path:     /{id}
+  defaults: { _controller: MainBundle:Artist:show }
+
+admin_artists_remove:
+  #  Un artiste : Delete
+  path:     /{id}/delete
+  defaults: { _controller: MainBundle:Artist:index }

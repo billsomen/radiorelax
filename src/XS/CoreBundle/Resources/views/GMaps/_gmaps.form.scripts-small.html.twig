@@ -1,0 +1,164 @@
+<script>
+  // This example displays an address form, using the autocomplete feature
+  // of the Google Places API to help users fill in the information.
+
+  // This example requires the Places library. Include the libraries=places
+  // parameter when you first load the API. For example:
+  // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+  var updateCountry = 0;
+  var placeSearch, autocomplete, id;
+  var componentForm = {
+    street_number: 'name',
+    route: 'name',
+    premise: 'name',
+    locality: 'name',
+    administrative_area_level_1: 'name',
+    administrative_area_level_2: 'name',
+    country: 'name',
+    postal_code: 'name'
+  };
+
+  id = 'autocomplete';
+
+  function initAutocomplete() {
+    // Create the autocomplete object, restricting the search to geographical
+    // location types.
+    var acInputs = document.getElementsByClassName('autocomplete_gmaps');
+    for (var i = 0; i < acInputs.length; i++) {
+      autocomplete = new google.maps.places.Autocomplete(acInputs[i],
+        {
+          types: ['geocode']
+        }
+      );
+      autocomplete.inputId = acInputs[i].id;
+      autocomplete.addListener('place_changed', function () {
+        fillInAddress(this);
+      });
+      // google.maps.event.addListener(autocomplete, 'place_changed', function () {
+      //   document.getElementById("log").innerHTML = 'You used input with id ' + this.inputId;
+      // });
+    }
+    /* autocomplete = new google.maps.places.Autocomplete(
+       /!** @type {!HTMLInputElement} *!/(acInputs),
+       {types: ['geocode']});
+ */
+    // When the user selects an address from the dropdown, populate the address
+    // fields in the form.
+
+  }
+  /*function initAutocompleteDiff(id_) {
+    // Create the autocomplete object, restricting the search to geographical
+    // location types.
+    var acInputs = document.getElementsByClassName('autocomplete_gmaps');
+    console.log(acInputs[0]);
+
+    for (var i = 0; i < acInputs.length; i++) {
+      autocomplete = new google.maps.places.Autocomplete(acInputs[i],
+        {
+          types: ['geocode']
+        }
+      );
+      // autocomplete.inputId = acInputs[i].id;
+      autocomplete.addListener('place_changed', fillInAddress(autocomplete.id));
+      // google.maps.event.addListener(autocomplete, 'place_changed', function () {
+      //   document.getElementById("log").innerHTML = 'You used input with id ' + this.inputId;
+      // });
+    }
+
+  }
+  */
+  function fillInAddress(elt) {
+    id = elt.inputId;
+    // Get the place details from the autocomplete object.
+    var place = elt.getPlace();
+    document.getElementById(id+'lat').value = place.geometry.location.lat();
+    document.getElementById(id+'lng').value = place.geometry.location.lng();
+    document.getElementById(id+'place_id').value = place.place_id;
+    document.getElementById(id+'formatted_address').value = place.formatted_address;
+
+    for (var component in componentForm) {
+      document.getElementById(id+'sn_'+component).value = '';
+      document.getElementById(id+'sn_'+component).disabled = false;
+      document.getElementById(id+'ln_'+component).value = '';
+      document.getElementById(id+'ln_'+component).disabled = false;
+    }
+
+    // Get each component of the address from the place details
+    // and fill the corresponding field on the form.
+    for (var i = 0; i < place.address_components.length; i++) {
+      var addressType = place.address_components[i].types[0];
+      if (componentForm[addressType]) {
+//        for short
+        var val = place.address_components[i]['short_'+componentForm[addressType]];
+        document.getElementById(id+'sn_'+addressType).value = val;
+//        for long
+        var val = place.address_components[i]['long_'+componentForm[addressType]];
+        document.getElementById(id+'ln_'+addressType).value = val;
+      }
+    }
+
+    //We Update from Country
+    if(updateCountry === 1){
+      updateCountryCode(document.getElementById(id+'sn_country').value);
+      // console.log(document.getElementById(id+'sn_country').value);
+      updateCountry = 0;
+    }
+
+    updateLocale(document.getElementById(id+'lat').value, document.getElementById(id+'lng').value, 0);
+
+  }
+
+  // Bias the autocomplete object to the user's geographical location,
+  // as supplied by the browser's 'navigator.geolocation' object.
+  function geolocate(target_id) {
+    id = target_id;
+    initAutocomplete();
+    if (!navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var geolocation = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        var circle = new google.maps.Circle({
+          center: geolocation,
+          radius: position.coords.accuracy
+        });
+        autocomplete.setBounds(circle.getBounds());
+      });
+    }
+  }
+
+  function initCodeUpdate() {
+    updateCountry = 1;
+  }
+
+  function updateCountryCode(code) {
+    $.each( countries, function( key, val ) {
+      if(val.code === code){
+        var target = document.getElementById('country_code');
+        var code_target = document.getElementById('phone_code');
+        $("#country_code").slideUp(400, function () {
+          target.innerText = val.dial_code;
+          $("#country_code").slideDown( 400, function() {
+            // Animation complete
+          });
+        });
+
+        code_target.value = val.dial_code;
+      }
+    });
+    updateCountry = 1;
+  }
+
+  function updateLocale(lat, lng, time) {
+    var url = 'https://maps.googleapis.com/maps/api/timezone/json?location='+lat+','+lng+'&timestamp='+time+'&key=AIzaSyC5fvnSjEv_pcRehI02aLvpy_FXxcgOs4g&language=fr';
+      $.get( url, function( data ) {
+      $( "#locale_time_zone_id" ).val( data.timeZoneId );
+      $( "#locale_time_zone_name" ).val( data.timeZoneName );
+      $( "#locale_dst_offset" ).val( data.dstOffset );
+      $( "#locale_raw_offset" ).val( data.rawOffset );
+    });
+  }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKgXUS33rXyjnJYAC0uqREbJ1hVQi4Q48&language=fr&libraries=places&callback=initAutocomplete" async defer></script>

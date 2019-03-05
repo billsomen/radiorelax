@@ -1,0 +1,63 @@
+{#<div class="login-content">#}
+  <h1>Edutool | Connexion </h1>
+  <h4>Etape 1/2</h4>
+  <div class="row">
+    <div class="col-md-6">
+      <p> <a href="{{ path('signin') }}" class="btn green btn-outline" type="button">Je n'ai pas de compte !</a> </p>
+    </div>
+    {# <div class="col-md-3 col-xs-6">
+       <img src="{{ asset('assets/layouts/layout3/img/sections/cloudoffice.png') }}" width="50">
+       <h6>Cloud Office</h6>
+     </div>#}
+    {#<div class="col-md-3 col-xs-6">
+      <img src="{{ asset('assets/layouts/layout3/img/sections/10xedu.png') }}" width="50">
+      <h6>Edutool</h6>
+    </div>#}
+  </div>
+  <form class="login-form" style="margin-top: 70px" method="post" action="{{ path('login') }}">
+    {{ form_row(form._token) }}
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+    <div class="row">
+      {#{{ form_errors(form) }}#}
+      <div class="alert alert-danger display-hide" style="z-index: 999">
+        <button class="close" data-close="alert"></button>
+        <span>Formulaire invalide.</span>
+      </div>
+      {% if error %}
+        <div class="alert alert-danger">{{ error.message }}</div>
+      {% endif %}
+    </div>
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+      <div class="alert alert-success">
+        {{ flashMessage }}
+      </div>
+    {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('error') %}
+      <div class="alert alert-danger">
+        {{ flashMessage }}
+      </div>
+    {% endfor %}
+
+    <div class="row">
+      <div class="col-xs-12 col-md-12 ">
+        {{ form_widget(form.username, {
+          'id' : 'username',
+          'attr': {
+            'class': 'form-control form-control-solid placeholder-no-fix form-group input-icon',
+            'autocomplete': 'off',
+            'title': 'Entrez un numéro au Cameroun (Orange, MTN, Camtel, Nexttel) !',
+            'autofocus': 'autofocus',
+            'autocomplete': 'off',
+            'placeholder': 'Numéro de téléphone'
+          }})
+        }}
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-actions">
+        {#<a href="{{ path('login_tmp', {'token': token}) }}" type="button" id="back-btn" class="btn green btn-outline">Connexion temporaire</a>#}
+        <button type="submit" class="btn btn-success uppercase pull-right">Continuer</button>
+      </div>
+    </div>
+  </form>
+{#</div>#}

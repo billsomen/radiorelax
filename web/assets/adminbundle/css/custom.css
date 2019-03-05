@@ -1,0 +1,5 @@
+/*Custom Admin CSS*/
+.ms_top_lang {
+  display: flex;
+  justify-content: space-evenly;
+}

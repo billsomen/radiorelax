@@ -1,0 +1,110 @@
+<script>
+  var countries = null;
+  // $('#signin').prop("disabled",true);
+
+  function recaptchaCallback(form_id) {
+/*    if($('#'+form_id).valid()){
+      $('#signin').removeAttr('disabled');
+    }*/
+  }
+
+  function genNamespace(e) {
+    var namespace = e.target.value;
+    namespace = namespace.replace(/\//g, '');
+
+    if(namespace.length > 4){
+      // target.prop('readonly', true);
+      var path = "{{ path('main_api_generate_namespace', {'namespace':'_tag'}) }}";
+      path = path.replace(/_tag/g, namespace);
+      $.get( path, function( data ) {
+        $('#namespace_target').text(data.formatted);
+      });
+    }
+
+  }
+
+  function checkNamespace(e) {
+    var namespace = e.target.value;
+    namespace = namespace.replace(/\//g, '');
+
+    var target_id = e.target.id;
+    var target =  $('#'+target_id);
+    var parent = target.parent();
+    target.val(namespace);
+    // target.text('');
+    if(namespace.length > 4){
+      // target.prop('readonly', true);
+      var path = "{{ path('main_api_check_namespace', {'namespace':'_tag'}) }}";
+      path = path.replace(/_tag/g, namespace);
+      $.get( path, function( data ) {
+        console.info('result_check', data);
+        if(data.found){
+          console.log('found');
+          if(!data.is_me){
+            console.log('0');
+            $('#'+target_id+'-error_message').show();
+            $('#'+target_id+'-success_message').hide();
+            parent.removeClass('has-success');
+            parent.addClass('has-error');
+            App.scrollTo(target);
+            target.focus();
+          }
+          else{
+            console.log('9999');
+            $('#'+target_id+'-error_message').hide();
+            $('#'+target_id+'-success_message').show();
+            parent.removeClass('has-error');
+            parent.addClass('has-success');
+          }
+        }
+        else{
+          $('#'+target_id+'-error_message').hide();
+          $('#'+target_id+'-success_message').show();
+          parent.removeClass('has-error');
+          parent.addClass('has-success');
+          target.val(data.formatted);
+          // target.prop('readonly', false);
+          // target.removeAttr('readonly');
+        }
+        // target.prop('readonly', false);
+        // target.removeAttr('readonly');
+        // target.removeAttr('readonly');
+
+      });
+    }
+
+  }
+
+  $.getJSON( "{{ asset('assets/json/CountryCodes.json') }}", function( data ) {
+    countries = data;
+    /*var items = [];
+    $.each( data, function( key, val ) {
+      items.push( "<li id='" + key + "'>" + val + "</li>" );
+    });
+
+    $( "<ul/>", {
+      "class": "my-new-list",
+      html: items.join( "" )
+    }).appendTo( "body" );*/
+  });
+
+  function setPhone() {
+    var target = document.getElementById('username');
+    var phone_target = document.getElementById('phone_number');
+    // .fadeOut()
+    phone_target.value = target.value;
+  }
+
+  function skypeStartChat(user_id) {
+    SkypeWebControl.SDK.Chat.startChat({
+      ConversationId: user_id,
+      ConversationType: 'agent'
+    });
+  }
+
+  function sendFolder() {
+    form.submit();
+
+  }
+
+</script>

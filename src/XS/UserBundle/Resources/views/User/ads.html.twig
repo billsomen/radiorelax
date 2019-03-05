@@ -1,0 +1,70 @@
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+    {{ user_profile.nickname }} | Annonces
+{% endblock %}
+
+{% block body %}
+    {#todo: Exactement la meme chose que pour les messages...#}
+    <div class="content-frame">
+        <!-- START CONTENT FRAME TOP -->
+        <div class="content-frame-top">
+            <div class="page-title">
+                <h3><span class="fa fa-comment"></span> <a href="#">Annonces</a> <span class="fa fa-caret-right"></span> <a href="{{ path('xs_user_show', {'namespace': user_profile.namespace}) }}">{{ user_profile.nickname }}</a> </h3>
+                <h4>{{ user_profile.ads | length }} Annonces</h4>
+            </div>
+            <div class="pull-right">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <label>
+                            <a href="{{ path('main_ads_add') }}">
+                                <button title="Ajouter une nouvelle annonce" class="btn btn-primary"><span class="fa fa-plus"></span> Ajouter</button>
+                            </a>
+{#                            <div class="btn-group">
+                                <a href="#" data-toggle="dropdown" class="btn btn-default dropdown-toggle" aria-expanded="false">Annonces <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Actives (45)</a></li>
+                                    <li><a href="#">Inactives (32)</a></li>
+                                    <li><a href="#">Produits (90)</a></li>
+                                    <li><a href="#">Services (78)</a></li>
+                                </ul>
+                            </div>#}
+                            <button class="btn btn-default content-frame-right-toggle"><span class="fa fa-bars"></span></button>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END CONTENT FRAME TOP -->
+        <!-- START CONTENT FRAME RIGHT -->
+        <div class="content-frame-right">
+            <div class="list-group list-group-contacts border-bottom push-down-10 scroll" style="height: 450px;">
+                {% if user_profile.ads == null %}
+                    <i>"Aucune annonce"</i>
+                {% else %}
+                    {% for ad in user_profile.ads %}
+                        <a href="{{ path('main_ads_show', {'id': ad.id}) }}" class="list-group-item active">
+                            <i class="{{ ad.generateIcon(1) }}"></i>
+                            <span class="contacts-title">{{ user_profile.nickname }}</span>
+                            <p>{{ ad.title }}</p>
+                        </a>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <!-- END CONTENT FRAME RIGHT -->
+
+        <!-- START CONTENT FRAME BODY -->
+        <div class="content-frame-body content-frame-body-left">
+            <hr>
+            <ul>
+                <li> <i> {{ user_profile.ads | length }} Annonces.</i></li>
+                <li> <i> Sélectionnez une annonce en cliquant sur <i class="fa fa-bars"></i> ou dans le menu de droite.</i></li>
+            </ul>
+        </div>
+        <!-- END CONTENT FRAME BODY -->
+    </div>
+{% endblock %}
+
+
+

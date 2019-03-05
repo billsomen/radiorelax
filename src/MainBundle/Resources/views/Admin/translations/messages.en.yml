@@ -1,0 +1,13 @@
+admin:
+  my_account: My Account
+  one: A radio that
+  two: makes you feel
+  three: new sensations!
+  wrapper:
+    one: Almost there!
+    two: +1000 artists
+    three: Online Radio
+    four: +2m musics
+  bundle:
+    coming_soon:
+      phrase: We are coming soon!

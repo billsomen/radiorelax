@@ -1,0 +1,31 @@
+#Dashboard de gestion des albums
+admin_albums_homepage:
+#  Tous les albumes
+  path:     /
+  defaults: { _controller: MainBundle:Album:index }
+
+admin_albums_reject_temp:
+#  Valider un albume temporaire et créer son compte
+#  Un mail sera envoyé, avec son lien d'albume :)
+  path:     /tmp/{id}/reject
+  defaults: { _controller: MainBundle:Album:index }
+
+admin_albums_new:
+#  Un albume : New
+  path:     /new/{id_artist}
+  defaults: { _controller: MainBundle:Album:new }
+
+admin_albums_show:
+  #  Un album : View and Edit
+  path:     /{id}
+  defaults: { _controller: MainBundle:Album:show }
+
+admin_albums_update_musics_index:
+  #  Un album : View and Edit
+  path:     /{id}/update-musics-index
+  defaults: { _controller: MainBundle:Album:updateMusicIndex }
+
+admin_albums_remove:
+  #  Un album : Delete
+  path:     /{id}/delete
+  defaults: { _controller: MainBundle:Album:remove }

@@ -1,0 +1,4 @@
+services:
+#    xs_core.example:
+#        class: XS\CoreBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

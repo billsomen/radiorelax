@@ -1,0 +1,32 @@
+{#Notre bloc d'ajout de commentaires...#}
+{#todo: Version minimaliste#}
+{% set form_info = obj_id~'_'~localId %}
+<form
+  class="media media-form-comments"
+  method="post"
+  {#style="display: none"#}
+  id='{{ form_info }}'
+  action="{{ path('comments_add_to_question', {'comment_id': localId, 'id_question': id_question, 'obj_id':obj_id}) }}"
+  {#action="{{ path('comments_add-', {'obj_id': obj_id, 'obj_name': obj_name, 'comment_id':localId }) }}"#}
+>
+  <div class="row">
+    {{ form_errors(form) }}
+  </div>
+  {{ form_row(form._token) }}
+  <div class="media-body">
+    {{ form_widget(
+      form.content, {
+        'attr': {
+          'target_form': form_info,
+          'obj_id': obj_id,
+          'style': 'margin: 0px',
+          'comment_id': localId,
+        }
+      })
+    }}
+    {{ form_widget(form.content) }}
+  </div>
+  {# <div class="col-md-12">
+     <button title="Envoyer le message" class="btn btn-default"><span class="fa fa-send"></span> Commenter</button>
+   </div>#}
+</form>

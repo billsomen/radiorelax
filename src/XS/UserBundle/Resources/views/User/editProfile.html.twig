@@ -1,0 +1,188 @@
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+    {{ app.user.nickname }} | Modification de ma photo de profil.
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('cropper-master/cropper-master/assets/css/tooltip.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('cropper-master/cropper-master/dist/cropper.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('cropper-master/cropper-master/demo/css/main.css') }}">
+{% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li><a href="{{ path('xs_user_show', {'namespace': app.user.namespace}) }}">{{ app.user.nickname }}</a></li>
+        <li class="active">Photo de profil</li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    {#todo: Exactement la meme chose que pour les messages...#}
+    <div class="page-content-wrap">
+        <div class="row">
+            <div class="col-md-7"> <!-- <h3 class="page-header">Demo:</h3> -->
+
+                <div class="img-container">
+                    <img src="{{ app.user.profile.src }}" alt="Profile picture">
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <!-- <h3 class="page-header">Preview:</h3> -->
+                    <div class="docs-preview clearfix">
+                        <div class="img-preview preview-lg"></div>
+                        <div class="img-preview preview-md"></div>
+                        <div class="img-preview preview-sm"></div>
+                        <div class="img-preview preview-xs"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="row docs-actions">
+                        <div class="col-md-12 docs-buttons">
+                            <!-- <h3 class="page-header">Toolbar:</h3> -->
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary" data-method="zoom" data-option="0.1" title="Zoom avant">
+                                    <span class="docs-tooltip" data-toggle="tooltip" title="Zoom avant">
+                                      <span class="fa fa-search-plus"></span>
+                                    </span>
+                                </button>
+                                <button type="button" class="btn btn-primary" data-method="zoom" data-option="-0.1" title="Zoom arrière">
+                                    <span class="docs-tooltip" data-toggle="tooltip" title="Zoom arrière">
+                                      <span class="fa fa-search-minus"></span>
+                                    </span>
+                                </button>
+                            </div>
+
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary" data-method="move" data-option="-10" data-second-option="0" title="Déplacer vers la gauche">
+                                    <span class="docs-tooltip" data-toggle="tooltip" title="Déplacer vers la gauche">
+                                      <span class="fa fa-arrow-left"></span>
+                                    </span>
+                                </button>
+                                <button type="button" class="btn btn-primary" data-method="move" data-option="10" data-second-option="0" title="Déplacer vers la droite">
+                                    <span class="docs-tooltip" data-toggle="tooltip" title="Déplacer vers la droite">
+                                      <span class="fa fa-arrow-right"></span>
+                                    </span>
+                                </button>
+                                <button type="button" class="btn btn-primary" data-method="move" data-option="0" data-second-option="-10" title="Déplacer vers le haut">
+                                    <span class="docs-tooltip" data-toggle="tooltip" title="Déplacer vers le haut">
+                                      <span class="fa fa-arrow-up"></span>
+                                    </span>
+                                </button>
+                                <button type="button" class="btn btn-primary" data-method="move" data-option="0" data-second-option="10" title="Déplacer vers le bas">
+                                    <span class="docs-tooltip" data-toggle="tooltip" title="Déplacer vers le bas">
+                                      <span class="fa fa-arrow-down"></span>
+                                    </span>
+                                </button>
+                            </div>
+
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary" data-method="rotate" data-option="-45" title="Rotation à gauche">
+                                    <span class="docs-tooltip" data-toggle="tooltip" title="Rotation à gauche">
+                                      <span class="fa fa-rotate-left"></span>
+                                    </span>
+                                </button>
+                                <button type="button" class="btn btn-primary" data-method="rotate" data-option="45" title="Rotation à droite">
+                                    <span class="docs-tooltip" data-toggle="tooltip" title="Rotation à droite">
+                                      <span class="fa fa-rotate-right"></span>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary" data-method="reset" title="Reset">
+                                    <span class="docs-tooltip" data-toggle="tooltip" title="Recommencer">
+                                      <span class="fa fa-refresh"></span>
+                                    </span>
+                                </button>
+                                <label class="btn btn-primary btn-upload" for="inputImage" title="Importer une image">
+                                    <input type="file" class="sr-only" id="inputImage" name="file" accept="image/*">
+                                    <span class="docs-tooltip" data-toggle="tooltip" title="Importer une image">
+                                      <span class="fa fa-upload"></span> Importer une image
+                                    </span>
+                                </label>
+
+                            </div>
+
+                            <hr>
+                            {#todo: Modifier les data options en fonction de l'image a cropper#}
+                            {#ici : 200x200 pour les photos de profil... :) #}
+                            <div class="btn-group btn-group-crop pull-right">
+                                <button type="button" class="btn btn-success" data-method="getCroppedCanvas" data-option="{ &quot;width&quot;: 200, &quot;height&quot;: 200 }">
+                                    <span class="docs-tooltip" data-toggle="tooltip" title="Modifications terminées">
+                                      <i class="fa fa-check"></i> Terminer
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="btn-group btn-group-crop pull-left">
+                                <a href="{{ path('xs_user_show', {'namespace': app.user.namespace }) }}">
+                                    <button type="button" class="btn btn-danger">
+                                        <span class="docs-tooltip" data-toggle="tooltip" title="Annuler et rentrer sur mon profil">
+                                          <i class="fa fa-times"></i> Annuler
+                                        </span>
+                                    </button>
+                                </a>
+                            </div>
+
+                            <!-- Show the cropped image in modal -->
+                            <div class="modal fade docs-cropped" id="getCroppedCanvasModal" aria-hidden="true" aria-labelledby="getCroppedCanvasTitle" role="dialog" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="getCroppedCanvasTitle">Terminé</h4>
+                                        </div>
+                                        <div class="modal-body" id="image_cropped"></div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fermer</button>
+                                            <a class="btn btn-primary" id="download" download="[www.afrobusiness.biz]{{ app.user.nickname ~'.'~ date().timestamp }}.png" ><i class="fa fa-download"></i> Télécharger</a>
+                                            <button type="button" class="btn btn-success" id="save"><i class="fa fa-floppy-o"></i> Enregistrer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- /.modal -->
+
+                        </div><!-- /.docs-buttons -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            {#todo: On cree un formulaire a champ caches pour envoyer tout xa...#}
+            <form id="image-send" action="{{ path('xs_user_edit_profile', {'namespace': app.user.namespace }) }}" method="post">
+                <div class="row">
+                    {{ form_errors(form) }}
+                </div>
+                {{ form_row(form._token) }}
+
+                {{ form_widget(form.uri) }}
+            </form>
+        </div>
+    </div>
+{% endblock %}
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="{{ asset('cropper-master/cropper-master/assets/js/jquery.min.js') }}"></script>
+        <script src="{{ asset('cropper-master/cropper-master/assets/js/tooltip.min.js') }}"></script>
+        <script src="{{ asset('cropper-master/cropper-master/assets/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('cropper-master/cropper-master/dist/cropper.js') }}"></script>
+        <script src="{{ asset('cropper-master/cropper-master/demo/js/main.js') }}"></script>
+
+        <script>
+            $(".img-container > img").cropper({
+                aspectRatio: 1,
+                preview: ".img-preview"
+            });
+
+            // Upload cropped image to server
+            $('#save').click(function(){
+                var url = $('#download').attr('href');
+                $('#form_uri').val(url);
+//            todo: On envoit le formulaire
+                $('#image-send').submit();
+            });
+        </script>
+    {% endblock %}
+
+

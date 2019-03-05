@@ -1,0 +1,35 @@
+{#Notre bloc d'ajout de commentaires...#}
+{#todo: Version minimaliste#}
+{#<div class="panel panel-default push-up-10">#}
+    {#todo : On va injecter le jQuery plus tard.#}
+    <form id='my_form' method="post" action="{{ path('comments_add_min', {'obj_id': app.request.get('obj_id'), 'obj_name': app.request.get('obj_name')}) }}">
+        <div class="row">
+            {{ form_errors(form) }}
+        </div>
+        {{ form_row(form._token) }}
+
+        {#<div class="panel-body panel-body-search">#}
+
+            <div class="input-group">
+                {{ form_widget(form.content, {'attr': {
+                    'class': 'form-control',
+                    'placeholder': '...',
+                    'onkeydown': 'send_min(event)',
+                }}
+                ) }}
+                <div class="input-group-btn">
+                    <div class="row">
+                        <button title="Envoyer le message" class="btn btn-default"><span class="fa fa-send"></span></button>
+                    </div>
+                </div>
+            </div>
+        {#</div>#}
+    </form>
+{#</div>#}
+<script>
+    function send_min(event){
+        if(event.keyCode == 13){
+            document.getElementById('my_form').submit();
+        }
+    }
+</script>

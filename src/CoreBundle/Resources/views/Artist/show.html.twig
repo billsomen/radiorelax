@@ -1,0 +1,53 @@
+{% extends "RadioRelaxCoreBundle::base.html.twig" %}
+
+{% block title %}
+  {{ user.nickname }} - {{ parent() }}
+{% endblock title %} 
+
+{% block body_inner_main %}
+  <!--Top Artist Section-->
+  <div class="ms_top_artist">
+    <div class="container-fluid">
+      <div class="album_single_data">
+        <div class="album_single_img">
+          <img src="{{ user.artist.profilePic | cloudinary_img('show') }}" alt="" class="img-fluid">
+        </div>
+        <div class="album_single_text">
+          <h2>{{ user.nickname }}</h2>
+          <p class="singer_name">Artiste, {{ ("locale.localization.country."~user.artist.localisation.country) | trans }}</p>
+          <div class="about_artist">
+            About: {{ user.artist.description }}
+          </div>
+          <div class="album_btn">
+          </div>
+        </div>
+      </div>
+      <!----Song List---->
+      <div class="album_inner_list">
+        <div class="album_list_wrapper">
+          <ul class="album_list_name">
+            {#<li>#</li>#}
+            <li>Pochette</li>
+            <li>Nom de l'Album</li>
+            <li>Description</li>
+            <li class="text-center">Année</li>
+          </ul>
+          {% for album in user.artist.albums %}
+            
+            <ul style="padding: 15px">
+              {#<li><span>01</span></li>#}
+              <li>
+                <a href="{{ path('radio_relax_core_artists_albums_show', {'namespace':user.artist.namespace,'id': album.id}) }}">
+                  <img src="{{ album.profile | cloudinary_img('show') }}" alt="" class="img-flui" width="100">
+                </a>
+              </li>
+              <li>{{ album.name }}</li>
+              <li>{{ album.desc }}</li>
+              <li class="text-center">{{ album.dateRelease | date("Y") }}</li>
+            </ul>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
