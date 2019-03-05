@@ -169,6 +169,7 @@ class SecurityController extends Controller{
     return $this->render('@XSUser/Security/login.html.twig', array(
       'form' => $form->createView(),
       'token' => $token,
+      'page' => 'login',
       'error' => $error
     ));
   }
@@ -561,6 +562,7 @@ class SecurityController extends Controller{
 
     return $this->render('@XSUser/Security/signin.html.twig', array(
       'form' => $form->createView(),
+      'page' => 'signin',
       'error' => $error
     ));
   }

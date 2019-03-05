@@ -3,8 +3,14 @@ xs_user:
     title: Login to access your account
     welcome: Welcome
     action: Login
+    hint: Login now
   signin:
     title: Sign up and create a new account
     welcome: Welcome
     action: Sign up
     hint: Sign up now
+  user:
+    nickname: Username
+    username: Email address
+    email: Email address
+    password: Password

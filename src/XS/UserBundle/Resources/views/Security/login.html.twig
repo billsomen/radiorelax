@@ -1,19 +1,32 @@
 {% extends "@XSUser/base.html.twig" %}
-
 {% block title %}
-  {{ "xs_user.login.title"|trans }}
+  {{ "xs_user."~page~".title"|trans }}
 {% endblock %}
 {% block page_content %}
   <div class="card bg-danger shadow border-0">
     <div class="card-body px-lg-5 py-lg-5">
+      {#language switcher#}
+      <div class="mb-3" style="display: flex; padding-bottom: 3px">
+        {% for lang in ['en', 'fr'] %}
+          <div style="margin: auto">
+            <a href="{{ path(page, {'_locale': lang}) }}" title="{{ ("locale.language."~lang~".title")|trans }}">
+              <img src="{{ asset('assets/images/'~lang~'.png') }}" alt="{{  ("locale.language."~lang~".title")|trans }}" width="40">
+              <span class="text-white">{{ ("locale.language."~lang~".title")|trans }}</span>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+      {#language switcher#}
+      
       <div class="text-center text-muted mb-4">
-        {% for flashMessage in app.session.flashbag.get('notice') %}
+        {% for flashMessage in app.session.flashbag.get('notice') if flashMessage %}
           <div class="alert alert-success text-center">
             <small>{{ flashMessage }}</small>
           </div>
         {% endfor %}
-        {% for flashMessage in app.session.flashbag.get('error') %}
-          <div class="alert alert-danger text-center">
+        
+        {% for flashMessage in app.session.flashbag.get('error') if flashMessage %}
+          <div class="alert alert-white text-center">
             <small>{{ flashMessage }}</small>
           </div>
         {% endfor %}
@@ -22,38 +35,39 @@
             {{ error.message }}
           </div>
         {% endif %}
-        {#<small>Bienvenue dans la Simulation GLPI</small>#}
       </div>
-      <form role="form" action="{{ path('login_check') }}" enctype="multipart/form-data" method="post">
-        <div class="form-group mb-3">
-          <div class="input-group input-group-alternative">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+      
+      <form role="form" {% block form_action %}action="{{ path('login_check') }}"{% endblock %} enctype="multipart/form-data" method="post">
+        {% block form_token %}{% endblock %}
+        {% block form_content %}
+          <div class="form-group mb-3">
+            <div class="input-group input-group-alternative">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+              </div>
+              <input class="form-control" placeholder="{{ 'xs_user.user.username'|trans }}" type="email" name="_username" autofocus required>
             </div>
-            <input class="form-control" placeholder="Email" type="email" name="_username" autofocus required>
           </div>
-        </div>
-        <div class="form-group">
-          <div class="input-group input-group-alternative">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+          <div class="form-group">
+            <div class="input-group input-group-alternative">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+              </div>
+              <input class="form-control" placeholder="{{ 'xs_user.user.password'|trans }}" type="password" name="_password" required>
             </div>
-            <input class="form-control" placeholder="Password" type="password" name="_password" required>
           </div>
-        </div>
+        {% endblock %}
         <input type="hidden" name="_target_path" value="#home" />
         <div class="text-center">
-          <button type="submit" class="btn btn-white my-4">{{ 'xs_user.login.action'|trans }}</button>
+          <button type="submit" class="btn btn-white my-4">{{ ('xs_user.'~page~'.action')|trans }}</button>
         </div>
       </form>
     </div>
   </div>
   <div class="row mt-3">
-    {#<div class="col-6">
-      <a href="#" class="text-light"><small>Mot de passe oublié?</small></a>
-    </div>#}
     <div class="col-6 text-right">
-      <a href="{{ path('signin') }}" class="text-light"><small>{{ 'xs_user.signin.hint'|trans }}</small></a>
+      {% set rel_page = (page == 'signin'?'login':'signin') %}
+      <a href="{{ path(rel_page) }}" class="text-light"><small>{{ ('xs_user.'~rel_page~'.hint')|trans }}</small></a>
     </div>
   </div>
 {% endblock %}

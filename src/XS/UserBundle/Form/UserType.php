@@ -31,14 +31,14 @@ class UserType extends AbstractType
           'class' => "form-control",
           'maxlength' => 10,
           'minlength' => 5,
-          'placeholder' => "Nom d'utilisateur"
+          'placeholder' => "xs_user.user.nickname"
         )
       ))
       ->add('username', EmailType::class, array(
         'required' => true,
         'attr' => array(
           'class' => "form-control",
-          'placeholder' => "Adresse Email"
+          'placeholder' => "xs_user.user.username"
         )
       ))
     ;

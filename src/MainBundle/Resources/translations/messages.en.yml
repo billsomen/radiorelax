@@ -351,6 +351,7 @@ form:
   address: "Address"
 
 locale:
+  current: English
   language:
     fr:
       title: Français
