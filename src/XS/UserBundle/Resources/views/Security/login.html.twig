@@ -37,7 +37,12 @@
         {% endfor %}
         {% if error and error.message %}
           <div class="alert alert-danger">
-            {{ error.message }}
+            {#{{ dump(error) }}#}
+            {% if error.message == "Bad credentials." %}
+              {{ "xs_user.login.flashbag.bad_credentials"|trans }}
+            {% else %}
+              {{ error.message }}
+            {% endif %}
           </div>
         {% endif %}
       </div>

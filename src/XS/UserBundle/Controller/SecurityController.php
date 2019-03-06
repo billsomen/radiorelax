@@ -513,7 +513,7 @@ class SecurityController extends Controller{
           $user->setPassword($password);
 
           $dm->persist($user);
-          $dm->flush();routin
+          $dm->flush();
 
           $status = 'notice';
           $status_message = $this->get('translator')->trans('xs_user.signin.flashbag.mail.complete');

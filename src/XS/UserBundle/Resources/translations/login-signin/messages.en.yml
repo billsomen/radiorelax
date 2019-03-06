@@ -4,6 +4,8 @@ xs_user:
     welcome: Welcome
     action: Login
     hint: Login now
+    flashbag:
+      bad_credentials: Invalid username or password
   signin:
     title: Create a new account
     welcome: Welcome

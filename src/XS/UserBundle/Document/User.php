@@ -21,7 +21,6 @@ use Doctrine\Bundle\MongoDBBundle\Validator\Constraints\Unique as MongoDBUnique;
 
 class User implements AdvancedUserInterface
 {
-
   /** @MongoDB\Id() */
   protected $id;
 
@@ -535,21 +534,25 @@ class User implements AdvancedUserInterface
   public function isAccountNonExpired()
   {
     // TODO: Implement isAccountNonExpired() method.
+    return true;
   }
 
   public function isAccountNonLocked()
   {
     // TODO: Implement isAccountNonLocked() method.
+    return true;
   }
 
   public function isCredentialsNonExpired()
   {
     // TODO: Implement isCredentialsNonExpired() method.
+    return true;
   }
 
   public function isEnabled()
   {
     // TODO: Implement isEnabled() method.
+    return true;
   }
 
   public function eraseCredentials()

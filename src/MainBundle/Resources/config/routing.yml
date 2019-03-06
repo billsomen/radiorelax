@@ -18,9 +18,6 @@ edu_homepage:
   path:     /{_locale}/edu
   defaults: { _controller: MainBundle:Edu:index, _locale: en_EN }
 
-logout:
-  path: /logout
-
 login:
   path: /{_locale}/login
   defaults: { _controller: XSUserBundle:Security:login }
