@@ -12,5 +12,9 @@ xs_market_place:
   resource: "@XSMarketPlaceBundle/Resources/config/routing.yml"
   prefix:   /{_locale}/market
 
+xs_afrobank:
+  resource: "@XSAfrobankBundle/Resources/config/routing.yml"
+  prefix:   /{_locale}/bank
+
 logout:
   path: /logout

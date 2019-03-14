@@ -1,8 +1,14 @@
 {% extends "MainBundle::base.html.twig" %}
 
 {% block title %}
-  Mon Panier
+  Paiement PayPal
 {% endblock title %}
+
+{% block head_scripts %}
+  <script
+      src="https://www.paypal.com/sdk/js?client-id={{ paypal_client_id }}&currency=CAD">
+  </script>
+{% endblock %}
 
 {% block body_inner_main %}
   <div class="ms_free_download ms_purchase_wrapper">
@@ -11,6 +17,7 @@
     </div>
     <div class="album_inner_list">
       <div class="album_list_wrapper">
+        <div id="paypal-button-container"></div>
         <ul class="album_list_name">
           <li>#</li>
           <li>Album</li>
@@ -60,10 +67,15 @@
       </div>
     </div>
     <div class="ms_view_more padder_bottom20">
-      <a href="{{ path('xs_afrobank_paypal_homepage') }}" class="ms_btn">
+      <a href="#" class="ms_btn">
         <i class="fa fa-check"></i>
         Payer | {{ cart.amount | amount_format }}
       </a>
     </div>
   </div>
+  
+  {#todo: Paypal integration script#}
+  <script>
+    paypal.Buttons().render('#paypal-button-container');
+  </script>
 {% endblock %}

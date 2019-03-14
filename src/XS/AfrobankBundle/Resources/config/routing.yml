@@ -1,7 +1,10 @@
-
 xs_afrobank_home:
     path: /
     defaults: { _controller: XSAfrobankBundle:Afrobank:index }
+
+xs_afrobank_paypal:
+    prefix: /paypal
+    resource: "routing-paypal.yml"
 
 xs_afrobank_add:
     path: /_add

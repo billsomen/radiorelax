@@ -50,6 +50,8 @@ twig:
     cloudinary_api_key: "%cloudinary_api_key%"
     cloudinary_cloud_name: "%cloudinary_cloud_name%"
     cloudinary_api_secret: "%cloudinary_api_secret%"
+    paypal_client_id: "%paypal_client_id%"
+    paypal_secret: "%paypal_secret%"
 
 
 # Doctrine Configuration
