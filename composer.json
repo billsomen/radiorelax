@@ -53,6 +53,7 @@
         "google/recaptcha": "^1.1",
         "incenteev/composer-parameter-handler": "^2.0",
         "mongodb/mongodb": "^1.1",
+        "paypal/paypal-checkout-sdk": "1.0.0",
         "sensio/distribution-bundle": "^5.0.19",
         "sensio/framework-extra-bundle": "^5.0.0",
         "swiftmailer/swiftmailer": "^5.4.1",
