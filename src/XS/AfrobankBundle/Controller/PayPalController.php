@@ -2,12 +2,41 @@
 
 namespace XS\AfrobankBundle\Controller;
 
+use PayPalCheckoutSdk\Core\PayPalHttpClient;
+use PayPalCheckoutSdk\Core\SandboxEnvironment;
 use PayPalCheckoutSdk\Orders\OrdersGetRequest;
-use Sample\PayPalClient;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
+ini_set('error_reporting', E_ALL); // or error_reporting(E_ALL);
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
 
 class PayPalController extends Controller
 {
+
+  /**
+   * Returns PayPal HTTP client instance with environment which has access
+   * credentials context. This can be used invoke PayPal API's provided the
+   * credentials have the access to do so.
+   */
+  public function client()
+  {
+    return new PayPalHttpClient(self::environment());
+  }
+
+  /**
+   * Setting up and Returns PayPal SDK environment with PayPal Access credentials.
+   * For demo purpose, we are using SandboxEnvironment. In production this will be
+   * LiveEnvironment.
+   */
+  public function environment()
+  {
+    $clientId = getenv("PAYPAL_CLIENT_ID") ?: $this->getParameter("paypal_client_id");
+    $clientSecret = getenv("PAYPAL_CLIENT_SECRET") ?: $this->getParameter("paypal_secret");
+    return new SandboxEnvironment($clientId, $clientSecret);
+  }
+
   public function indexAction()
   {
     $cart = $this->getUser()->getCart();
@@ -16,8 +45,8 @@ class PayPalController extends Controller
     ));
   }
 
-  public static function addOrderAction($id){
-    $client = PayPalClient::client();
+  public function addOrderAction($id){
+    $client = self::client();
     $response = $client->execute(new OrdersGetRequest($id));
 
     //print json_encode($response->result);
@@ -34,8 +63,7 @@ class PayPalController extends Controller
     print "Gross Amount: {$response->result->purchase_units[0]->amount->currency_code} {$response->result->purchase_units[0]->amount->value}\n";
 
     // To print the whole response body, uncomment the following line
-     echo json_encode($response->result, JSON_PRETTY_PRINT);
-
+    return new JsonResponse( $response->result);
   }
 
 

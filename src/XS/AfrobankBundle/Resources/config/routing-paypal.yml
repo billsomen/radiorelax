@@ -3,5 +3,5 @@ xs_afrobank_paypal_homepage:
   defaults: { _controller: XSAfrobankBundle:PayPal:index }
 
 xs_afrobank_paypal_order_add:
-  path: /paypal/orders/add
+  path: /paypal/orders/add/{id}
   defaults: { _controller: XSAfrobankBundle:PayPal:addOrder }
