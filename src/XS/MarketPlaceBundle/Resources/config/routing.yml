@@ -35,6 +35,10 @@ xs_market_place_cart_add_album:
   path:     /cart/add/album/{id}
   defaults: { _controller: XSMarketPlaceBundle:Cart:addAlbum }
 
+xs_market_place_cart_remove_album:
+  path:     /cart/remove/album/{id}
+  defaults: { _controller: XSMarketPlaceBundle:Cart:removeAlbum }
+
 xs_market_place_cart_add_session:
   path:     /cart/add/session/{tutor_id}/{id}
   defaults: { _controller: XSMarketPlaceBundle:Cart:addSession }

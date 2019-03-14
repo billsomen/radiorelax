@@ -33,7 +33,7 @@ class Album extends FilesTemplate
   protected $price;
 
   /** @MongoDB\EmbedOne(targetDocument="XS\AfrobankBundle\Document\EntityAccount") */
-//  The Local entinty's of the Album
+//  The Local entinty's of the Album : all the transactions informations :)
   protected $account;
 
   /**

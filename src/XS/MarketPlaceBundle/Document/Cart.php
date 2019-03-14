@@ -46,7 +46,7 @@ class Cart implements CartInterface
 //  Le solde actuel du compte : total des transactions : il est calculé à l'affichage
     $amount = new Amount();
     foreach ($this->albums as $album){
-      $amount->addAmount($album->getAmount(), true);
+      $amount->addAmount($album->getPrice(), true);
     }
 
     return $amount;

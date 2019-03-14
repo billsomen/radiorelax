@@ -109,6 +109,29 @@ class CartController extends Controller
     return $this->redirectToRoute('xs_market_place_cart');
   }
 
+  public function removeAlbumAction($id){
+    $dm = $this->get('doctrine_mongodb')->getManager();
+//       Quand on ajoute un produit, on n'a pas encore acces a sa quantite...
+    $album = $dm->getRepository('MainBundle:Album')->findOneBy(array(
+      'id' => $id
+    ));
+    $user = $this->getUser();
+    if(isset($album) and !empty($user)){
+//          ON s'assure que l'user est connecté
+      $cart = $user->getCart();
+      $cart->removeAlbum($album);
+      $dm->persist($user);
+      $dm->flush();
+
+      $this->addFlash("notice", "Album retiré avec succès du panier");
+    }
+    else{
+      $this->addFlash("error", "Erreur: le panier ne contient pas cet album");
+    }
+
+    return $this->redirectToRoute('xs_market_place_cart');
+  }
+
 
   public function loadTableXmlhttpAction(Request $request){
     $session = $request->getSession();
