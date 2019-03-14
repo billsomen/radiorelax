@@ -101,42 +101,17 @@ class CartController extends Controller
     }
   }
   
-  public function addProductAction(Request $request, $id){
+  public function addAlbumAction($id){
     $dm = $this->get('doctrine_mongodb')->getManager();
 //       Quand on ajoute un produit, on n'a pas encore acces a sa quantite...
-    $product = $dm->getRepository('XSMarketPlaceBundle:Product')->findOneById($id);
+    $album = $dm->getRepository('MainBundle:Album')->findOneBy(array(
+      'id' => $id
+    ));
     $in_cart = false;
-    /*$paypal_datass = $_POST['ZalgoPromise'];
-    $rejected = $paypal_datass['rejected'];
-    $paypal_id = $paypal_datass['value']['id'];
-    $paypal_amount = $paypal_datass['transactions'][0]['amount']['total'];
-    $paypal_currency = $paypal_datass['transactions'][0]['amount']['currency'];
-    $paypal_sender_email = $paypal_datass['value']['payer']['payer_info']['email'];
-    $infos = '555';
-    
-    if(!$rejected){
-      if($paypal_sender_email == '...'){
-        if($paypal_amount == '...'){
-          //En SQL, tu MAJ et \/alide la commande...
-          if($request->isXmlHttpRequest()){
-            $response = new JsonResponse();
-            $response->setData(array(
-              'type' => 'notice',
-                'message' => "Commande OK!"
-              )
-            );
-            return $response;
-          }
-        }
-      }
-    }*/
-//    print_r(55555555555555555555555);
-    if(isset($product)){
+    $user = $this->getUser();
+    if(isset($product) and !empty($user)){
 //          ON s'assure que l'user est connecté ou pas
-      
-      $session = $request->getSession();
-      $cart = $session->get('cart');
-//            $cart = new Cart();
+      $cart = $user->getCart();
       $productCart = new ProductCart();
       $productCart->setProduct($product);
       $productCart->setAmount($product->getPriceShown());

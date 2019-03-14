@@ -8,8 +8,6 @@
 
 namespace XS\AfrobankBundle\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use XS\CoreBundle\Document\ManagerSystem;
-use XS\EducationBundle\Document\Course;
 
 /**
  * Class Transaction
@@ -17,7 +15,7 @@ use XS\EducationBundle\Document\Course;
  * @MongoDB\Document
  */
 
-class Transaction extends ManagerSystem
+class Transaction
 {
 //  Type de transactions
   const TYPE_WITHDRAW = "withdraw";
@@ -33,7 +31,14 @@ class Transaction extends ManagerSystem
   
   const STATE_PENDING = "pending";
   const STATE_FINISHED = "finished";
-  
+
+  /** @MongoDB\Id() */
+  protected $id;
+
+  /** @MongoDB\Field(type="date") */
+  //Quand as-t'on ajoute cela ?
+  protected $date_add;
+
   /** @MongoDB\ReferenceOne(targetDocument="XS\UserBundle\Document\User") */
   protected $sender; //Qui envoit ?
   //
@@ -405,5 +410,36 @@ class Transaction extends ManagerSystem
   {
     $this->invoice = $invoice;
   }
-  
+
+  /**
+   * @return mixed
+   */
+  public function getId()
+  {
+    return $this->id;
+  }
+
+  /**
+   * @param mixed $id
+   */
+  public function setId($id): void
+  {
+    $this->id = $id;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getDateAdd()
+  {
+    return $this->date_add;
+  }
+
+  /**
+   * @param mixed $date_add
+   */
+  public function setDateAdd($date_add): void
+  {
+    $this->date_add = $date_add;
+  }
 }

@@ -27,7 +27,7 @@
           <div class="album_btn">
             <a href="#" class="ms_btn" title="Ajouter au panier">
               <span class="fa fa-cart-plus"></span>
-              Panier
+              Panier | {{ album.account.amount | amount_format }}
             </a>
             {#<a href="#" class="ms_btn" title="Dans le panier">
               <span class="fa fa-check"></span>

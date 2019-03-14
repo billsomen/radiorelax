@@ -15,7 +15,7 @@ use XS\AfrobankBundle\Document\EntityAccount;
 /**
  * Class Album
  * @MongoDB\Document()
- * @package RadioRelax\CoreBundle\Document
+ * @package MainBundle\Document
  */
 
 class Album extends FilesTemplate
