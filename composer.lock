@@ -77,12 +77,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cloudinary/cloudinary_php.git",
-                "reference": "b9ae0b25d1b57ef4fb7fc5ddbee5d82deb64f2e1"
+                "reference": "fd6a49f1ca585c896f0730ec46bf37967bb454db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cloudinary/cloudinary_php/zipball/b9ae0b25d1b57ef4fb7fc5ddbee5d82deb64f2e1",
-                "reference": "b9ae0b25d1b57ef4fb7fc5ddbee5d82deb64f2e1",
+                "url": "https://api.github.com/repos/cloudinary/cloudinary_php/zipball/fd6a49f1ca585c896f0730ec46bf37967bb454db",
+                "reference": "fd6a49f1ca585c896f0730ec46bf37967bb454db",
                 "shasum": ""
             },
             "require": {
@@ -121,7 +121,7 @@
                 "image management",
                 "sdk"
             ],
-            "time": "2019-02-28T12:55:01+00:00"
+            "time": "2019-03-07T12:15:03+00:00"
         },
         {
             "name": "composer/ca-bundle",
@@ -1056,16 +1056,16 @@
         },
         {
             "name": "doctrine/mongodb-odm",
-            "version": "1.2.6",
+            "version": "1.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/mongodb-odm.git",
-                "reference": "496ab5368afea176a1e368769a8eb643656cb7fb"
+                "reference": "0cd3c37dfc369abdb3cb8090a50def7ea161f469"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/mongodb-odm/zipball/496ab5368afea176a1e368769a8eb643656cb7fb",
-                "reference": "496ab5368afea176a1e368769a8eb643656cb7fb",
+                "url": "https://api.github.com/repos/doctrine/mongodb-odm/zipball/0cd3c37dfc369abdb3cb8090a50def7ea161f469",
+                "reference": "0cd3c37dfc369abdb3cb8090a50def7ea161f469",
                 "shasum": ""
             },
             "require": {
@@ -1136,7 +1136,7 @@
                 "odm",
                 "persistence"
             ],
-            "time": "2019-01-15T10:22:40+00:00"
+            "time": "2019-03-06T13:42:40+00:00"
         },
         {
             "name": "doctrine/mongodb-odm-bundle",
@@ -2465,7 +2465,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "BackEndTea@gmail.com"
+                    "email": "backendtea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
@@ -3031,16 +3031,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v2.6.2",
+            "version": "v2.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "7d7342c8a4059fefb9b8d07db0cc14007021f9b7"
+                "reference": "70c59531da43afe598c66135e39cac39475a2f51"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/7d7342c8a4059fefb9b8d07db0cc14007021f9b7",
-                "reference": "7d7342c8a4059fefb9b8d07db0cc14007021f9b7",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/70c59531da43afe598c66135e39cac39475a2f51",
+                "reference": "70c59531da43afe598c66135e39cac39475a2f51",
                 "shasum": ""
             },
             "require": {
@@ -3056,7 +3056,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev"
+                    "dev-master": "2.7-dev"
                 }
             },
             "autoload": {
@@ -3094,7 +3094,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2019-01-14T15:00:48+00:00"
+            "time": "2019-03-12T18:48:26+00:00"
         }
     ],
     "packages-dev": [
