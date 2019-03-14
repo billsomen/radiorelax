@@ -179,7 +179,7 @@ class AlbumController extends Controller
 
   public function updateMusicIndexAction($id, Request $request)
   {
-    //    Show and Edit Artists
+    //    Update the indexes of an Album
     $dm = $this->get('doctrine.odm.mongodb.document_manager');
     $album = $dm->getRepository("MainBundle:Album")->findOneBy(array(
       'id' => $id
@@ -194,7 +194,7 @@ class AlbumController extends Controller
 
           if(!empty($indexes)){
             foreach ($indexes as $key => $index){
-              $music = $dm->getRepository("RadioRelaxCoreBundle:Music")->findOneBy(array(
+              $music = $dm->getRepository("MainBundle:Music")->findOneBy(array(
                 "id" => $ids[$key]
               ));
               $music->setRank($index);
@@ -226,6 +226,10 @@ class AlbumController extends Controller
 
   public function removeAction($id)
   {
+    //We cant remove album for now
+    $this->addFlash('error', "Impossible de supprimer les albums, merci de contacter un administrateur.");
+    return $this->redirectToRoute('admin_profile');
+
     //    Show and Edit Artists
     $dm = $this->get('doctrine.odm.mongodb.document_manager');
     $album = $dm->getRepository("MainBundle:Album")->findOneBy(array(
