@@ -1,0 +1,75 @@
+{% set cart = 0 %}
+{% if app.session %}
+  {% if app.session.get('cart') %}
+    {% set cart = app.session.get('cart') %}
+  {% endif %}
+{% endif %}
+
+{#<div class="cart-dropdown cart-module">#}
+    {% if not cart %}
+      <a href="{#{{ path('main_cart') }}#}" class="cart-dropdown-icon">
+        <i class="minicart-icon"></i>
+        <div class="cart-info">
+          <span class="cart-qty">0</span>
+          <span class="cart-text">item</span>
+        </div>
+      </a>
+
+      <div class="cart-dropdownmenu right">
+        <div class="dropdownmenu-wrapper">
+          <div class="cart-totals">
+            Total: <span>$0</span>
+          </div>
+
+          <div class="cart-actions">
+            <a href="{#{{ path('main_cart') }}#}" class="btn btn-primary">View Cart</a>
+            <a href="#" class="btn btn-primary">Checkout</a>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <a href="{#{{ path('main_cart') }}#}" class="cart-dropdown-icon">
+        <i class="minicart-icon"></i>
+        <div class="cart-info">
+          <span class="cart-qty" id="cart-qty-mo">{{ cart.quantity }}</span>
+          <span class="cart-text">item(s)</span>
+        </div>
+      </a>
+      <div class="cart-dropdownmenu right">
+        <div class="dropdownmenu-wrapper">
+          <div class="cart-products" style="overflow-y: scroll; overflow-x: hidden; max-height: 200px">
+            {% for pro_cart in cart.ProductsCarts if pro_cart.product %}
+              <div class="product product-sm" id="block_cart_pro_module_{{ pro_cart.product.id }}">
+                {#<a href="#TYuioo" class="test5"><i class="fa fa-user fa-2x"></i></a>#}
+                <a href="{#{{ path('main_cart_remove_product', {'id': pro_cart.product.id}) }}#}" class="btn-remove removefromcart" id="cart_pro_module_{{ pro_cart.product.id }}" qty="{{ pro_cart.quantity }}" amount="{{ pro_cart.amount.value }}" title="Retirer du Panier">
+                  <i class="fa fa-times"></i>
+                </a>
+                <figure class="product-image-area">
+                  <a href="{#{{ path('main_store_products_show', {'id': pro_cart.product.id}) }}#}" title="{{ pro_cart.product.name }}" class="product-image">
+                    <img src="{{ pro_cart.product.profileUrl }}" alt="{{ pro_cart.product.name|length > 15 ? pro_cart.product.name|slice(0, 15) ~ '...' :pro_cart.product.name  }}">
+                  </a>
+                </figure>
+                <div class="product-details-area">
+                  <h2 class="product-name"><a href="{#{{ path('main_store_products_show', {'id': pro_cart.product.id}) }}" title="{{ pro_cart.product.name }}#}">{{ pro_cart.product.name|length > 15 ? pro_cart.product.name|slice(0, 15) ~ '...' :pro_cart.product.name  }}</a></h2>
+
+                  <div class="cart-qty-price">
+                    {{ pro_cart.quantity }} X
+                    <span class="product-price">{{ pro_cart.amount | amount_format }}</span>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+
+          <div class="cart-totals">
+            Total: $<span id="cart-amount-mo" class="cart-total">{{ cart.amount | amount_format }}</span>
+          </div>
+
+          <div class="cart-actions">
+            <a href="{{ path('xs_market_place_cart') }}" class="btn btn-primary">Consulter</a>
+            <a href="#" class="btn btn-primary">Valider</a>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+{#</div>#}

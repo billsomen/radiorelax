@@ -1,0 +1,85 @@
+xs_market_place_homepage:
+    path:     /
+    defaults: { _controller: XSMarketPlaceBundle:Default:index }
+
+#    Stores
+xs_market_place_stores_new:
+    path:     /stores/_new
+    defaults: { _controller: XSMarketPlaceBundle:Store:_new }
+
+#Product
+xs_market_place_products_new:
+    path:     /products/_new
+    defaults: { _controller: XSMarketPlaceBundle:Product:_new }
+
+xs_market_place_products_edit:
+    path:     /products/_edit/{id}
+    defaults: { _controller: XSMarketPlaceBundle:Product:_edit }
+
+xs_market_place_products_all:
+    path:     /products/_all
+    defaults: { _controller: XSMarketPlaceBundle:Product:_all }
+
+xs_market_place_products_show:
+    path:     /products/{id}
+    defaults: { _controller: XSMarketPlaceBundle:Product:show }
+
+#All the routing starting with 
+
+#Cart
+xs_market_place_cart:
+    path:     /cart
+    defaults: { _controller: XSMarketPlaceBundle:Cart:index }
+
+xs_market_place_cart_add_product:
+    path:     /cart/add/product/{id}
+    defaults: { _controller: XSMarketPlaceBundle:Cart:addProduct }
+
+xs_market_place_cart_add_session:
+    path:     /cart/add/session/{tutor_id}/{id}
+    defaults: { _controller: XSMarketPlaceBundle:Cart:addSession }
+
+xs_market_place_cart_remove_session:
+    path:     /cart/remove/session/{tutor_id}/{id}
+    defaults: { _controller: XSMarketPlaceBundle:Cart:removeSession }
+
+xs_market_place_cart_remove_product:
+    path:     /cart/remove/product/{id}
+    defaults: { _controller: XSMarketPlaceBundle:Cart:removeProduct }
+
+xs_market_place_cart_ajax_load_table:
+    path:     /cart/ajax/load/table
+    defaults: { _controller: XSMarketPlaceBundle:Cart:loadTableXmlhttp }
+
+#Wish_list
+xs_market_place_wish_list:
+    path:     /wish_list
+    defaults: { _controller: XSMarketPlaceBundle:WishList:index }
+
+#Compare_list
+xs_market_place_compare_list:
+    path:     /compare_list
+    defaults: { _controller: XSMarketPlaceBundle:CompareList:index }
+
+xs_market_place_compare_list_all:
+    path:     /compare_list/_all
+    defaults: { _controller: XSMarketPlaceBundle:CompareList:_all }
+
+xs_market_place_compare_list_add_product:
+    path:     /compare_list/add/product/{id}
+    defaults: { _controller: XSMarketPlaceBundle:CompareList:addProduct }
+
+xs_market_place_compare_list_remove_product:
+    path:     /compare_list/remove/product/{id}
+    defaults: { _controller: XSMarketPlaceBundle:CompareList:removeProduct }
+
+#Add to Cart, Compare List or Wishlist
+xs_market_place_list_add_product:
+    path:     /{list}/add/{id}
+    defaults: { _controller: XSMarketPlaceBundle:Default:addProductToList }
+
+xs_market_place_list_remove_product:
+    path:     /{list}/remove/{id}
+    defaults: { _controller: XSMarketPlaceBundle:Default:removeProductFromList }
+
+

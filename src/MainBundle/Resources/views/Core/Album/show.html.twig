@@ -13,15 +13,34 @@
           <img src="{{ album.profile | cloudinary_img('show') }}" alt="" class="img-fluid">
         </div>
         <div class="album_single_text">
-          <h2>{{ album.name }}</h2>
+          <h2>{{ album|album_duration }} - {{ album.name }} | {{ album.dateRelease|date("Y") }}</h2>
           <p class="singer_name"><a href="{{ path('core_artists_show', {'namespace': artist.namespace}) }}">{{ artist.name }}</a></p>
           <div class="about_artist">
-            About: {{ album.desc }}
+            <p>{#About: #}{{ album.desc }}</p>
+           {# <p>
+              {{ album.dateRelease|date("Y") }}
+            </p>#}
+            {#<p>
+              {{ "label.duration"|trans }}: <b>{{ album|album_duration }}</b>
+            </p>#}
           </div>
           <div class="album_btn">
-            {{ album.dateRelease|date("Y") }}
-            <br>
-            {{ "label.duration"|trans }}: <b>{{ album|album_duration }}</b>
+            <a href="#" class="ms_btn" title="Ajouter au panier">
+              <span class="fa fa-cart-plus"></span>
+              Panier
+            </a>
+            {#<a href="#" class="ms_btn" title="Dans le panier">
+              <span class="fa fa-check"></span>
+              Panier
+            </a>#}
+            {#<a href="#" class="ms_btn">
+              <span class="fa fa-check"></span>
+              Acheter
+            </a>#}
+            <a href="#" class="ms_btn">
+              <span class="fa fa-plus"></span>
+              Playlist
+            </a>
           </div>
         </div>
       </div>

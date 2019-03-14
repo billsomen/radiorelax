@@ -1,0 +1,124 @@
+<form class="modal fade" action="{{ path('xs_afrobank_transaction_update', {'id': transaction.id}) }}" id="transaction-{{ transaction.id }}" tabindex="-1" role="basic" aria-hidden="true" method="post" enctype="multipart/form-data">
+  {% set color = 'whitesmoke; color: black' %}
+  {% if transaction.state == 'finished' %}
+    {% set color = 'lightgreen' %}
+  {% elseif transaction.state == 'error' %}
+    {% set color = 'orange' %}
+  {% elseif transaction.state == 'rejected' %}
+    {% set color = 'red' %}
+  {% endif %}
+  <div class="row">
+    {{ form_errors(form) }}
+  </div>
+  {{ form_row(form._token) }}
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title"><i class='fa fa-exchange'></i> : {{ transaction.code | upper  }}</h4>
+      </div>
+      <div class="modal-body">
+        {% set nickname = 'Aucun' %}
+        {% if transaction.sender %}
+          {% set nickname = transaction.sender.nickname ~' | '~ transaction.sender.username %}
+        {% endif %}
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th colspan="2">
+              <i class='fa fa-user'></i> <a href="javascript:;">{{ nickname }}</a> <i class='fa fa-long-arrow-right'></i> <a href="javascript:;"> {{ transaction.receiver.nickname ~' | '~ transaction.receiver.username }} </a>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Raison</td>
+            <td>
+              {{ transaction.reason }}
+            </td>
+          </tr>
+          <tr>
+            <td>Type</td>
+            <td>
+              {{ transaction.type | upper }}
+            </td>
+          </tr>
+          <tr>
+            <td>Code Local </td>
+            <td>
+              {{ transaction.localCode }}
+            </td>
+          </tr>
+          <tr>
+            <td>Moyen de Transfert</td>
+            <td>
+              {{ transaction.bank }}
+            </td>
+          </tr>
+          <tr>
+            <td>Date d'ajout</td>
+            <td>
+              <span title='{{ transaction.dateAdd | time_diff }}'><i class='fa fa-clock-o'></i> {{ transaction.dateAdd| date('Y-m-d | H:i')}}</span>
+            </td>
+          </tr>
+          <tr>
+            <td>Etat</td>
+            <td>
+              <label class='label' style='background: {{ color }}'>{{ transaction.state }}</label>
+            </td>
+          </tr>
+          <tr>
+            <td>Montant : <b>{{ transaction.amount.value|number_format ~' '~  transaction.amount.currency}}</b></td>
+            <td>
+              <div class="input-icon">
+                <i class='fa fa-money'></i>
+                {{ form_widget(form.amount.value) }}
+                {#<input type="number" min="0" value="{{ transaction.amount.value }}" class="form-control" placeholder="Montant réel">#}
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Frais : <b>{{ transaction.fee|number_format ~' '~  transaction.amount.currency}}</b></td>
+            <td>
+              <div class="input-icon">
+                <i class='fa fa-money'></i>
+                {{ form_widget(form.fee) }}
+                {#<input type="number" min="0" value="{{ transaction.fee }}" class="form-control" placeholder="Frais réels">#}
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Statut ?</td>
+            <td>
+              <div class="mt-radio-inline">
+                <label class="mt-radio">
+                  <input type="radio" name="approved" id="optionsRadios4" value="0" checked=""> Rejeter
+                  <span></span>
+                </label>
+                <label class="mt-radio">
+                  <input type="radio" name="approved" id="optionsRadios5" value="1"> Valider
+                  <span></span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Message au Client</td>
+            <td>
+              {{ form_widget(form.description) }}
+              {#<textarea class="form-control" rows="2" placeholder="Informations au client."></textarea>#}
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn green pull-left"><i class="fa fa-check"></i> Enregistrer</button>
+        <button type="button" class="btn dark btn-outline pull-right" data-dismiss="modal">Fermer</button>
+        {#<a type="button" class="btn red pull-left"><i class="fa fa-close"></i> Rejeter</a>#}
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</form>

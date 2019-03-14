@@ -1,0 +1,145 @@
+<form role="form" class="row" action="{{ path('xs_market_place_products_new') }}"  method="post" enctype="multipart/form-data">
+  <div class="row">
+    {{ form_errors(form) }}
+  </div>
+  {{ form_row(form._token) }}
+  <table class="table table-striped table-bordered table-hover">
+    <tr>
+      <td>Catégorie</td>
+      <td>
+        <span class="tooltips" title="Unique catégorie actuellement">Logement</span>
+      </td>
+    </tr>
+    <tr>
+      <td>Nom</td>
+      <td>
+        {{ form_widget(form.name, {
+          'attr':{
+            'autofocus':'autofocus'
+          }
+        }) }}
+      </td>
+    </tr>
+    <tr>
+      <td>Quantité</td>
+      <td>
+        {{ form_widget(form.quantity) }}
+      </td>
+    </tr>
+    <tr>
+      <td>Fréquence de Paiement</td>
+      <td>
+        {{ form_widget(form.payFrequency) }}
+      </td>
+    </tr>
+    <tr>
+      <td>Tarif (en USD)</td>
+      <td>
+        {{ form_widget(form.priceShown.value) }}
+      </td>
+    </tr>
+    <tr>
+      <td>Etat Physique</td>
+      <td>
+        {{ form_widget(form.state, {
+          'attr' : {
+            'onchange' : "updateTarget(event, 'oldness')"
+          }
+        }) }}
+      </td>
+    </tr>
+    <tr id="oldness" style="display: none">
+      <td>Ancienneté</td>
+      <td>
+        {{ form_widget(form.stateDuration) }}
+      </td>
+    </tr>
+    <tr>
+      <td>Description</td>
+      <td>
+        {{ form_widget(form.description) }}
+      </td>
+    </tr>
+    <tr>
+      <td>Localisation</td>
+      <td>
+        {% include '@XSCore/GMaps/_gmaps.form.insert-small.html.twig' with {'form_element': form.localisation.gmaps, 'update_phone':0 } %}
+      </td>
+    </tr>
+    <tr>
+      <td>A proximité d'une Ecole ?</td>
+      <td>
+        <div class="col-md-6">
+          <select class="form-control select" name="school_proxy" id="school_proxy" onchange="updateTarget(event, '{{ form.house.distanceSchool.vars.id }}')">
+            <option value="none" selected class="tooltips" title="Je ne suis pas certain!">(?) Aucune Ecole</option>
+            {% for school in schools %}
+              <option value="{{ school.id }}">{{ school | school_format }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-6">
+          {{ form_widget(form.house.distanceSchool, {
+            'attr' : {
+              'style' : "display:none"
+            }
+          }) }}
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>Photos</td>
+      <td>
+        <div class="fileinput fileinput-new" data-provides="fileinput">
+          <div class="input-group input-large">
+            <div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
+              <i class="fa fa-file fileinput-exists"></i>&nbsp;
+              <span class="fileinput-filename"> </span>
+            </div>
+            <div class="input-group-addon btn default btn-file">
+              <span class="fileinput-new"> <i class="fa fa-plus-circle"></i> Ajouter</span>
+              <span class="fileinput-exists"> <i class="fa fa-edit"></i> </span>
+              <input type="file" name="file" multiple>
+            </div>
+            <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> <i class="fa fa-trash"></i> </a>
+          </div>
+        </div>
+      </td>
+    </tr>
+    {#<tr>
+      <td>A proximité d'une Ecole ?</td>
+      <td>
+        <div id="w2-pictures" class="tab-pane active">
+          <section class="panel panel-admin">
+            <header class="panel-heading">
+              <h2 class="panel-title">Pictures 5</h2>
+            </header>
+            <div class="panel-body">
+              <div class="alert alert-warning" id="message_zone"></div>
+              <form class="form-horizontal dropzone" id="step_1_form" method="post" action="5" enctype="multipart/form-data">
+                <input type="hidden" name="_token" value="6">
+              </form>
+              <div class="progress-bars">
+                <div class="progress-label">
+                  <span>Progress</span>
+                </div>
+                <div class="progress" id="count_sent_zone">
+
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </td>
+    </tr>#}
+    {% include 'XSMarketPlaceBundle:Product:_new.house.html.twig' with {'form': form.house } %}
+  </table>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="margin-top-10">
+        <button type="submit" class="btn green"> Enregistrer</button>
+        <button type="reset" class="btn default"> Annuler </button>
+      </div>
+    </div>
+  </div>
+</form>
+

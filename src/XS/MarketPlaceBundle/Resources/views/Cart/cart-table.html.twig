@@ -1,0 +1,87 @@
+{% if cart %}
+  <div class="col-md-8 col-lg-9">
+    <div class="cart-table-wrap" id="cart-table">
+      <table class="cart-table">
+        <thead>
+        <tr>
+          <th></th>
+          <th></th>
+          <th>Nom du Produit</th>
+          <th>Type de Logement</th>
+          {#<th>Qty</th>#}
+          <th>Tarif</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for pro_cart in cart.ProductsCarts if pro_cart.product %}
+          <tr>
+            <td class="product-action-td">
+              <a href="{{ path('xs_market_place_cart_remove_product', {'id': pro_cart.product.id}) }}" class="btn-remove removefromcart" id="cart_pro_in_{{ pro_cart.product.id }}" qty="{{ pro_cart.quantity }}" amount="{{ pro_cart.amount.value }}" title="Retirer le Produit">
+                <i class="fa fa-times"></i>
+              </a>
+            </td>
+            <td class="product-image-td">
+              <a href="#" title="{{ pro_cart.name }}">
+                <img src="{{ pro_cart.product.profileUrl }}" alt="{{ pro_cart.name }}">
+              </a>
+            </td>
+            <td class="product-name-td">
+              <h2 class="product-name"><a href="5" title="{{ pro_cart.name }}">{{ pro_cart.name }}</a></h2>
+              {#<h2 class="product-name"><a href="{{ path('xs_market_place_stores_product_show', {'id': pro_cart.product.id}) }}" title="{{ pro_cart.name }}">{{ pro_cart.name }}</a></h2>#}
+            </td>
+            <td>{{ pro_cart.product.house.type | trans }}</td>
+            <td>
+              <span class="text-primary">$<span class="cart-total-item">{{ pro_cart.amount | amount_format }} / {{ pro_cart.product.payFrequency | trans}}</span></span>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+          <td colspan="6" class="clearfix">
+            <a href="{{ path('xs_market_place_homepage') }}" class="btn btn-default hover-primary btn-continue">Continuer</a>
+            {#<a href="{{ path('xs_market_place_store_products_all') }}" class="btn btn-default hover-primary btn-continue">Continue Shopping</a>#}
+            <button href="{{ path('xs_market_place_cart') }}" class="btn btn-default hover-primary btn-update">Mettre à jour le Panier</button>
+            <a href="{{ path('xs_market_place_cart') }}" class="btn btn-default hover-primary btn-clear">Vider le Panier</a>
+          </td>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  <aside class="col-md-4 col-lg-3 sidebar shop-sidebar">
+    <div class="panel-group">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-cart-total">
+              Total Panier
+            </a>
+          </h4>
+        </div>
+        <div id="panel-cart-total" class="accordion-body collapse in">
+          <div class="panel-body">
+            <table class="totals-table">
+              <tbody>
+              <tr>
+                <td>Sous total</td>
+                <td>${% if cart %}<span class="cart-total">{{ cart.amount | amount_format }}</span>{% else %}0{% endif %}</td>
+              </tr>
+              <tr>
+                <td>Grand Total</td>
+                <td>${% if cart %}<span class="cart-total">{{ cart.amount | amount_format }}</span>{% else %}0{% endif %}</td>
+              </tr>
+              </tbody>
+            </table>
+            {% if cart %}
+              <div class="totals-table-action">
+                <a href="#" class="btn btn-primary btn-block">Valider mes Commandes</a>
+                {#<a href="#" class="btn btn-link btn-block">Checkout with Multiple Addresses</a>#}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+{% endif %}

@@ -1,0 +1,86 @@
+{#<table class="table table-striped table-bordered table-hover">#}
+<tr>
+  <td>Type de local</td>
+  <td>
+    {{ form_widget(form.type) }}
+  </td>
+</tr>
+<tr>
+  <td>Dimensions - Longueur</td>
+  <td>
+    {{ form_widget(form.length) }}
+  </td>
+</tr>
+<tr>
+  <td>Dimensions - Largeur</td>
+  <td>
+    {{ form_widget(form.width) }}
+  </td>
+</tr>
+<tr>
+  <td>Dimensions - Hauteur</td>
+  <td>
+    {{ form_widget(form.height) }}
+  </td>
+</tr>
+<tr>
+  <td>Distance de la route</td>
+  <td>
+    {{ form_widget(form.distanceToRoad) }}
+  </td>
+</tr>
+<tr>
+  <td>
+    {{ form_label(form.furnished, "Logement meublé ?") }}
+  </td>
+  <td>
+    <label class="mt-checkbox">
+      {{ form_widget(form.furnished) }}
+      Oui, ce logement est meublé.
+      <span></span>
+    </label>
+  </td>
+</tr>
+<tr>
+  <td>Places de Parking</td>
+  <td>
+    {{ form_widget(form.parking) }}
+  </td>
+</tr>
+<tr>
+  <td>Chambres</td>
+  <td>
+    {{ form_widget(form.room.bedRoom) }}
+  </td>
+</tr>
+<tr>
+  <td>Bureaux</td>
+  <td>
+    {{ form_widget(form.room.office) }}
+  </td>
+</tr>
+<tr>
+  <td>Salons</td>
+  <td>
+    {{ form_widget(form.room.livingRoom) }}
+  </td>
+</tr>
+<tr>
+  <td>Salles à manger</td>
+  <td>
+    {{ form_widget(form.room.diningRoom) }}
+  </td>
+</tr>
+<tr>
+  <td>Cuisines</td>
+  <td>
+    {{ form_widget(form.room.kitchen) }}
+  </td>
+</tr>
+<tr>
+  <td>Salles de bain</td>
+  <td>
+    {{ form_widget(form.room.toilet) }}
+  </td>
+</tr>
+{#</table>#}
