@@ -6,6 +6,10 @@ admin:
   resource: "routing-admin.yml"
   prefix:   /{_locale}/admin
 
+main_artists:
+  prefix:   /{_locale}/artists
+  resource: "core/routing-artists.yml"
+
 api_business_card:
     path:     /{_locale}/business-cards/{id}
     defaults: { _controller: MainBundle:Api:businessCard, _locale: en_EN  }

@@ -34,7 +34,10 @@ class User implements AdvancedUserInterface
 
   /** @MongoDB\Field(type="string") */
   protected $gender; //m (pour homme) et f(pour femme).
-  
+
+  /** @MongoDB\Field(type="string") */
+  protected $namespace;
+
   /** @MongoDB\Field(type="string") */
   protected $name; //Nom tel que sur la CNI
   
@@ -120,7 +123,7 @@ class User implements AdvancedUserInterface
   
   /** @MongoDB\ReferenceOne(targetDocument="XS\AfrobankBundle\Document\Account") */
   protected $account; //Le compte bancaire de l'utilisateur...
-  
+
   /**
    * User constructor.
    */
@@ -606,5 +609,21 @@ class User implements AdvancedUserInterface
   public function setProfiles($profiles): void
   {
     $this->profiles = $profiles;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getNamespace()
+  {
+    return $this->namespace;
+  }
+
+  /**
+   * @param mixed $namespace
+   */
+  public function setNamespace($namespace): void
+  {
+    $this->namespace = $namespace;
   }
 }

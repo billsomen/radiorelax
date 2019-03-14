@@ -2,12 +2,9 @@
 
 namespace MainBundle\Controller;
 
-use RadioRelax\AdminBundle\Form\AlbumType;
-use RadioRelax\AdminBundle\Form\ArtistType;
-use RadioRelax\CoreBundle\Document\Album;
+use MainBundle\Form\AlbumType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class AlbumController extends Controller
 {
@@ -55,7 +52,7 @@ class AlbumController extends Controller
             }
             catch(\Exception $exception){
               $this->addFlash("error", "CDN non Disponible!");
-              return $this->redirectToRoute("radio_relax_admin_artists_show", array(
+              return $this->redirectToRoute("admin_artists_show", array(
                 "id" => $id_artist
               ));
             }
@@ -68,7 +65,7 @@ class AlbumController extends Controller
           $dm->persist($user);
           $dm->persist($album);
           $dm->flush();
-          return $this->redirectToRoute("radio_relax_admin_artists_show", array(
+          return $this->redirectToRoute("admin_artists_show", array(
             "id" => $id_artist
           ));
         }
@@ -84,14 +81,14 @@ class AlbumController extends Controller
     }
 
     $this->addFlash('error', "Artiste inexistant");
-    return $this->redirectToRoute('radio_relax_admin_artists_homepage');
+    return $this->redirectToRoute('admin_artists_homepage');
   }
 
   public function showAction($id, Request $request)
   {
     //    Show and Edit Artists
     $dm = $this->get('doctrine.odm.mongodb.document_manager');
-    $album = $dm->getRepository("RadioRelaxCoreBundle:Album")->findOneBy(array(
+    $album = $dm->getRepository("MainBundle:Album")->findOneBy(array(
       'id' => $id
     ));
 
@@ -126,7 +123,7 @@ class AlbumController extends Controller
               }
               catch(\Exception $exception){
                 $this->addFlash("error", "CDN non Disponible!");
-                return $this->redirectToRoute("radio_relax_admin_artists_show", array(
+                return $this->redirectToRoute("admin_artists_show", array(
                   "id" => $user->getId()
                 ));
               }
@@ -136,7 +133,7 @@ class AlbumController extends Controller
             $dm->persist($user);
             $dm->persist($album);
             $dm->flush();
-            return $this->redirectToRoute("radio_relax_admin_artists_show", array(
+            return $this->redirectToRoute("admin_artists_show", array(
               "id" => $user->getId()
             ));
           }
@@ -160,7 +157,7 @@ class AlbumController extends Controller
           }
         }
         ksort($ordered_list);
-        return $this->render('RadioRelaxAdminBundle:Album:show.html.twig', array(
+        return $this->render('MainBundle:Admin/Album:show.html.twig', array(
           'artist' => $user,
           'album' => $album,
           'musics' => $ordered_list,
@@ -169,21 +166,21 @@ class AlbumController extends Controller
       }
       else{
         $this->addFlash('error', "Artiste inexistant");
-        return $this->redirectToRoute('radio_relax_admin_artists_homepage');
+        return $this->redirectToRoute('admin_artists_homepage');
       }
     }
     else{
       $this->addFlash('error', "Album inexistant");
     }
 
-    return $this->redirectToRoute('radio_relax_admin_artists_homepage');
+    return $this->redirectToRoute('admin_artists_homepage');
   }
 
   public function updateMusicIndexAction($id, Request $request)
   {
     //    Show and Edit Artists
     $dm = $this->get('doctrine.odm.mongodb.document_manager');
-    $album = $dm->getRepository("RadioRelaxCoreBundle:Album")->findOneBy(array(
+    $album = $dm->getRepository("MainBundle:Album")->findOneBy(array(
       'id' => $id
     ));
 
@@ -205,7 +202,7 @@ class AlbumController extends Controller
             $dm->flush();
 
             $this->addFlash("notice", "Album musics indexes updated");
-            return $this->redirectToRoute('radio_relax_admin_albums_show', array(
+            return $this->redirectToRoute('admin_albums_show', array(
               'id' => $id
             ));
           }
@@ -216,21 +213,21 @@ class AlbumController extends Controller
       }
       else{
         $this->addFlash('error', "Artiste inexistant");
-        return $this->redirectToRoute('radio_relax_admin_artists_homepage');
+        return $this->redirectToRoute('admin_artists_homepage');
       }
     }
     else{
       $this->addFlash('error', "Album inexistant");
     }
 
-    return $this->redirectToRoute('radio_relax_admin_artists_homepage');
+    return $this->redirectToRoute('admin_artists_homepage');
   }
 
   public function removeAction($id)
   {
     //    Show and Edit Artists
     $dm = $this->get('doctrine.odm.mongodb.document_manager');
-    $album = $dm->getRepository("RadioRelaxCoreBundle:Album")->findOneBy(array(
+    $album = $dm->getRepository("MainBundle:Album")->findOneBy(array(
       'id' => $id
     ));
 
@@ -244,7 +241,7 @@ class AlbumController extends Controller
         $dm->persist($user);
         $dm->persist($album);
         $dm->flush();
-        return $this->redirectToRoute("radio_relax_admin_artists_show", array(
+        return $this->redirectToRoute("admin_artists_show", array(
           "id" => $user->getId()
         ));
       }
@@ -255,6 +252,6 @@ class AlbumController extends Controller
 
     $this->addFlash('error', "Album inexistant");
 
-    return $this->redirectToRoute('radio_relax_admin_artists_homepage');
+    return $this->redirectToRoute('admin_artists_homepage');
   }
 }

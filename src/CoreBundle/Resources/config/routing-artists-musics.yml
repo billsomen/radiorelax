@@ -1,5 +1,0 @@
-#  Un son en particulier
-radio_relax_core_artists_musics_show:
-  path:     /{id}
-  defaults: { _controller: RadioRelaxCoreBundle:Music:index }
-

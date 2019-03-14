@@ -1,0 +1,42 @@
+{% extends "MainBundle::base.html.twig" %}
+
+{% block title %}
+  Artistes - {{ parent() }}
+{% endblock %}
+
+{% block body_inner_main %}
+  <div class="ms_top_artist">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="ms_heading">
+            <h1>{{ "title.artists"|trans }}</h1>
+          </div>
+        </div>
+        {% for user in users if user.profiles.accessArtist %}
+          <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="ms_rcnt_box marger_bottom30">
+              <div class="ms_rcnt_box_img">
+                <a href="#">
+                  <img src="{{  user.profiles.artist.profilePic | cloudinary_img('show') }}" alt="Image" class="img-fluid">
+                </a>
+                <div class="ms_main_overlay">
+                  <div class="ms_box_overlay"></div>
+                  <div class="ms_play_icon">
+                    <a href="{{ path('core_artists_show', {'namespace': user.profiles.artist.namespace}) }}">
+                      <img src="{{ asset('assets/corebundle/images/svg/play.svg') }}" alt="" width="100px">
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="ms_rcnt_box_text">
+                <h3><a href="{{ path('core_artists_show', {'namespace': user.profiles.artist.namespace}) }}">{{ user.nickname }}</a></h3>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

@@ -1,0 +1,19 @@
+core_artists_homepage:
+#  Tous les artistes
+  path:     /
+  defaults: { _controller: MainBundle:Core\Artist:index }
+
+core_artists_show:
+#  Profil d'un artiste et ses albums
+  path:     /{namespace}
+  defaults: { _controller: MainBundle:Core\Artist:show }
+
+core_artists_albums:
+  #  Vue d'un album d'un artiste et les musiques qui s'y trouvent
+  prefix:   /{namespace}/albums
+  resource: "routing-artists-albums.yml"
+
+core_artists_musics:
+  #  Vue d'un album d'un artiste et les musiques qui s'y trouvent
+  prefix:   /{namespace}/musics
+  resource: "routing-artists-musics.yml"

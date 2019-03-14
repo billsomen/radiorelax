@@ -1,4 +1,0 @@
-services:
-#    radio_relax_core.example:
-#        class: RadioRelax\CoreBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]

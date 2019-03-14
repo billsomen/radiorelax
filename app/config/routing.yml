@@ -4,7 +4,15 @@ main:
   requirements:
     _locale:  en|fr
 
+#core:
+#  resource: "@CoreBundle/Resources/config/routing.yml"
+#  prefix:   /
+#  requirements:
+#    _locale:  en|fr
+
 admin:
   resource: "@MainBundle/Resources/config/routing-admin.yml"
   prefix:   /{_locale}/admin
 
+logout:
+  path: /logout

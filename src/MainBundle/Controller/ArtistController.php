@@ -2,9 +2,8 @@
 
 namespace MainBundle\Controller;
 
-use phpDocumentor\Reflection\Types\This;
-use RadioRelax\AdminBundle\Form\ArtistType;
-use RadioRelax\CoreBundle\Document\Artist;
+use MainBundle\Document\Artist;
+use MainBundle\Form\ArtistType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
@@ -103,7 +102,7 @@ class ArtistController extends Controller
       $this->addFlash($status, $status_message);
     }
 
-    return $this->redirectToRoute('radio_relax_admin_artists_homepage');
+    return $this->redirectToRoute('admin_artists_homepage');
   }
 
   public function showAction($id, Request $request)
@@ -114,14 +113,15 @@ class ArtistController extends Controller
       'id' => $id
     ));
     if(!empty($user)){
-      $artist = $user->getArtist();
-      if(empty($user->getArtist())){
+      $artist = $user->getProfiles()->getArtist();
+      if(empty($artist)){
         //
-        $artist = new Artist();
+        $user->getProfiles()->add("artist");
+        $artist = $user->getProfiles()->getArtist();
         $album = $artist->getAlbums()->get(0);
         $album->setArtist($user);
         $dm->persist($album);
-        $user->setArtist($artist);
+        $user->getProfiles()->setArtist($artist);
 
         $dm->flush();
       }
@@ -132,7 +132,7 @@ class ArtistController extends Controller
         $form->handleRequest($request);
         if($form->isValid()){
 //          Si le namespaçe n'existe pas, on le génère
-          $user->getArtist()->generateNamespace();
+          $user->getProfiles()->getArtist()->generateNamespace();
 //          On enregistre et push l'image
           $tmp_name = $_FILES['profile']['tmp_name'];
           $params_clnry = array(
@@ -163,7 +163,7 @@ class ArtistController extends Controller
             $this->addFlash("notice", "Mise à jour du profil de l'artiste terminée!");
             $dm->persist($user);
             $dm->flush();
-            return $this->redirectToRoute("radio_relax_admin_artists_show", array(
+            return $this->redirectToRoute("admin_artists_show", array(
               "id" => $id
             ));
 //          }
@@ -173,14 +173,14 @@ class ArtistController extends Controller
         }
       }
 
-      return $this->render('RadioRelaxAdminBundle:Artist:show.html.twig', array(
+      return $this->render('MainBundle:Admin/Artist:show.html.twig', array(
         'user' => $user,
         'form' => $form->createView()
       ));
     }
 
     $this->addFlash('error', $this->get("translator")->trans('flashbags.artist.not_found'));
-    return $this->redirectToRoute('radio_relax_admin_artists_homepage');
+    return $this->redirectToRoute('admin_artists_homepage');
   }
 
   public function newAction()

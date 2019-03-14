@@ -64,9 +64,9 @@ class AdminController extends Controller
         }
         $this->addFlash('notice', 'Modifications enregistrées !');
       }
-      return $this->redirectToRoute('radio_relax_admin_profile');
+      return $this->redirectToRoute('admin_profile');
     }
-    return $this->render('RadioRelaxAdminBundle:Artist:my_profile.html.twig', array(
+    return $this->render('@Main/Admin/Artist/my_profile.html.twig', array(
       'user' => $user,
       'form' => $form->createView(),
       'formPassword' => $formPassword->createView()

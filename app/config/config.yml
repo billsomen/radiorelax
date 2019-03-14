@@ -16,6 +16,7 @@ monolog:
       level: debug
 
 framework:
+  ide: 'myide://open?url=file://C:\Program Files\JetBrains\PhpStorm 2018.2.5\bin\phpstorm64.exe'
   #esi:             ~
   translator:      { fallbacks: ["%locale%"] }
   secret:          "%secret%"
@@ -44,6 +45,12 @@ twig:
 
   globals:
     app_name: '%app_name%'
+    mailer_user: '%mailer_user%'
+    cloudinary_preset: "%cloudinary_preset%"
+    cloudinary_api_key: "%cloudinary_api_key%"
+    cloudinary_cloud_name: "%cloudinary_cloud_name%"
+    cloudinary_api_secret: "%cloudinary_api_secret%"
+
 
 # Doctrine Configuration
 doctrine:

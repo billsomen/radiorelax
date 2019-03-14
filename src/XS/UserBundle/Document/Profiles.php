@@ -9,7 +9,7 @@
 namespace XS\UserBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use CoreBundle\Document\Artist;
+use MainBundle\Document\Artist;
 
 /**
  * Class Profiles
@@ -27,7 +27,7 @@ class Profiles
 //  Ai-je accès au profil Artiste
   protected $accessArtist;
 
-  /** @MongoDB\EmbedOne(targetDocument="RadioRelax\CoreBundle\Document\Artist") */
+  /** @MongoDB\EmbedOne(targetDocument="MainBundle\Document\Artist") */
 //    Champ contenant la variale Artiste
   protected $artist;
 

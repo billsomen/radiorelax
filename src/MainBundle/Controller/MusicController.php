@@ -60,7 +60,7 @@ class MusicController extends Controller
             }
             catch(\Exception $exception){
               $this->addFlash("error", "CDN non Disponible!");
-              return $this->redirectToRoute("radio_relax_admin_albums_show", array(
+              return $this->redirectToRoute("admin_albums_show", array(
                 "id" => $id_album
               ));
             }
@@ -74,7 +74,7 @@ class MusicController extends Controller
           $dm->persist($music);
           $dm->persist($album);
           $dm->flush();
-          return $this->redirectToRoute("radio_relax_admin_albums_show", array(
+          return $this->redirectToRoute("admin_albums_show", array(
             "id" => $id_album
           ));
         }
@@ -91,14 +91,14 @@ class MusicController extends Controller
     }
 
     $this->addFlash('error', "Album inexistant");
-    return $this->redirectToRoute('radio_relax_admin_profile');
+    return $this->redirectToRoute('admin_profile');
   }
 
   public function newMultipleAction($id_album, Request $request)
   {
     //    Add multiple
     $dm = $this->get('doctrine.odm.mongodb.document_manager');
-    $album = $dm->getRepository("RadioRelaxCoreBundle:Album")->findOneBy(array(
+    $album = $dm->getRepository("MainBundle:Album")->findOneBy(array(
       'id' => $id_album
     ));
     if(!empty($album)){
@@ -148,25 +148,25 @@ class MusicController extends Controller
           }
           catch(\Exception $exception){
             $this->addFlash("error", "CDN non Disponible!");
-            return $this->redirectToRoute("radio_relax_admin_albums_show", array(
+            return $this->redirectToRoute("admin_albums_show", array(
               "id" => $id_album
             ));
           }
         }
-        return $this->redirectToRoute("radio_relax_admin_albums_show", array(
+        return $this->redirectToRoute("admin_albums_show", array(
           "id" => $id_album
         ));
 
       }
 
-      return $this->render('RadioRelaxAdminBundle:Music:new-multiple.html.twig', array(
+      return $this->render('@Main/Admin/Music/new-multiple.html.twig', array(
         'artist' => $user,
         'album' => $album
       ));
     }
 
     $this->addFlash('error', "Album inexistant");
-    return $this->redirectToRoute('radio_relax_admin_profile');
+    return $this->redirectToRoute('admin_profile');
   }
 
   public function showAction($id, Request $request)
@@ -212,8 +212,8 @@ class MusicController extends Controller
             }
             catch(\Exception $exception){
               $this->addFlash("error", "CDN non Disponible!");
-              print_r("bad");
-              /*return $this->redirectToRoute("radio_relax_admin_albums_show", array(
+//              print_r("bad");
+              /*return $this->redirectToRoute("admin_albums_show", array(
                 "id" => $id_album
               ));*/
             }
@@ -223,7 +223,7 @@ class MusicController extends Controller
           $this->addFlash("notice", "Mise à jour des informations de la musique terminée!");
           $dm->persist($music);
           $dm->flush();
-          return $this->redirectToRoute("radio_relax_admin_albums_show", array(
+          return $this->redirectToRoute("admin_albums_show", array(
             "id" => $music->getAlbum()->getId()
           ));
         }
@@ -241,6 +241,6 @@ class MusicController extends Controller
     }
 
     $this->addFlash('error', "Musique inexistante");
-    return $this->redirectToRoute('radio_relax_admin_profile');
+    return $this->redirectToRoute('admin_profile');
   }
 }

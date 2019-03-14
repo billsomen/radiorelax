@@ -14,11 +14,23 @@ class GMapsType extends AbstractType
     {
       $builder
         ->add('formattedAddress', TextType::class, array(
-          'required' => true,
+          'required' => false,
           'attr' => array(
             'class' => 'form-control',
             'readonly' => 'readonly',
             'id' => 'formatted_address'
+          )
+        ))
+        ->add('country', TextType::class, array(
+          'required' => true,
+          'attr' => array(
+            'class' => 'form-control',
+          )
+        ))
+        ->add('town', TextType::class, array(
+          'required' => true,
+          'attr' => array(
+            'class' => 'form-control',
           )
         ))
         ->add('lat', TextType::class, array(

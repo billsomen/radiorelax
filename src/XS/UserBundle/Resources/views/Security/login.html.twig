@@ -23,7 +23,6 @@
       {#language switcher#}
       
       <div class="text-center text-muted mb-4">
-        
         {% for flashMessage in app.session.flashbag.get('notice') if flashMessage %}
           <div class="alert alert-success alert-dismissible text-center">
             <small>{{ flashMessage }}</small>
@@ -35,6 +34,7 @@
             <small>{{ flashMessage }}</small>
           </div>
         {% endfor %}
+        
         {% if error and error.message %}
           <div class="alert alert-danger">
             {#{{ dump(error) }}#}

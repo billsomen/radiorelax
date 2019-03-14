@@ -81,6 +81,12 @@ class GMaps {
   
   /** @MongoDB\Field(type="string") */
   protected $ln_administrative_area_level_2;
+
+  /** @MongoDB\Field(type="string") */
+  protected $country;
+
+  /** @MongoDB\Field(type="string") */
+  protected $town;
   
   function __construct(){
     $this->lat = 45.4946761;
@@ -409,5 +415,37 @@ class GMaps {
   
   public function getLatLng(){
     return $this->getLat().','.$this->getLng();
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getCountry()
+  {
+    return $this->country;
+  }
+
+  /**
+   * @param mixed $country
+   */
+  public function setCountry($country): void
+  {
+    $this->country = $country;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getTown()
+  {
+    return $this->town;
+  }
+
+  /**
+   * @param mixed $town
+   */
+  public function setTown($town): void
+  {
+    $this->town = $town;
   }
 }
