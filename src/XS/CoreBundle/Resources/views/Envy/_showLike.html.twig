@@ -1,0 +1,11 @@
+{% if liked %}
+  <a type="button if_like" class="if_like"  style="text-decoration: none;" href="javascript:;" id="like_{{ obj_name~'_'~obj_id~'_'~comment_id }}">
+    <i class="icon-like"></i> <span class="hidden-xs hidden-sm">J'aime</span>
+    <span class="badge badge-info"> {{ object.countLikes }} </span>
+  </a>
+{% else %}
+  <a type="button" class="if_like" style="text-decoration: none; color: #0b0b0b;" href="{{ path('envy_like', {'comment_id': comment_id, 'obj_name':obj_name, 'obj_id':obj_id}) }}">
+    <i class="icon-like"></i> <span class="hidden-xs hidden-sm">J'aime</span>
+    <span class="badge badge-inverse"> {{ object.countLikes }} </span>
+  </a>
+{% endif %}

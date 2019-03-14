@@ -1,0 +1,140 @@
+<div class="portlet light portlet-fit ">
+  <div class="portlet-title">
+    <div class="caption">
+      <i class=" icon-user font-green"></i>
+      <span class="caption-subject font-green bold uppercase">Nos Utilisateurs</span>
+    </div>
+  </div>
+  <div class="portlet-body">
+    <div class="mt-element-card mt-card-round mt-element-overlay">
+      <div class="row">
+        {% for user in users if not user.type %}
+          {{ render(controller('XSAdvertBundle:Advert:_newAndTutor', {'group':'tutoring','id_tutor':user.id})) }}
+          <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <div class="mt-card-item">
+              <div class="mt-card-avatar mt-overlay-1">
+                <img src="http://php7x10.herokuapp.com//assets/layouts/layout3/img/icon-users-header.png" />
+                <div class="mt-overlay">
+                  <ul class="mt-info">
+                    <li>
+                      <a class="btn default btn-outline" href="{{ path('xs_mboadjoss_users_show', {'id': user.id}) }}">
+                        <i class="icon-magnifier"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="btn default btn-outline" href="javascript:;">
+                        <i class="icon-plus"></i>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="mt-card-content">
+                {#{{ render(controller('XSMboadjossBundle:Message:send', {'receiver_namespace': user.id})) }}#}
+                <h3 class="mt-card-name">
+                  <i class="icon-check"></i>
+                  <a
+                    href="{{ path('xs_mboadjoss_users_show', {'id': user.id}) }}"
+                    class="popovers"
+                    data-container="body"
+                    data-trigger="hover"
+                    data-placement="top"
+                    data-content="Présentations, je suis un jeune Ingénieur en..."
+                    data-original-title="Ma Présentation"
+                  >
+                    {{ user.nickname }}
+                  </a>
+                </h3>
+                {% if user.edu.student and user.edu.student.school %}
+                  {% if user.edu.student.classe %}
+                    <p class="mt-card-desc font-grey-mint">{{ user.edu.student.classe.formattedName }}</p>
+                  {% else %}
+                    <p class="mt-card-desc font-grey-mint">Aucune Classe</p>
+                  {% endif %}
+                  <div class="mt-card-social">
+                    <ul>
+                      <li>
+                        <a href="#sendMessage-{{ user.id }}"  data-toggle="modal" class="tooltips" title="Ecrire">
+                          <i class="icon-pencil"></i>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="javascript:;" class="tooltips" title="{{ user.edu.student.school.name }}">
+                          <i class="icon-graduation"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                {% else %}
+                  <p class="mt-card-desc font-grey-mint">Aucune Classe</p>
+                  <div class="mt-card-social">
+                    <ul>
+                      <li>
+                        <div class="btn-group">
+                          <a class="dropdown-toggle tooltips" data-toggle="dropdown" href="javascript:;" aria-expanded="true" title="Ajouter">
+                            <i class="icon-plus"></i>
+                          </a>
+                          <ul class="dropdown-menu" style="color: #0b0b0b">
+                            <li>
+                              <a href="javascript:;"> Ajouter comme ami
+                              </a>
+                            </li>
+                            <li>
+                              <a data-toggle="modal" href="#newAndTutor-{{ user.id }}">Ajouter comme Tuteur</a>
+                            </li>
+                            <li>
+                              <a href="{{ path('xs_tutoring_mentor_add', {'id': user.id}) }}">Ajouter comme Mentor</a>
+                            </li>
+                          </ul>
+                        </div>
+                        {#<a href="javascript:;" class="tooltips" title="Ajouter">
+                          <i class="icon-plus"></i>
+                        </a>#}
+                      </li>
+                      {% if user.skypeId %}
+                        <li>
+                          <a href="javascript:skypeStartChat('{{ user.skypeId }}')" class="tooltips" title="Lancer le Chat Skype!">
+                            <i class="ion-social-skype"></i>
+                          </a>
+                        </li>
+                      {% endif %}
+                      <li>
+                        <a href="#sendMessage-{{ user.id }}" data-toggle="modal" class="tooltips" title="Ecrire">
+                          <i class="icon-pencil"></i>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="javascript:;" class="tooltips" title="Aucune Ecole">
+                          <i class="icon-graduation"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                {% endif %}
+                <div class="mt-card-desc font-grey-mint">
+                  <i class="ion-location"></i>
+                  <a href="#sendMessage-05"  data-toggle="modal" class="tooltips" title="Localisation">
+                    1 705 km
+                  </a>
+                  , <a href="javascript:;" class="tooltips" title="Localisation">
+                    35 min
+                  </a>
+                </div>
+                <div class="mt-card-social">
+                  <ul>
+                    <li>
+                      <a href="#sendMessage-5"  data-toggle="modal" class="tooltips" title="Compétences">
+                        <i class="icon-tag"></i>Maths (Tle), Info(P), Histoire(Sup)
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+

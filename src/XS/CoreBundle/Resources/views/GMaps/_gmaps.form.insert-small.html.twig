@@ -1,0 +1,136 @@
+<div class="col-md-12" style="display: none">
+  {#{{ dump() }}#}
+</div>
+{% set target_id = form_element.vars.id %}
+
+<input
+  class="form-control autocomplete_gmaps form-group"
+  id="{{ target_id }}"
+  placeholder="Ville"
+  required="required"
+  style="background-color: transparent"
+  onFocus="geolocate('{{ target_id }}')"
+  {% if update_phone is defined %}
+    {% if  update_phone %}
+      onchange="initCodeUpdate()"
+    {% endif %}
+  {% endif %}
+  value="{{ form_element.formattedAddress.vars.value }}"
+  type="text"
+/>
+
+<div class="col-md-6" style="display: none">
+  {{ form_widget(form_element.formattedAddress, {'id': target_id~''~'formatted_address'}) }}
+</div>
+<table class="table table-light table-hover" style="display: none">
+  <tr>
+    <td>Saisir l'Adresse</td>
+    <td colspan="2">
+
+    </td>
+  </tr>
+  <tr>
+    <td>Addresse Finale</td>
+    <td colspan="2">
+
+    </td>
+  </tr>
+  <tr >
+    <td>Lat</td>
+    <td colspan="2">
+      {{ form_widget(form_element.lat, {'id': target_id~''~'lat'}) }}
+    </td>
+  </tr>
+  <tr style="display: none">
+    <td>Lng</td>
+    <td colspan="2">
+      {{ form_widget(form_element.lng, {'id': target_id~''~'lng'}) }}
+    </td>
+  </tr>
+
+  <tr style="display: none">
+    <td>Place Id</td>
+    <td colspan="2">
+      {{ form_widget(form_element.placeId, {'id': target_id~''~'place_id'}) }}
+    </td>
+  </tr>
+  <tr style="display: none">
+    <td>Route</td>
+    <td>
+      {{ form_widget(form_element.snRoute, {'id': target_id~''~'sn_route'}) }}
+    </td>
+    <td>
+      {{ form_widget(form_element.lnRoute, {'id': target_id~''~'ln_route'}) }}
+    </td>
+  </tr>
+
+  <tr style="display: none">
+    <td>Street Number</td>
+    <td>
+      {{ form_widget(form_element.snStreetNumber, {'id': target_id~''~'sn_street_number'}) }}
+    </td>
+    <td>
+      {{ form_widget(form_element.lnStreetNumber, {'id': target_id~''~'ln_street_number'}) }}
+    </td>
+  </tr>
+
+  <tr style="display: none">
+    <td>Premise</td>
+    <td>
+      {{ form_widget(form_element.snPremise, {'id': target_id~''~'sn_premise'}) }}
+    </td>
+    <td>
+      {{ form_widget(form_element.lnPremise, {'id': target_id~''~'ln_premise'}) }}
+    </td>
+  </tr>
+
+  <tr style="display: none">
+    <td>Locality</td>
+    <td>
+      {{ form_widget(form_element.snLocality, {'id': target_id~''~'sn_locality'}) }}
+    </td>
+    <td>
+      {{ form_widget(form_element.lnLocality, {'id': target_id~''~'ln_locality'}) }}
+    </td>
+  </tr>
+
+  <tr style="display: none">
+    <td>State</td>
+    <td>
+      {{ form_widget(form_element.snAdministrativeAreaLevel1, {'id': target_id~''~'sn_administrative_area_level_1'}) }}
+    </td>
+    <td>
+      {{ form_widget(form_element.lnAdministrativeAreaLevel1, {'id': target_id~''~'ln_administrative_area_level_1'}) }}
+    </td>
+  </tr>
+
+  <tr style="display: none">
+    <td>County or Region</td>
+    <td>
+      {{ form_widget(form_element.snAdministrativeAreaLevel2, {'id': target_id~''~'sn_administrative_area_level_2'}) }}
+    </td>
+    <td>
+      {{ form_widget(form_element.lnAdministrativeAreaLevel2, {'id': target_id~''~'ln_administrative_area_level_2'}) }}
+    </td>
+  </tr>
+
+  <tr style="display: none">
+    <td>Country</td>
+    <td>
+      {{ form_widget(form_element.snCountry, {'id': target_id~''~'sn_country'}) }}
+    </td>
+    <td>
+      {{ form_widget(form_element.lnCountry, {'id': target_id~''~'ln_country'}) }}
+    </td>
+  </tr>
+
+  <tr style="display: none">
+    <td>Postal_code</td>
+    <td>
+      {{ form_widget(form_element.snPostalCode, {'id': target_id~''~'sn_postal_code'}) }}
+    </td>
+    <td>
+      {{ form_widget(form_element.lnPostalCode, {'id': target_id~''~'ln_postal_code'}) }}
+    </td>
+  </tr>
+</table>

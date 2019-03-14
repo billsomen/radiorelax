@@ -1,0 +1,26 @@
+xs_user:
+  login:
+    title: Login to access your account
+    welcome: Welcome
+    action: Login
+    hint: Login now
+    flashbag:
+      bad_credentials: Invalid username or password
+  signin:
+    title: Create a new account
+    welcome: Welcome
+    action: Sign up
+    hint: Sign up now
+    flashbag:
+      mail:
+        complete: Sign up completed.
+  user:
+    nickname: Username
+    username: Email address
+    email: Email address
+    password: Password
+    link: Link
+    is:
+      already_exist: A user with the same credantials already exists.
+  _message:
+    signin: Hello <b>%nickname%</b>, Welcome to %app_name% . Your credantials follow

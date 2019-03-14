@@ -1,0 +1,1005 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  {#{{ user.nickname }} |#} Recharges et Paiements
+{% endblock %}
+
+{% block stylesheets_page %}
+  <link href="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ asset('assets/global/plugins/jstree/dist/themes/default/style.min.css') }}" rel="stylesheet" type="text/css" />
+
+  <link href="{{ asset('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block stylesheets_page_level_styles %}
+  <link href="{{ asset('assets/pages/css/profile.min.css') }}" rel="stylesheet" type="text/css" />
+  <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+{% endblock %}
+
+{% block body_breadcrumbs %}
+  <ul class="page-breadcrumb breadcrumb">
+    <li>
+      <a href="#">Edutool</a>
+      <i class="fa fa-circle"></i>
+    </li>
+    <li>
+      <a href="{{ path('xs_education_homepage') }}">Education</a>
+      <i class="fa fa-circle"></i>
+    </li>
+    <li>
+      <a href="#">Mon Compte</a>
+      <i class="fa fa-circle"></i>
+    </li>
+    <li>
+      <span>Recharget et Paiements</span>
+    </li>
+  </ul>
+{% endblock %}
+
+{% block body_inner %}
+  <div class="row">
+    <div class="col-md-12">
+      <div class="m-heading-1 border-green m-bordered">
+        <h3>Twitter Bootstrap Wizard Plugin</h3>
+        <p> This twitter bootstrap plugin builds a wizard out of a formatter tabbable structure. It allows to build a wizard functionality using buttons to go through the different wizard steps and using events
+          allows to hook into each step individually. </p>
+        <p> For more info please check out
+          <a class="btn red btn-outline" href="http://vadimg.com/twitter-bootstrap-wizard-example" target="_blank">the official documentation</a>
+        </p>
+      </div>
+      <div class="portlet light " id="form_wizard_1">
+        <div class="portlet-title">
+          <div class="caption">
+            <i class=" icon-layers font-red"></i>
+            <span class="caption-subject font-red bold uppercase"> Recharges et Paiements -
+                                                                <span class="step-title"> Etape 1 sur 4 </span>
+                                                            </span>
+          </div>
+          <div class="actions">
+            <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
+              <i class="icon-cloud-upload"></i>
+            </a>
+            <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
+              <i class="icon-wrench"></i>
+            </a>
+            <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
+              <i class="icon-trash"></i>
+            </a>
+          </div>
+        </div>
+        <div class="portlet-body form">
+          <form class="form-horizontal" action="{{ path('xs_user_subscribe') }}" id="submit_form" method="post" enctype="multipart/form-data">
+            <div class="form-wizard"  id="loop_target">
+              <div class="form-body">
+                <div class="row">
+                  {{ form_errors(form) }}
+                </div>
+                {{ form_row(form._token) }}
+                {% if app.user %}
+                  <ul class="nav nav-pills nav-justified steps">
+                    {#<li>
+                      <a href="#tab1" data-toggle="tab" class="step">
+                        <span class="number"> 1 </span>
+                        <span class="desc">
+                                                                                    <i class="fa fa-check"></i> Mon Compte </span>
+                      </a>
+                    </li>#}
+                    <li>
+                      <a href="#tab2" data-toggle="tab" class="step">
+                        <span class="number"> 1 </span>
+                        <span class="desc">
+                                                                                    <i class="fa fa-check"></i> Mes Achats </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#tab3" data-toggle="tab" class="step active">
+                        <span class="number"> 2 </span>
+                        <span class="desc">
+                                                                                    <i class="fa fa-check"></i> Modes de Recharges </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#tab4" data-toggle="tab" class="step">
+                        <span class="number"> 3 </span>
+                        <span class="desc">
+                                                                                    <i class="fa fa-check"></i> Paiement </span>
+                      </a>
+                    </li>
+                  </ul>
+                {% else %}
+                  <ul class="nav nav-pills nav-justified steps">
+                    <li>
+                      <a href="#tab1" data-toggle="tab" class="step">
+                        <span class="number"> 1 </span>
+                        <span class="desc">
+                                                                                    <i class="fa fa-check"></i> Mon Compte </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#tab2" data-toggle="tab" class="step">
+                        <span class="number"> 2 </span>
+                        <span class="desc">
+                                                                                    <i class="fa fa-check"></i> Mes Achats </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#tab3" data-toggle="tab" class="step active">
+                        <span class="number"> 3 </span>
+                        <span class="desc">
+                                                                                    <i class="fa fa-check"></i> Modes de Recharges </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#tab4" data-toggle="tab" class="step">
+                        <span class="number"> 4 </span>
+                        <span class="desc">
+                                                                                    <i class="fa fa-check"></i> Confirmation </span>
+                      </a>
+                    </li>
+                  </ul>
+                {% endif %}
+                <div id="bar" class="progress progress-striped" role="progressbar">
+                  <div class="progress-bar progress-bar-success"> </div>
+                </div>
+                <div class="tab-content">
+                  <div class="alert alert-danger display-none">
+                    <button class="close" data-dismiss="alert"></button> Vous avez des erreurs dans votre formulaire </div>
+                  <div class="alert alert-success display-none">
+                    <button class="close" data-dismiss="alert"></button> Votre formulaire est complet! </div>
+                  {% if app.user %}
+                    <div class="tab-pane active" id="tab2">
+                      <h3 class="block">Confirmez vos achats</h3>
+                      <table class="table table-light table-hover">
+                        {% for course in  courses %}
+                          <tr>
+                            <td>
+                              <div class="mt-checkbox-inline">
+                                <label class="media mt-checkbox">
+                                  <input value="{{ course.id }}" type="checkbox" checked name="courses[]"  data-title="<a href='{{ path('xs_education_courses_show', {'id': course.id}) }}'>{{ course.name }}</a>, Ecole : {{ course.mediaDurationFormatted }} - <a href='{{ path('xs_education_schools_show', {'id': course.school.id}) }}'>{{ course.school.name }}</a>">
+                                  <a class="pull-left" href="javascript:;">
+                                    <img class="media-object" alt="Course_img" width="64" src="{{ course.thumbnail }}">
+                                  </a>
+                                  <div class="media-body">
+                                    <h4 class="media-heading hidden-xs hidden-sm">{{ course.name }}, {{ course.mediaDurationFormatted }}</h4>
+                                    <p class="media-heading hidden-md hidden-lg">{{ course.name }}, {{ course.mediaDurationFormatted }}</p>
+                                    <p class="hidden-xs hidden-sm"> {{ course.description }} - <a href="{{ path('xs_education_schools_show', {'id': course.school.id}) }}">{{ course.school.name }}</a> </p>
+                                  </div>
+                                  <span></span>
+                                </label>
+                              </div>
+                            </td>
+                            <td style="width: 100px">XAF {{ course.lifePrice | number_format }}<div class="list-datetime bold font-yellow-casablanca hidden-xs"><i class="icon-clock"></i> A vie </div></td>
+                            {#<td><button class="btn btn-danger"><i class="icon-trash"></i> <span class="hidden-xs hidden-sm">Supprimer</span></button></td>#}
+                          </tr>
+                        {% endfor %}
+                      </table>
+                    </div>
+                    <div class="tab-pane" id="tab3">
+                      <h3 class="block">Choisissez un mode de Paiement</h3>
+                      <table class="table table-light table-hover">
+                        <thead>
+                        <tr>
+                          <th> Moyen </th>
+                          <th> Récepteur </th>
+                          <th class="hidden-xs hidden-sm"> Localisations </th>
+                          <th> Instructions </th>
+                          <th class="hidden-xs hidden-sm"> Frais </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                          <td>
+                            {{ form_widget(form.bank, {
+                              'id': 'bank'})
+                            }}
+                            <div class="mt-radio-inline">
+                              <label class="media mt-radio">
+                                <input value="Orange Money" type="radio" name="payment_way" data-title="Orange Money" required>
+                                <a class="pull-left" href="javascript:;">
+                                  <img class="media-object" alt="Course_img" width="64" src="https://lh6.ggpht.com/4KvTCVZ8JJa9J1KMeyyXYdXZWWE5iLPrtJJ27vqoydRFfxNxcFlKTLbrpSR7qHGMONg=w300">
+                                </a>
+                                <div class="media-body">
+                                  <h4 class="media-heading">Orange Money</h4>
+                                  <p>On...</p>
+                                </div>
+                                <span></span>
+                              </label>
+                            </div>
+                          </td>
+                          <td><b>695 45 61 85</b> <i>( NGONGANG SOMEN )</i></td>
+                          <td class="hidden-xs hidden-sm">Cameroun</td>
+                          <td>
+                            <p>On...</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="mt-radio-inline">
+                              <label class="media mt-radio">
+                                <input value="MTN Mobile Money" type="radio" name="payment_way" data-title="MTN Mobile Money" required>
+                                <a class="pull-left" href="javascript:;">
+                                  <img class="media-object" alt="Course_img" width="64" src="https://lh6.ggpht.com/LTwt4DZRCzi45iNjN_HsX7TTxJPz9Y1dFgN05jj0J89yDpoeO2I2_bbEz8cl84NK34g=w300">
+                                </a>
+                                <div class="media-body">
+                                  <h4 class="media-heading">MTN Mobile Money</h4>
+                                  <p>On...</p>
+                                </div>
+                                <span></span>
+                              </label>
+                            </div>
+                          </td>
+                          <td><b>695 45 61 85</b> <i>( NGONGANG SOMEN )</i></td>
+                          <td class="hidden-xs hidden-sm">Cameroun</td>
+                          <td class="hidden-xs hidden-sm">
+                            <a href="http://money.orange.cm/2/particuliers/1/4/tarification-35305.html">Tarifs Orange Money</a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                           <div class="mt-radio-inline">
+                              <label class="media mt-radio">
+                                <input value="Express Union" type="radio" name="payment_way" data-title="Express Union" required>
+                                <a class="pull-left" href="javascript:;">
+                                  <img class="media-object" alt="Course_img" width="64" src="https://lh3.googleusercontent.com/rnus8P6i83XPdZAyAxb7l-Qrvav8PXiXyovczagNJ2zIah1qxBR626DG-uTL114m_Xg=w300">
+                                </a>
+                                <div class="media-body">
+                                  <h4 class="media-heading">Express Union</h4>
+                                  <p>On...</p>
+                                </div>
+                                <span></span>
+                              </label>
+                            </div>
+                          </td>
+                          <td><b>695 45 61 85</b> <i>( NGONGANG SOMEN )</i></td>
+                          <td class="hidden-xs hidden-sm">Cameroun</td>
+                          <td class="hidden-xs hidden-sm">
+                            Aucun frais supplémentaire ne sera retenu!
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="mt-radio-inline">
+                              <label class="media mt-radio">
+                                <input value="Express Exchange" type="radio" name="payment_way" data-title="Express Exchange" required>
+                                <a class="pull-left" href="javascript:;">
+                                  <img class="media-object" alt="Course_img" width="64" src="http://excelsportacademy.com/cache/mod_bt_contentslider/d78ea40f93cac552f776400910d29be7-logo_expressexchange.jpg">
+                                </a>
+                                <div class="media-body">
+                                  <h4 class="media-heading">Express Exchange</h4>
+                                  <p>On...</p>
+                                </div>
+                                <span></span>
+                              </label>
+                            </div>
+                          </td>
+                          <td><b>695 45 61 85</b> <i>( NGONGANG SOMEN )</i></td>
+                          <td class="hidden-xs hidden-sm">Cameroun</td>
+                          <td class="hidden-xs hidden-sm">
+                            <a href="http://money.orange.cm/2/particuliers/1/4/tarification-35305.html">Tarifs Orange Money</a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="mt-radio-inline">
+                              <label class="media mt-radio">
+                                <input value="Virement Bancaire" type="radio" name="payment_way"  data-title="Virement Bancaire" required>
+                                <a class="pull-left" href="javascript:;">
+                                  <img class="media-object" alt="Course_img" width="64" src="http://acheteror.org/wp-content/uploads/2012/04/Stockage-or-banque.jpg">
+                                </a>
+                                <div class="media-body">
+                                  <h4 class="media-heading">Virement Bancaire</h4>
+                                  <p>On...</p>
+                                </div>
+                                <span></span>
+                              </label>
+                            </div>
+                          </td>
+                          <td>CCA : <b>INNOVAFACTORY ETS</b> <i>10031-00253327501-58</i></td>
+                          <td class="hidden-xs hidden-sm">Cameroun</td>
+                          <td class="hidden-xs hidden-sm">Aucun frais supplémentaire ne sera retenu</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="mt-radio-inline">
+                              <label class="media mt-radio">
+                                <input value="Paypal" type="radio" name="payment_way"  data-title="Paypal" required>
+                                <a class="pull-left" href="javascript:;">
+                                  <img class="media-object" alt="Course_img" width="64" src="https://img.purch.com/r/520x520/aHR0cDovL3d3dy50b3B0ZW5yZXZpZXdzLmNvbS9pL3Jldi9wcm9kL2xhcmdlLzY3NjMwLXBheXBhbC1ib3guanBn">
+                                </a>
+                                <div class="media-body">
+                                  <h4 class="media-heading">Paypal <span class="visible-xs">(Compte Paypal / VISA / MasterCard)</span></h4>
+                                  <p>On...</p>
+                                </div>
+                                <span></span>
+                              </label>
+                            </div>
+                          </td>
+                          <td>Edutool</td>
+                          <td class="hidden-xs hidden-sm">Monde entier</td>
+                          <td class="hidden-xs hidden-sm">Les frais de retraits seront déduits du montant transféré ( voir :
+                            <a href="https://lemobileaukamer.com/tarifs-transfert-dargent-mtn-mobile-money/">Tarifs MTN Mobile Money</a>)
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="tab-pane" id="tab4">
+                      <h3 class="block">Confirmer le Paiement</h3>
+                      <table class="table table-light table-hover">
+                        <thead>
+                        <tr>
+                          <th> Moyen </th>
+                          <th id="th-amount"> Montant </th>
+                          <th id="th-transaction"> Transaction </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                          <td id="td-way">
+                            <p class="form-control-static" data-display="payment_way"> </p>
+                          </td>
+                          <td id="td-amount-no-paypal">
+                            {{ form_widget(form.amount.value, {
+                              'attr': {
+                                'placeholder': 'Montant'
+                              }})
+                            }}
+                            {#<input type="number" min="0" class="form-control" placeholder="Montant transféré" name="payment_amount" />#}
+                            <span class="help-block"> Ex: 50000 (en XAF) </span>
+                          </td>
+                          <td id="td-transaction-no-paypal">
+                            {{ form_widget(form.localCode, {
+                              'attr': {
+                                'placeholder': 'Code de Transaction'
+                              }})
+                            }}
+                            {#<input type="text" class="form-control" placeholder="Code de Transaction" name="payment_transaction" />#}
+                            <span class="help-block"> Ex: PP181117.1852.A78965 </span>
+                          </td>
+
+                          <td id="td-amount">
+                            &euro; {{ 5000 | number_format }}
+                          </td>
+                          <td id="td-transaction"><div id="paypal-button"></div></td>
+                        </tr>
+                        </tbody>
+                      </table>
+                      <h4 class="form-section">Cours :</h4>
+                      <div class="form-group">
+                        <ol>
+                          <li class="form-control-static" data-display="courses[]"> </li>
+                        </ol>
+                      </div>
+                    </div>
+                  {% else %}
+                    <div class="tab-pane" id="tab1">
+                      <h3 class="block">Informations de compte</h3>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Contact Téléphonique
+                          <span class="required"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                          <input type="text" class="form-control" name="username" readonly/>
+                          <span class="help-block"> Provide your username </span>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Mot de Passe
+                          <span class="required"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                          <input type="password" class="form-control" name="password" id="submit_form_password" readonly/>
+                          <span class="help-block"> Provide your password. </span>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Confirmer le Mot de Passe
+                          <span class="required"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                          <input type="password" class="form-control" name="rpassword" readonly/>
+                          <span class="help-block"> Confirm your password </span>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Adresse Email
+                          <span class="required"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                          <input type="text" class="form-control" name="email" readonly/>
+                          <span class="help-block"> Provide your email address </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane active" id="tab1">
+                      <h3 class="block">Provide your account details</h3>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Username
+                          <span class="required"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                          <input type="text" class="form-control" name="username" />
+                          <span class="help-block"> Provide your username </span>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Password
+                          <span class="required"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                          <input type="password" class="form-control" name="password" id="submit_form_password" />
+                          <span class="help-block"> Provide your password. </span>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Confirm Password
+                          <span class="required"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                          <input type="password" class="form-control" name="rpassword" />
+                          <span class="help-block"> Confirm your password </span>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Email
+                          <span class="required"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                          <input type="text" class="form-control" name="email" />
+                          <span class="help-block"> Provide your email address </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane" id="tab2">
+                      <h3 class="block">Provide your profile details</h3>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Fullname
+                          <span class="required"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                          <input type="text" class="form-control" name="fullname" />
+                          <span class="help-block"> Provide your fullname </span>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Phone Number
+                          <span class="required"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                          <input type="text" class="form-control" name="phone" />
+                          <span class="help-block"> Provide your phone number </span>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Gender
+                          <span class="required"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                          <div class="radio-list">
+                            <label>
+                              <input type="radio" name="gender" value="M" data-title="Male" /> Male </label>
+                            <label>
+                              <input type="radio" name="gender" value="F" data-title="Female" /> Female </label>
+                          </div>
+                          <div id="form_gender_error"> </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Address
+                          <span class="required"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                          <input type="text" class="form-control" name="address" />
+                          <span class="help-block"> Provide your street address </span>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">City/Town
+                          <span class="required"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                          <input type="text" class="form-control" name="city" />
+                          <span class="help-block"> Provide your city or town </span>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Country</label>
+                        <div class="col-md-4">
+                          <select name="country" id="country_list" class="form-control">
+                            <option value=""></option>
+                            <option value="AF">Afghanistan</option>
+                            <option value="AL">Albania</option>
+                            <option value="DZ">Algeria</option>
+                            <option value="AS">American Samoa</option>
+                            <option value="AD">Andorra</option>
+                            <option value="AO">Angola</option>
+                            <option value="AI">Anguilla</option>
+                            <option value="AR">Argentina</option>
+                            <option value="AM">Armenia</option>
+                            <option value="AW">Aruba</option>
+                            <option value="AU">Australia</option>
+                            <option value="AT">Austria</option>
+                            <option value="AZ">Azerbaijan</option>
+                            <option value="BS">Bahamas</option>
+                            <option value="BH">Bahrain</option>
+                            <option value="BD">Bangladesh</option>
+                            <option value="BB">Barbados</option>
+                            <option value="BY">Belarus</option>
+                            <option value="BE">Belgium</option>
+                            <option value="BZ">Belize</option>
+                            <option value="BJ">Benin</option>
+                            <option value="BM">Bermuda</option>
+                            <option value="BT">Bhutan</option>
+                            <option value="BO">Bolivia</option>
+                            <option value="BA">Bosnia and Herzegowina</option>
+                            <option value="BW">Botswana</option>
+                            <option value="BV">Bouvet Island</option>
+                            <option value="BR">Brazil</option>
+                            <option value="IO">British Indian Ocean Territory</option>
+                            <option value="BN">Brunei Darussalam</option>
+                            <option value="BG">Bulgaria</option>
+                            <option value="BF">Burkina Faso</option>
+                            <option value="BI">Burundi</option>
+                            <option value="KH">Cambodia</option>
+                            <option value="CM">Cameroon</option>
+                            <option value="CA">Canada</option>
+                            <option value="CV">Cape Verde</option>
+                            <option value="KY">Cayman Islands</option>
+                            <option value="CF">Central African Republic</option>
+                            <option value="TD">Chad</option>
+                            <option value="CL">Chile</option>
+                            <option value="CN">China</option>
+                            <option value="CX">Christmas Island</option>
+                            <option value="CC">Cocos (Keeling) Islands</option>
+                            <option value="CO">Colombia</option>
+                            <option value="KM">Comoros</option>
+                            <option value="CG">Congo</option>
+                            <option value="CD">Congo, the Democratic Republic of the</option>
+                            <option value="CK">Cook Islands</option>
+                            <option value="CR">Costa Rica</option>
+                            <option value="CI">Cote d'Ivoire</option>
+                            <option value="HR">Croatia (Hrvatska)</option>
+                            <option value="CU">Cuba</option>
+                            <option value="CY">Cyprus</option>
+                            <option value="CZ">Czech Republic</option>
+                            <option value="DK">Denmark</option>
+                            <option value="DJ">Djibouti</option>
+                            <option value="DM">Dominica</option>
+                            <option value="DO">Dominican Republic</option>
+                            <option value="EC">Ecuador</option>
+                            <option value="EG">Egypt</option>
+                            <option value="SV">El Salvador</option>
+                            <option value="GQ">Equatorial Guinea</option>
+                            <option value="ER">Eritrea</option>
+                            <option value="EE">Estonia</option>
+                            <option value="ET">Ethiopia</option>
+                            <option value="FK">Falkland Islands (Malvinas)</option>
+                            <option value="FO">Faroe Islands</option>
+                            <option value="FJ">Fiji</option>
+                            <option value="FI">Finland</option>
+                            <option value="FR">France</option>
+                            <option value="GF">French Guiana</option>
+                            <option value="PF">French Polynesia</option>
+                            <option value="TF">French Southern Territories</option>
+                            <option value="GA">Gabon</option>
+                            <option value="GM">Gambia</option>
+                            <option value="GE">Georgia</option>
+                            <option value="DE">Germany</option>
+                            <option value="GH">Ghana</option>
+                            <option value="GI">Gibraltar</option>
+                            <option value="GR">Greece</option>
+                            <option value="GL">Greenland</option>
+                            <option value="GD">Grenada</option>
+                            <option value="GP">Guadeloupe</option>
+                            <option value="GU">Guam</option>
+                            <option value="GT">Guatemala</option>
+                            <option value="GN">Guinea</option>
+                            <option value="GW">Guinea-Bissau</option>
+                            <option value="GY">Guyana</option>
+                            <option value="HT">Haiti</option>
+                            <option value="HM">Heard and Mc Donald Islands</option>
+                            <option value="VA">Holy See (Vatican City State)</option>
+                            <option value="HN">Honduras</option>
+                            <option value="HK">Hong Kong</option>
+                            <option value="HU">Hungary</option>
+                            <option value="IS">Iceland</option>
+                            <option value="IN">India</option>
+                            <option value="ID">Indonesia</option>
+                            <option value="IR">Iran (Islamic Republic of)</option>
+                            <option value="IQ">Iraq</option>
+                            <option value="IE">Ireland</option>
+                            <option value="IL">Israel</option>
+                            <option value="IT">Italy</option>
+                            <option value="JM">Jamaica</option>
+                            <option value="JP">Japan</option>
+                            <option value="JO">Jordan</option>
+                            <option value="KZ">Kazakhstan</option>
+                            <option value="KE">Kenya</option>
+                            <option value="KI">Kiribati</option>
+                            <option value="KP">Korea, Democratic People's Republic of</option>
+                            <option value="KR">Korea, Republic of</option>
+                            <option value="KW">Kuwait</option>
+                            <option value="KG">Kyrgyzstan</option>
+                            <option value="LA">Lao People's Democratic Republic</option>
+                            <option value="LV">Latvia</option>
+                            <option value="LB">Lebanon</option>
+                            <option value="LS">Lesotho</option>
+                            <option value="LR">Liberia</option>
+                            <option value="LY">Libyan Arab Jamahiriya</option>
+                            <option value="LI">Liechtenstein</option>
+                            <option value="LT">Lithuania</option>
+                            <option value="LU">Luxembourg</option>
+                            <option value="MO">Macau</option>
+                            <option value="MK">Macedonia, The Former Yugoslav Republic of</option>
+                            <option value="MG">Madagascar</option>
+                            <option value="MW">Malawi</option>
+                            <option value="MY">Malaysia</option>
+                            <option value="MV">Maldives</option>
+                            <option value="ML">Mali</option>
+                            <option value="MT">Malta</option>
+                            <option value="MH">Marshall Islands</option>
+                            <option value="MQ">Martinique</option>
+                            <option value="MR">Mauritania</option>
+                            <option value="MU">Mauritius</option>
+                            <option value="YT">Mayotte</option>
+                            <option value="MX">Mexico</option>
+                            <option value="FM">Micronesia, Federated States of</option>
+                            <option value="MD">Moldova, Republic of</option>
+                            <option value="MC">Monaco</option>
+                            <option value="MN">Mongolia</option>
+                            <option value="MS">Montserrat</option>
+                            <option value="MA">Morocco</option>
+                            <option value="MZ">Mozambique</option>
+                            <option value="MM">Myanmar</option>
+                            <option value="NA">Namibia</option>
+                            <option value="NR">Nauru</option>
+                            <option value="NP">Nepal</option>
+                            <option value="NL">Netherlands</option>
+                            <option value="AN">Netherlands Antilles</option>
+                            <option value="NC">New Caledonia</option>
+                            <option value="NZ">New Zealand</option>
+                            <option value="NI">Nicaragua</option>
+                            <option value="NE">Niger</option>
+                            <option value="NG">Nigeria</option>
+                            <option value="NU">Niue</option>
+                            <option value="NF">Norfolk Island</option>
+                            <option value="MP">Northern Mariana Islands</option>
+                            <option value="NO">Norway</option>
+                            <option value="OM">Oman</option>
+                            <option value="PK">Pakistan</option>
+                            <option value="PW">Palau</option>
+                            <option value="PA">Panama</option>
+                            <option value="PG">Papua New Guinea</option>
+                            <option value="PY">Paraguay</option>
+                            <option value="PE">Peru</option>
+                            <option value="PH">Philippines</option>
+                            <option value="PN">Pitcairn</option>
+                            <option value="PL">Poland</option>
+                            <option value="PT">Portugal</option>
+                            <option value="PR">Puerto Rico</option>
+                            <option value="QA">Qatar</option>
+                            <option value="RE">Reunion</option>
+                            <option value="RO">Romania</option>
+                            <option value="RU">Russian Federation</option>
+                            <option value="RW">Rwanda</option>
+                            <option value="KN">Saint Kitts and Nevis</option>
+                            <option value="LC">Saint LUCIA</option>
+                            <option value="VC">Saint Vincent and the Grenadines</option>
+                            <option value="WS">Samoa</option>
+                            <option value="SM">San Marino</option>
+                            <option value="ST">Sao Tome and Principe</option>
+                            <option value="SA">Saudi Arabia</option>
+                            <option value="SN">Senegal</option>
+                            <option value="SC">Seychelles</option>
+                            <option value="SL">Sierra Leone</option>
+                            <option value="SG">Singapore</option>
+                            <option value="SK">Slovakia (Slovak Republic)</option>
+                            <option value="SI">Slovenia</option>
+                            <option value="SB">Solomon Islands</option>
+                            <option value="SO">Somalia</option>
+                            <option value="ZA">South Africa</option>
+                            <option value="GS">South Georgia and the South Sandwich Islands</option>
+                            <option value="ES">Spain</option>
+                            <option value="LK">Sri Lanka</option>
+                            <option value="SH">St. Helena</option>
+                            <option value="PM">St. Pierre and Miquelon</option>
+                            <option value="SD">Sudan</option>
+                            <option value="SR">Suriname</option>
+                            <option value="SJ">Svalbard and Jan Mayen Islands</option>
+                            <option value="SZ">Swaziland</option>
+                            <option value="SE">Sweden</option>
+                            <option value="CH">Switzerland</option>
+                            <option value="SY">Syrian Arab Republic</option>
+                            <option value="TW">Taiwan, Province of China</option>
+                            <option value="TJ">Tajikistan</option>
+                            <option value="TZ">Tanzania, United Republic of</option>
+                            <option value="TH">Thailand</option>
+                            <option value="TG">Togo</option>
+                            <option value="TK">Tokelau</option>
+                            <option value="TO">Tonga</option>
+                            <option value="TT">Trinidad and Tobago</option>
+                            <option value="TN">Tunisia</option>
+                            <option value="TR">Turkey</option>
+                            <option value="TM">Turkmenistan</option>
+                            <option value="TC">Turks and Caicos Islands</option>
+                            <option value="TV">Tuvalu</option>
+                            <option value="UG">Uganda</option>
+                            <option value="UA">Ukraine</option>
+                            <option value="AE">United Arab Emirates</option>
+                            <option value="GB">United Kingdom</option>
+                            <option value="US">United States</option>
+                            <option value="UM">United States Minor Outlying Islands</option>
+                            <option value="UY">Uruguay</option>
+                            <option value="UZ">Uzbekistan</option>
+                            <option value="VU">Vanuatu</option>
+                            <option value="VE">Venezuela</option>
+                            <option value="VN">Viet Nam</option>
+                            <option value="VG">Virgin Islands (British)</option>
+                            <option value="VI">Virgin Islands (U.S.)</option>
+                            <option value="WF">Wallis and Futuna Islands</option>
+                            <option value="EH">Western Sahara</option>
+                            <option value="YE">Yemen</option>
+                            <option value="ZM">Zambia</option>
+                            <option value="ZW">Zimbabwe</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Remarks</label>
+                        <div class="col-md-4">
+                          <textarea class="form-control" rows="3" name="remarks"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane" id="tab3">
+                      <h3 class="block">Provide your billing and credit card details</h3>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Card Holder Name
+                          <span class="required"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                          <input type="text" class="form-control" name="card_name" />
+                          <span class="help-block"> </span>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Card Number
+                          <span class="required"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                          <input type="text" class="form-control" name="card_number" />
+                          <span class="help-block"> </span>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">CVC
+                          <span class="required"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                          <input type="text" placeholder="" class="form-control" name="card_cvc" />
+                          <span class="help-block"> </span>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Expiration(MM/YYYY)
+                          <span class="required"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                          <input type="text" placeholder="MM/YYYY" maxlength="7" class="form-control" name="card_expiry_date" />
+                          <span class="help-block"> e.g 11/2020 </span>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Payment Options
+                          <span class="required"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                          <div class="checkbox-list">
+                            <label>
+                              <input type="checkbox" name="payment[]" value="1" data-title="Auto-Pay with this Credit Card." /> Auto-Pay with this Credit Card </label>
+                            <label>
+                              <input type="checkbox" name="payment[]" value="2" data-title="Email me monthly billing." /> Email me monthly billing </label>
+                          </div>
+                          <div id="form_payment_error"> </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane" id="tab4">
+                      <h3 class="block">Confirm your account</h3>
+                      <h4 class="form-section">Account</h4>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Username:</label>
+                        <div class="col-md-4">
+                          <p class="form-control-static" data-display="username"> </p>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Email:</label>
+                        <div class="col-md-4">
+                          <p class="form-control-static" data-display="email"> </p>
+                        </div>
+                      </div>
+                      <h4 class="form-section">Profile</h4>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Fullname:</label>
+                        <div class="col-md-4">
+                          <p class="form-control-static" data-display="fullname"> </p>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Gender:</label>
+                        <div class="col-md-4">
+                          <p class="form-control-static" data-display="gender"> </p>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Phone:</label>
+                        <div class="col-md-4">
+                          <p class="form-control-static" data-display="phone"> </p>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Address:</label>
+                        <div class="col-md-4">
+                          <p class="form-control-static" data-display="address"> </p>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">City/Town:</label>
+                        <div class="col-md-4">
+                          <p class="form-control-static" data-display="city"> </p>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Country:</label>
+                        <div class="col-md-4">
+                          <p class="form-control-static" data-display="country"> </p>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Remarks:</label>
+                        <div class="col-md-4">
+                          <p class="form-control-static" data-display="remarks"> </p>
+                        </div>
+                      </div>
+                      <h4 class="form-section">Billing</h4>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Card Holder Name:</label>
+                        <div class="col-md-4">
+                          <p class="form-control-static" data-display="card_name"> </p>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Card Number:</label>
+                        <div class="col-md-4">
+                          <p class="form-control-static" data-display="card_number"> </p>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">CVC:</label>
+                        <div class="col-md-4">
+                          <p class="form-control-static" data-display="card_cvc"> </p>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Expiration:</label>
+                        <div class="col-md-4">
+                          <p class="form-control-static" data-display="card_expiry_date"> </p>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">Payment Options:</label>
+                        <div class="col-md-4">
+                          <p class="form-control-static" data-display="payment[]"> </p>
+                        </div>
+                      </div>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-actions">
+                <div class="row">
+                  <div class="col-md-offset-3 col-md-9">
+                    <a href="javascript:;" class="btn default button-previous">
+                      <i class="fa fa-angle-left"></i> Précédent </a>
+                    <a href="javascript:;" class="btn btn-outline green button-next"> Continuer
+                      <i class="fa fa-angle-right"></i>
+                    </a>
+                    <button type="submit" class="btn green button-submit"> Envoyer
+                      <i class="fa fa-check"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+  {% block javascripts_page %}
+    <script src="{{ asset('assets/global/plugins/jstree/dist/jstree.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/jquery.sparkline.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/autosize/autosize.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
+
+    <script src="{{ asset('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/bootstrap-selectsplitter/bootstrap-selectsplitter.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/jquery.input-ip-address-control-1.0.min.js') }}" type="text/javascript"></script>
+  {% endblock %}
+
+  {% block javascripts_page_level %}
+    <script src="{{ asset('assets/pages/scripts/form-input-mask.min.js') }}" type="text/javascript"></script>
+    {#<script src="{{ asset('assets/pages/scripts/table-datatables-colreorder.min.js') }}" type="text/javascript"></script>#}
+    <script src="{{ asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/pages/scripts/ui-tree.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/pages/scripts/form-wizard.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/pages/scripts/components-bootstrap-select-splitter.min.js') }}" type="text/javascript"></script>
+    <script>
+
+      paypal.Button.render({
+
+        env: 'sandbox', // Or 'sandbox',
+        locale: 'fr_FR',
+        commit: true, // Show a 'Pay Now' button
+
+        style: {
+          color: 'gold',
+          size: 'responsive'
+        },
+        client: {
+          sandbox:    'AdBC_mb7RSZamGZNUNidbVR2-LiJj4gAylB_4U4u8SHK_2ezRchxe4jKATffmZ9bUOgimms0tUsTbgOz',
+          // production: 'AdBC_mb7RSZamGZNUNidbVR2-LiJj4gAylB_4U4u8SHK_2ezRchxe4jKATffmZ9bUOgimms0tUsTbgOz'
+        },
+
+        payment: function(data, actions) {
+          return actions.payment.create({
+            payment: {
+              transactions: [
+                {
+                  amount: { total: '500', currency: 'EUR' }
+                }
+              ]
+            }
+          });
+        },
+
+        onAuthorize: function(data, actions) {
+          return actions.payment.execute().then(function(payment) {
+
+            // The payment is complete!
+            // You can now show a confirmation message to the customer
+          });
+        },
+
+        onCancel: function(data, actions) {
+          /*
+           * Buyer cancelled the payment
+           */
+        },
+
+        onError: function(err) {
+          /*
+           * An error occurred during the transaction
+           */
+        }
+
+      }, '#paypal-button');
+    </script>
+    {#<script>
+      $('#submit_form').bootstrapWizard.next();
+    </script>#}
+  {% endblock %}

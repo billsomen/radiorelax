@@ -1,0 +1,5 @@
+#  Tous les sons d'un album :: Un album en particulier
+core_artists_albums_show:
+  path:     /{id}
+  defaults: { _controller: MainBundle:Core\Album:show }
+

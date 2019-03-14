@@ -4,16 +4,16 @@
 # This file is auto-generated during the composer install
 parameters:
     secret: "%env(APP_TOKEN)%"
-    app_name: Radio Relax
+    app_name: "%env(APP_NAME)%"
 
     database_host: ""
     database_port: ""
     database_user: ""
     database_password: ""
     database_name: "%env(DATABASE_NAME)%"
-    database_url: "%env(DATABASE_URL)%"
+    database_url: "%env(MONGODB_URI)%"
 
-    mailer_transport: smtp
+    mailer_transport: gmail
     mailer_auth_mode: login
     mailer_encryption: ssl
     mailer_host: ssl0.ovh.net
@@ -21,4 +21,8 @@ parameters:
     mailer_user: "%env(MAILER_USER)%"
     mailer_password: "%env(MAILER_PASSWORD)%"
 
+    cloudinary_preset:  "%env(CLOUDINARY_PRESET)%"
+    cloudinary_api_key: "%env(CLOUDINARY_API_KEY)%"
+    cloudinary_cloud_name:  "%env(CLOUDINARY_CLOUD_NAME)%"
+    cloudinary_api_secret:  "%env(CLOUDINARY_API_SECRET)%"
 

@@ -1,0 +1,9 @@
+{% if is_me %}
+  <button type="button" class="btn btn-circle btn-sm">Moi-même !</button>
+{% else %}
+  {% if following %}
+    <button type="button" class="btn btn-circle btn-sm"><i class="icon-check"></i> Suivi!</button>
+  {% else %}
+    <a href="{{ path('xs_user_follow_user', {'id': target.id, 'follow':1}) }}" type="button" class="btn btn-circle green btn-sm">Suivre</a>
+  {% endif %}
+{% endif %}

@@ -1,5 +1,5 @@
 app:
-  #  phrase: A radio that makes you feel new sensations!
+  phrase: A radio that makes you feel new sensations!
   home:
     title: Home
     specs:
@@ -351,6 +351,7 @@ form:
   address: "Address"
 
 locale:
+  current: English
   language:
     fr:
       title: Français
@@ -364,9 +365,11 @@ mail:
 
 flashbags:
   mail:
-    success: Email sent successfully. You've received a copy :) !
-    errror: Error sending the email. Check your email address or contact us via our social networks.
-  user:
-    error:
-      already_exist: A user with the same credentials has already been registered. Use another email address, or contact us.
+    success: Email sent successfully. You've received a copy !
+    error: Error sending the email. Check your email address or contact us via our social networks.
+  form:
+    bad: The form was not correctly filled. Try again.
+#  user:
+#    error:
+#      already_exist: A user with the same credentials has already been registered. Use another email address, or contact us.
 

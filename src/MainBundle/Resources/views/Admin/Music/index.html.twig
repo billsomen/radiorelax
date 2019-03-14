@@ -1,0 +1,205 @@
+{% extends "RadioRelaxAdminBundle::base.html.twig" %}
+{#Visualisation et gestion de tous les artistes#}
+{% block title %}
+  Artistes - {{ parent() }}
+{% endblock %}
+
+
+{% block body_inner_main %}
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Artistes Temporaires | {{ tmp_artists |length }} en attente</h3>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+            <tr>
+              <th scope="col">Nom d'Artiste</th>
+              <th scope="col">Date d'ajout</th>
+              <th scope="col">Status</th>
+              <th scope="col">Lien</th>
+              {#<th scope="col">Completion</th>#}
+              <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for artist in tmp_artists if not artist.validated %}
+              <tr>
+                <th scope="row">
+                  <div class="media align-items-center">
+                    <a href="{{ path('radio_relax_admin_artists_show', {'id': 'x'}) }}" class="avatar rounded-circle mr-3">
+                      <img alt="Image" src="{{ asset('assets/adminbundle/img/theme/bootstrap.jpg') }}">
+                    </a>
+                    <div class="media-body">
+                      {#<a href="{{ path('radio_relax_admin_artists_show', {'id': artist.id}) }}"><span class="mb-0 text-sm">{{ artist.name }}</span></a>#}
+                      <span class="mb-0 text-sm">{{ artist.name }}</span>
+                    </div>
+                  </div>
+                </th>
+                <td>
+                  {{ artist.dateAdd | date("Y/m/d") }}
+                </td>
+                <td>
+                      <span class="badge badge-dot mr-4">
+                        <i class="bg-warning"></i> en attente
+                      </span>
+                </td>
+                <td>
+                  <a href="http://{{ artist.linkPortfolio }}" target="_blank" title="Lien Portfolio de l'artiste">{{ artist.linkPortfolio }}</a>
+                </td>
+                <td class="text-right">
+                  <div class="dropdown">
+                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                      <a class="dropdown-item" href="{{ path('radio_relax_admin_artists_validate_temp', {'id': artist.id}) }}" title="Valider le profil et créer le profil de l'artiste">Valider le Compte</a>
+                      <a class="dropdown-item" href="{{ path('radio_relax_admin_artists_reject_temp', {'id': artist.id}) }}">Rejeter la demande</a>
+                      {#<a class="dropdown-item" href="#">Editer</a>#}
+                      {#<a class="dropdown-item" href="#">Supprimer</a>#}
+                      {#<a class="dropdown-item" href="#">Ajouter Album</a>#}
+                      {#<a class="dropdown-item" href="#">Réinitialiser le Compte</a>#}
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer py-4">
+          <nav aria-label="...">
+            <ul class="pagination justify-content-end mb-0">
+              {#<li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">
+                  <i class="fas fa-angle-left"></i>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+              <li class="page-item active">
+                <a class="page-link" href="#">1</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#">
+                  <i class="fas fa-angle-right"></i>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>#}
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Tous les Artistes | {{ tmp_artists |length }} au total</h3>
+            </div>
+            {#<div class="col-4 text-right">
+              <a href="{{ path('radio_relax_admin_artists_new') }}" class="btn btn-sm btn-primary">Ajouter</a>
+            </div>#}
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+            <tr>
+              <th scope="col">Nom</th>
+              <th scope="col">Date d'ajout</th>
+              <th scope="col">Status</th>
+              <th scope="col">Albums</th>
+              {#<th scope="col">Completion</th>#}
+              <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for artist in artists if artist.accessArtist %}
+              <tr>
+                <th scope="row">
+                  <div class="media align-items-center">
+                    <a href="{{ path('radio_relax_admin_artists_show', {'id': artist.id }) }}" class="avatar rounded-circle mr-3">
+                      {% if not artist.artist.profilePic %}
+                        <img alt="Image placeholder" src="{{ asset('assets/adminbundle/img/theme/bootstrap.jpg') }}">
+                      {% else %}
+                        <img alt="Image placeholder" src="{{ artist.artist.profilePic }}">
+                      {% endif %}
+                    </a>
+                    <div class="media-body">
+                      <a href="{{ path('radio_relax_admin_artists_show', {'id': artist.id}) }}"><span class="mb-0 text-sm">{{ artist.artist.name }}</span></a>
+                    </div>
+                  </div>
+                </th>
+                <td>
+                  {{ artist.dateAdd | date("Y/m/d") }}
+                </td>
+                <td>
+                      <span class="badge badge-dot mr-4">
+                        <i class="bg-warning"></i> en attente
+                      </span>
+                </td>
+                <td>
+                  {{ artist.artist.albums | length }}
+                </td>
+                <td class="text-right">
+                  <div class="dropdown">
+                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                      <a class="dropdown-item" href="#">Editer</a>
+                      {#<a class="dropdown-item" href="#">Supprimer</a>#}
+                      <a class="dropdown-item" href="#">Ajouter Album</a>
+                      {#<a class="dropdown-item" href="#">Réinitialiser le Compte</a>#}
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer py-4">
+          <nav aria-label="...">
+            <ul class="pagination justify-content-end mb-0">
+              {#<li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">
+                  <i class="fas fa-angle-left"></i>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+              <li class="page-item active">
+                <a class="page-link" href="#">1</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#">
+                  <i class="fas fa-angle-right"></i>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>#}
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+

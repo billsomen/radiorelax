@@ -1,5 +1,18 @@
+admin:
+  resource: "@MainBundle/Resources/config/routing-admin.yml"
+  prefix:   /admin/{_locale}/
+
 main:
-    resource: "@MainBundle/Resources/config/routing.yml"
-    prefix:   /
-    requirements:
-      _locale:  en|fr
+  resource: "@MainBundle/Resources/config/routing.yml"
+  prefix:   /
+  requirements:
+    _locale:  en|fr
+
+#core:
+#  resource: "@CoreBundle/Resources/config/routing.yml"
+#  prefix:   /
+#  requirements:
+#    _locale:  en|fr
+
+logout:
+  path: /logout

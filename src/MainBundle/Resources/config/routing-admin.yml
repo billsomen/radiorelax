@@ -1,0 +1,25 @@
+#Dashboard de gestion des artistes
+admin_homepage:
+  path:     /
+  defaults: { _controller: MainBundle:Admin:index }
+
+admin_profile:
+  path:     /profile
+  defaults: { _controller: MainBundle:Admin:index }
+
+admin_store:
+  path:     /store
+  defaults: { _controller: MainBundle:Admin:index }
+
+#Admin Artist
+admin_artists:
+  prefix:     /artists
+  resource: "admin/routing-artists.yml"
+
+admin_albums:
+  prefix:     /albums
+  resource: "admin/routing-albums.yml"
+
+admin_musics:
+  prefix:     /musics
+  resource: "admin/routing-musics.yml"

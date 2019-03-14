@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Bled-Downloader | Confirmation de l'adresse Email
+{% endblock %}
+
+{% block header_bottom %}
+{% endblock %}
+
+{% block body %}
+    <div class="content">
+        <div class="content_top">
+            <div class="back-links">
+                <p><a href="{{ path('main_homepage') }}">Accueil</a>&gt;<a href="#" class="active">Confirmation d'adresse E-Mail</a></p>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="section group">
+            <div class="col span_2_of_3">
+                <div class="contact-form">
+                    <h2>Confirmation de l'adresse Email</h2>
+                    {% if confirmed %}
+                        <div class="row">
+                            <div class="error-subtext"><i class="fa fa-smile-o"></i> Adresse Email : <i>{{ email }}</i> <b>confirmée</b> avec succès !</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="{{ path('login') }}"><button class="btn btn-primary btn-block btn-lg">Connectez-vous !</button></a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="row">
+                            <div class="error-subtext"><i class="fa fa-frown-o"></i> <b>Erreur</b> lors de la confirmation de votre adresse Email.</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                Merci de cliquer de nouveau sur le lien reçu par mail.
+                            </div>
+                            <hr>
+                            <div class="col-md-12">
+                                <div class="alert alert-info">
+                                    Si le problème perdure, contactez notre technicien à :
+                                    <ul>
+                                        <li> > <i>info@bled-downloader.com</i></li>
+                                        <li> > <a href="tel:695949869">(+237) 695-949-869</a></li>
+                                        <li> > <a href="tel:699477454">(+237) 699-477-454</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col span_1_of_3">
+                <div class="contact_info">
+                    <h2>Retrouvez-nous</h2>
+                    <div class="map">
+                        <iframe width="100%" height="175" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3980.801637434308!2d11.496323314242069!3d3.852709749500174!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x108bcfbe9b4b8167%3A0x86b34283a0889fdd!2sRESTAURANT+CRADAT!5e0!3m2!1sen!2sus!4v1451696598188" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="company_address">
+                    <h2>Information :</h2>
+                    <p>Cameroun, Yaoundé</p>
+                    <p>Carrefour Cradat, A coté du glacier italien</p>
+                    <p><i class="fa fa-phone"></i> (+237) 695-949-869</p>
+                    <p>Email: <span><a href="mailto:info@bled-downloader.com">info@bled-downloader.com</a></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

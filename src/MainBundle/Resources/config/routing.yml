@@ -2,6 +2,10 @@ main_homepage:
     path:     /{_locale}
     defaults: { _controller: MainBundle:Default:index, _locale: en_EN  }
 
+main_artists:
+  prefix:   /{_locale}/artists
+  resource: "core/routing-artists.yml"
+
 api_business_card:
     path:     /{_locale}/business-cards/{id}
     defaults: { _controller: MainBundle:Api:businessCard, _locale: en_EN  }
@@ -13,3 +17,14 @@ api_get_order:
 edu_homepage:
   path:     /{_locale}/edu
   defaults: { _controller: MainBundle:Edu:index, _locale: en_EN }
+
+login:
+  path: /{_locale}/login
+  defaults: { _controller: XSUserBundle:Security:login }
+
+login_check:
+  path: /{_locale}/login_check
+
+signin:
+  path: /{_locale}/signin
+  defaults: { _controller: XSUserBundle:Security:signin }

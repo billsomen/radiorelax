@@ -1,0 +1,115 @@
+<table class="table table-striped table-bordered table-hover data-table">
+  <thead>
+  <tr>
+    <th> Identifiant </th>
+    <th> Matricule </th>
+    <th> Nom </th>
+    <th> Prénom </th>
+    <th> Genre </th>
+    <th> Date et Lieu de Naissance </th>
+    <th> Date d'ajout </th>
+    {#<th> Auteur </th>#}
+    <th> Types</th>
+  </tr>
+  </thead>
+  <tbody>
+  {% for user in staff.students %}
+    <tr>
+      <td>
+        <a href="{{ path('xs_manager_users_show', {'id': user.id}) }}">{{ user.nickname }}</a> - <i>{{ user.username }}</i>,
+      </td>
+      <td> {{ user.registrationNumber }}</td>
+      <td> {{ user.name }}</td>
+      <td> {{ user.surname }}</td>
+      <td> {{ user.gender }}</td>
+      <td title="{{ user.birthdate | time_diff }}">
+        {{ user.birthdate | date('d/m/Y') }}
+        {% if user.birthLocation %}
+          à <span title="{{ user.birthLocation.town ~'('~user.birthLocation.quarter~'), '~user.birthLocation.country }}">{{ user.birthLocation.town }}</span>
+        {% endif %}
+      </td>
+      <td> {{ user.dateAdd | time_diff }}</td>
+      {#<td> {{ user.author.nickname }} - <i>{{ user.author.username }}</i></td>#}
+      <td>
+        {% if user.edu.eduTypes %}
+          <ul>
+            {% for eduType in user.edu.eduTypes %}
+              <li>{{ eduType }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </td>
+      {# <td>
+           <ul>
+               {% if user.edu.isStudent %}
+                   <li>
+                       {{ 'Student' }}
+                      #}{# {% for sy in user.edu.student.schools if sy.schoolYear in current_sy %}
+                           {% for school in sy.schools %}
+                               <a href="{{ path('xs_manager_admin_schools_show', {'id': school.id}) }}">{{ school.name }}</a>
+                           {% endfor %}
+                       {% else %}
+                           -
+                       {% endfor %}#}{#
+                   </li>
+               {% endif %}
+               {% if user.edu.isTeacher %}
+                   <li>
+                       {{ edu_type ~'->' }}
+                       {% for sy in user.edu.student.schools if sy.schoolYear in current_sy %}
+                           {% for school in sy.schools %}
+                               <a href="{{ path('xs_manager_admin_schools_show', {'id': school.id}) }}">{{ school.name }}</a>
+                           {% endfor %}
+                       {% else %}
+                           -
+                       {% endfor %}
+                   </li>
+               {% endif %}
+           </ul>
+
+       </td>
+       <td>
+           {% for sy in user.edu.admin.schools if sy.schoolYear in current_sy %}
+               <ul>
+                   {% for school in sy.schools %}
+                       <li>
+                           <a href="{{ path('xs_manager_admin_schools_show', {'id': school.id}) }}">{{ school.name }}</a>
+                       </li>
+                   {% endfor %}
+               </ul>
+           {% else %}
+               -
+           {% endfor %}
+       </td>
+       <td> {{ user.edu.admin.users | length }} </td>
+
+       <td>
+           <div class="btn-group">
+               <span class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">Actions
+                   <i class="fa fa-angle-down"></i>
+               </span>
+               <ul class="dropdown-menu">
+                   <li>
+                       <a href="{{ path('xs_manager_admin_users_show', {'id': user.id}) }}"><span class="icon-wrench"></span> Modifier </a>
+                   </li>
+                   <li>
+                       <a data-toggle="modal" href="#adminAddSchool-{{ user.id }}"><span class="icon-plus"></span> Ajouter Ecole</a>
+                   </li>
+                   <li>
+                       <a data-toggle="modal" href="#remove-{{ user.id }}"><span class="icon-trash"></span> Supprimer </a>
+                   </li>
+                   <li class="divider"> </li>
+                   <li>
+                       <a href="javascript:;"> Contacter </a>
+                   </li>
+               </ul>
+           </div>
+       </td>
+       #}{#todo: Modal de confirmation de suppression#}{#
+       {{ render(controller('XSEducationBundle:Admin:removeUser', {'id': user.id})) }}
+       #}{#todo: Modal d'Ajout d'Ecoles a Manager#}{#
+       {{ render(controller('XSEducationBundle:Admin:addSchoolAdmin', {'id': user.id})) }}#}
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>

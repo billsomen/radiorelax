@@ -1,0 +1,68 @@
+<div class="modal-dialog" id="modalDialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+      <h4 class="modal-title" id="modalEntry-title">{{ session.name | truncate(50) }}</h4>
+    </div>
+    <div class="modal-body" id="modalEntry-body">
+      <table class="table table-light">
+       {# <tr>
+          <td>Postuler</td>
+          <td><a class="btn btn-primary tooltips" title="Tarif de la séance : {{ session.accessPrice|amount_format }} / {{ session.accessPrice.PaymentFrequency | trans}}">Réserver ma place</a> </td>
+        </tr>#}
+        {#<tr>
+          <td>Calendrier</td>
+          <td><a class="btn btn-primary tooltips" title="Ajouter à mon calendrier">Ajouter</a> </td>
+        </tr>
+        <tr>
+          <td>Message</td>
+          <td><a class="btn btn-primary tooltips" title="Envoyer un message au tuteur">Envoyer</a> </td>
+        </tr>#}
+        <tr>
+          <td>Tuteur</td>
+          <td><a href="{{ path('xs_mboadjoss_users_show', {'id': tutor.id}) }}">{{ tutor.nickname }}</a></td>
+        </tr>
+        <tr>
+          <td>Type</td>
+          <td>{{ session.type }}</td>
+        </tr>
+        <tr>
+          <td>Date</td>
+          <td>{{ session.dateFrom | date("Y-m-d") }}</td>
+        </tr>
+        <tr>
+          <td>Heures</td>
+          <td>de {{ session.dateFrom | date("H:i") }} à {{ session.dateTo | date("H:i") }}</td>
+        </tr>
+        <tr>
+          <td>Etat</td>
+          <td>{{ session.status }}</td>
+        </tr>
+        <tr>
+          <td>Thème</td>
+          <td>{{ session.name }}</td>
+        </tr>
+        <tr>
+          <td>Places</td>
+          <td>{{ session.placesClosed }} /{{ session.placesTotal }}</td>
+        </tr>
+        <tr>
+          <td>Tarif</td>
+          <td>{{ session.accessPrice|amount_format }} / {{ session.accessPrice.PaymentFrequency | trans}}</td>
+        </tr>
+        <tr>
+          <td>Description</td>
+          <td>{{ session.description }}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn dark btn-outline pull-left" data-dismiss="modal">Fermer</button>
+      {% if in_cart %}
+        <a type="button" href="{{ path('xs_education_my_cart') }}" class="btn pull-right"><i class="icon-check"></i> <span class="hidden-sm hidden-xs"> Dans mon </span>Panier</a>
+      {% else %}
+        <button type="button" class="btn btn-primary pull-right" id="cart_{{ session.id }}" onclick="addSessionToCart('{{ tutor.id }}', '{{ session.id }}')"><i class="icon-handbag"></i> <span class="hidden-sm hidden-xs"> Ajouter au </span>Panier</button>
+      {% endif %}
+    </div>
+  </div>
+</div>
