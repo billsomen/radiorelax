@@ -8,11 +8,9 @@ main:
   requirements:
     _locale:  en|fr
 
-#core:
-#  resource: "@CoreBundle/Resources/config/routing.yml"
-#  prefix:   /
-#  requirements:
-#    _locale:  en|fr
+xs_market_place:
+  resource: "@XSMarketPlaceBundle/Resources/config/routing.yml"
+  prefix:   /{_locale}/market
 
 logout:
   path: /logout

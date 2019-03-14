@@ -25,7 +25,7 @@
             </p>#}
           </div>
           <div class="album_btn">
-            <a href="#" class="ms_btn" title="Ajouter au panier">
+            <a href="{{ path('xs_market_place_cart_add_album', {'id': album.id}) }}" class="ms_btn" title="Ajouter au panier">
               <span class="fa fa-cart-plus"></span>
               Panier | {{ album.account.amount | amount_format }}
             </a>

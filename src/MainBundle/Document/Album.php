@@ -112,4 +112,13 @@ class Album extends FilesTemplate
   {
     $this->price = $price;
   }
+
+  public function getTotalDuration(){
+//    return the duration of subsequents files in second
+    $seconds = 0;
+    foreach ($this->getMusics() as $m){
+      $seconds += $m->getDuration();
+    }
+    return $seconds;
+  }
 }

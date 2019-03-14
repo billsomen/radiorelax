@@ -106,5 +106,19 @@ class Cart implements CartInterface
     $this->locked = false;
   }
 
-  
+  /**
+   * @return mixed
+   */
+  public function getAlbums()
+  {
+    return $this->albums;
+  }
+
+  /**
+   * @param mixed $albums
+   */
+  public function setAlbums($albums): void
+  {
+    $this->albums = $albums;
+  }
 }

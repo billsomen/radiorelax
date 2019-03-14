@@ -13,37 +13,14 @@ use XS\MarketPlaceBundle\Document\ProductCart;
 
 class CartController extends Controller
 {
-  public function indexAction(Request $request)
+  public function indexAction()
   {
-    $session = $request->getSession();
-    $cart = $session->get('cart');
+    $cart = $this->getUser()->getCart();
     return $this->render('@XSMarketPlace/Cart/index.html.twig', array(
       'cart' => $cart
     ));
   }
-  public function addProduct_2Action(Request $request, $id){
-    $dm = $this->get('doctrine_mongodb')->getManager();
-//       Quand on ajoute un produit, on n'a pas encore acces a sa quantite...
-    $product = $dm->getRepository('MainBundle:Product')->findOneById($id);
-    $session = $request->getSession();
-//        $cart = $session->get('cart');
-    $cart = new Cart();
-    $productCart = new ProductCart();
-    $productCart->setProductId($id);
-    $productCart->setProfileUrl($product->getProfileUrl());
-    $productCart->setName($product->getName());
-    $productCart->setAmount($product->getPriceShown());
-    $productCart->setProduct($product);
-    $cart->addProductCart($productCart);
-//        var_dump($cart);
-    $session->set('cart', $cart);
-    $cartS = $session->get('cart');
-    $response = new Response('Hello '.$id, Response::HTTP_OK);
-    
-    return $response;
-//        return $this->redirectToRoute('main_cart');
-  }
-  
+
   public function addSessionAction(Request $request, $id, $tutor_id){
     $dm = $this->get('doctrine_mongodb')->getManager();
     $tutor = $dm->getRepository('XSUserBundle:User')->findOneBy(array(
@@ -51,7 +28,7 @@ class CartController extends Controller
     ));
     $message = "Erreur inconnue, merci de recommencer!";
     $type = "error";
-    
+
     $cart = null;
     $session = $request->getSession();
     $user = $this->getUser();
@@ -64,7 +41,7 @@ class CartController extends Controller
         $cart = new Cart();
       }
     }
-    
+
     foreach($tutor->getCalendar()->getEntries() as $entry){
       if($entry->getId() == $id){
         $result = $cart->addSession($tutor, $entry);
@@ -85,14 +62,14 @@ class CartController extends Controller
         break;
       }
     }
-    
+
     if($request->isXmlHttpRequest()){
       $response = new JsonResponse();
       $response->setData(array(
         'message' => $message,
         'type' => $type
       ));
-      
+
       return $response;
     }
     else{
@@ -100,74 +77,39 @@ class CartController extends Controller
       return new Response($message);
     }
   }
-  
+
   public function addAlbumAction($id){
     $dm = $this->get('doctrine_mongodb')->getManager();
 //       Quand on ajoute un produit, on n'a pas encore acces a sa quantite...
     $album = $dm->getRepository('MainBundle:Album')->findOneBy(array(
       'id' => $id
     ));
-    $in_cart = false;
     $user = $this->getUser();
-    if(isset($product) and !empty($user)){
-//          ON s'assure que l'user est connecté ou pas
+    if(isset($album) and !empty($user)){
+//          ON s'assure que l'user est connecté
       $cart = $user->getCart();
-      $productCart = new ProductCart();
-      $productCart->setProduct($product);
-      $productCart->setAmount($product->getPriceShown());
-      $productCart->setName($product->getName());
-      $productCart->setProfileUrl($product->getProfileUrl());
-//            On cree le flag in_cart, renseignant sur la presence du produit dans le cart
       if(!isset($cart)){
         $cart = new Cart();
-//                On ajoute directement...
-        $cart->addProductCart($productCart);
       }
-//            On s'assure desormais de l'unicite d'un produit dans le panier...
-      else{
-        foreach($cart->getProductsCarts() as $product_cart){
-          if($product_cart->getProduct()->getId() == $id){
-            $in_cart = true;
-            break;
-          }
-        }
-        if(!$in_cart) {
-          $cart->addProductCart($productCart);
-          print_r(555555555555555);
-          $session->set('cart', $cart);
-        }
-      }
-      
-      $user = $this->getUser();
-      if(isset($user)){
-        $user->getMarket()->setCart($cart);
-//        $user
+//      Adding was OK ?
+      $add_ok = $cart->addAlbum($album);
+      if($add_ok){
+        $user->setCart($cart);
         $dm->persist($user);
         $dm->flush();
       }
-      
-      //                Avant de continuer, on renvoit des donnees s'il s'agit d'une requete xmlhttp...
-      
-      if($request->isXmlHttpRequest()){
-//                On up*ate juste le mo*ule général
-//        return new Response('Fuck');
-        return $this->container->get('templating')->renderResponse('XSMarketPlaceBundle:Cart:cart-module.html.twig');
+      else{
+        $this->addFlash("error", "Le panier contient déjà l'album");
       }
-      /* if($request->isXmlHttpRequest())
-       {
-           return $this->container->get('templating')->renderResponse('MainBundle:Cart:addProduct.html.twig', array(
-                   'id' => $id)
-           );
-       }*/
     }
     else{
-      $this->addFlash('error', 'Sorry, the product does not exist');
+      $this->addFlash("error", "Erreur, l'album n'existe pas");
     }
-//    return new Response('Fuck');
+
     return $this->redirectToRoute('xs_market_place_cart');
   }
-  
-  
+
+
   public function loadTableXmlhttpAction(Request $request){
     $session = $request->getSession();
     $cart = $session->get('cart');
@@ -177,7 +119,7 @@ class CartController extends Controller
       'cart' => $cart
     ));
   }
-  
+
   public function removeSessionAction(Request $request, $tutor_id, $id){
     $cart = null;
     $session = $request->getSession();
@@ -192,7 +134,7 @@ class CartController extends Controller
         $session->set('cart', $cart);
       }
     }
-    
+
     $res = $cart->removeSession($tutor_id, $id);
     if($res){
       if(isset($user)){
@@ -202,14 +144,14 @@ class CartController extends Controller
       }
       $session->set('cart', $cart);
     }
-    
+
     if(!isset($user)){
       $user = new \XS\UserBundle\Document\User();
       $user->setNickname("Anonyme");
     }
     $locale_action = new Locale();
     $locale = $locale_action->defaultLocale($user);
-    
+
     return $this->container->get('templating')->renderResponse('@XSEducation/User/cart-module.html.twig', array(
       'cart' => $cart,
       'locale' => $locale,
@@ -223,7 +165,7 @@ class CartController extends Controller
     $in_cart = false;
     if(isset($product)){
 //          ON s'assure que l'user est connecté ou pas
-      
+
       $session = $request->getSession();
       $cart = $session->get('cart');
 //            On cree le flag in_cart, renseignant sur la presence du produit dans le cart
@@ -258,10 +200,10 @@ class CartController extends Controller
     else{
       $this->addFlash('error', 'Sorry, the product does not exist');
     }
-    
+
     return $this->redirectToRoute('xs_market_place_cart');
   }
-  
+
   public function buyProductAction(Request $request, $id){
     return $this->redirectToRoute('homepage');
     $dm = $this->get('doctrine_mongodb')->getManager();
@@ -295,7 +237,7 @@ class CartController extends Controller
               }
 //                            MAJ de la quantite dans le CART...
             }
-            
+
           }
         }
       }
