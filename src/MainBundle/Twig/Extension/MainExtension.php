@@ -2,7 +2,7 @@
 
 namespace MainBundle\Twig\Extension;
 
-use RadioRelax\CoreBundle\Document\Album;
+use MainBundle\Document\Album;
 use XS\AfrobankBundle\Document\Amount;
 use XS\EducationBundle\Document\Classe;
 use XS\EducationBundle\Document\School;

@@ -40,7 +40,7 @@ security:
 
       logout:
         path: logout
-        target: radio_relax_coming_soon_homepage
+        target: coming_soon_homepage
 
   access_control:
   - { path: ^/admin/, roles: ROLE_USER }

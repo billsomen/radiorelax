@@ -17,7 +17,7 @@
             <div class="col-8">
               <h3 class="mb-0">
                 Nouvel Album de
-                <a href="{{ path('radio_relax_admin_artists_show', {'id': artist.id}) }}">
+                <a href="{{ path('admin_artists_show', {'id': artist.id}) }}">
                   {{ artist.nickname }}
                 </a></h3>
             </div>
@@ -27,7 +27,7 @@
           </div>
         </div>
         <div class="card-body">
-          <form method="post" action="{{ path('radio_relax_admin_albums_new', {'id_artist': artist.id}) }}" name="new-artist" id="new-artist" enctype="multipart/form-data">
+          <form method="post" action="{{ path('admin_albums_new', {'id_artist': artist.id}) }}" name="new-artist" id="new-artist" enctype="multipart/form-data">
             {{ form_row(form._token) }}
             <h6 class="heading-small text-muted mb-4">Informations Album</h6>
             <div class="pl-lg-4">

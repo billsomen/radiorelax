@@ -2,6 +2,7 @@
 
 namespace MainBundle\Controller;
 
+use MainBundle\Document\Album;
 use MainBundle\Form\AlbumType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -59,7 +60,7 @@ class AlbumController extends Controller
           }
 
           $album->setArtist($user);
-          $user->getArtist()->getAlbums()->add($album);
+          $user->getProfiles()->getArtist()->getAlbums()->add($album);
 
           $this->addFlash("notice", "Mise à jour des informations de l'album terminée!");
           $dm->persist($user);
@@ -74,7 +75,7 @@ class AlbumController extends Controller
         }
       }
 
-      return $this->render('RadioRelaxAdminBundle:Album:new.html.twig', array(
+      return $this->render('MainBundle:Admin/Album:new.html.twig', array(
         'artist' => $user,
         'form' => $form->createView()
       ));

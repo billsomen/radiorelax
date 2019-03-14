@@ -2,10 +2,6 @@ main_homepage:
     path:     /{_locale}
     defaults: { _controller: MainBundle:Default:index, _locale: en_EN  }
 
-admin:
-  resource: "routing-admin.yml"
-  prefix:   /{_locale}/admin
-
 main_artists:
   prefix:   /{_locale}/artists
   resource: "core/routing-artists.yml"
