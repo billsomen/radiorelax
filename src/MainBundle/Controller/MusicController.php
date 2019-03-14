@@ -169,6 +169,32 @@ class MusicController extends Controller
     return $this->redirectToRoute('admin_profile');
   }
 
+  public function removeAction($id)
+  {
+    // For now, we're not able to remove any music
+    $this->addFlash('error', "Impossible de supprimer de la musique, merci de contacter un administrateur.");
+    return $this->redirectToRoute('admin_profile');
+    //    Remove the Music accordingly to its id
+    $dm = $this->get('doctrine.odm.mongodb.document_manager');
+    $music = $dm->getRepository("MainBundle:Music")->findOneBy(array(
+      'id' => $id
+    ));
+    if(!empty($music)){
+      $id_album = $music->getAlbum()->getId();
+      $dm->remove($music);
+      $dm->flush();
+      $this->addFlash('notice', "Musique supprimée avec succès");
+      return $this->redirectToRoute("admin_albums_show", array(
+        "id" => $id_album
+      ));
+    }
+    else{
+      $this->addFlash('error', "Musique inexistante");
+    }
+
+    return $this->redirectToRoute('admin_profile');
+  }
+
   public function showAction($id)
   {
     //    Show Music
@@ -205,9 +231,6 @@ class MusicController extends Controller
         if($form->isValid()){
 //          On enregistre et push l'image
           $tmp_name = !empty($_FILES['profile'])?$_FILES['profile']['tmp_name']:null;
-//          var_dump($_FILES);
-//          m;
-//          print_r($iii);
 
           $res["public_id"] = 0;
           if(!empty($tmp_name)){

@@ -23,6 +23,7 @@
               </h3>
             </div>
             <div class="col-4 text-right">
+              <a href="{{ path('admin_musics_remove', {'id': music.id}) }}" class="btn btn-sm btn-danger" title="{{ 'button.delete'|trans }}"><i class="fa fa-trash"></i></a>
               <button form="new-artist" class="btn btn-sm btn-primary">{{ 'button.save'|trans }}</button>
             </div>
           </div>
