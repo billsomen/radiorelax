@@ -23,12 +23,27 @@ class Listener
 //  Les albums de l'artist
   protected $albums;
 
+  /** @MongoDB\ReferenceMany(targetDocument="Album") */
+//  Les albums achetés par l'auditeur
+  protected $favorites_albums;
+
+  /** @MongoDB\ReferenceMany(targetDocument="Music") */
+//  Musiques achetéesz
+  protected $musics;
+
+  /** @MongoDB\ReferenceMany(targetDocument="Music") */
+//  Musiques favorites
+  protected $favorites_musics;
+
   /**
    * Listener constructor.
    */
   public function __construct()
   {
     $this->albums = new ArrayCollection();
+    $this->musics = new ArrayCollection();
+    $this->favorites_albums = new ArrayCollection();
+    $this->favorites_musics = new ArrayCollection();
   }
 
   /**
@@ -67,4 +82,71 @@ class Listener
     return false;
   }
 
+  public function hasFavoriteAlbumId($album_id){
+    foreach ($this->favorites_albums as $album_user){
+      if($album_id == $album_user->getId()){
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public function hasFavoriteMusicId($album_id){
+    foreach ($this->favorites_musics as $album_user){
+      if($album_id == $album_user->getId()){
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getFavoritesAlbums()
+  {
+    return $this->favorites_albums;
+  }
+
+  /**
+   * @param mixed $favorites_albums
+   */
+  public function setFavoritesAlbums($favorites_albums): void
+  {
+    $this->favorites_albums = $favorites_albums;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getMusics()
+  {
+    return $this->musics;
+  }
+
+  /**
+   * @param mixed $musics
+   */
+  public function setMusics($musics): void
+  {
+    $this->musics = $musics;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getFavoritesMusics()
+  {
+    return $this->favorites_musics;
+  }
+
+  /**
+   * @param mixed $favorites_musics
+   */
+  public function setFavoritesMusics($favorites_musics): void
+  {
+    $this->favorites_musics = $favorites_musics;
+  }
 }

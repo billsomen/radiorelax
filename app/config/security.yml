@@ -38,7 +38,7 @@ security:
 
       logout:
         path: logout
-        target: coming_soon_homepage
+        target: main_homepage
 
   access_control:
   - { path: ^/(en|fr)/admin/, roles: ROLE_USER }

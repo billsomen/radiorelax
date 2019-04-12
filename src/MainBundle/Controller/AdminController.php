@@ -2,8 +2,10 @@
 
 namespace MainBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use XS\UserBundle\Document\Telephone;
 use XS\UserBundle\Form\UserEditPasswordType;
 use XS\UserBundle\Form\UserEditType;
@@ -69,6 +71,8 @@ class AdminController extends Controller
     $this->addFlash('error', $this->get("translator")->trans('flashbags.artist.not_found'));
     return $this->redirectToRoute('admin_profile');
   }
+
+
   public function playlistAlbumShowAction($id){
     //    Proxy to redirect user to  album view
     $dm = $this->get('doctrine.odm.mongodb.document_manager');
@@ -80,6 +84,105 @@ class AdminController extends Controller
     return $this->redirectToRoute("core_artists_albums_show", array(
       "id" => $id,
       "namespace" => $album->getArtist()->getProfiles()->getArtist()->getNamespace()
+    ));
+  }
+
+  public function favoriteAlbumAddAction($id){
+    //    Ajouter un album à la liste des favoris
+    $dm = $this->get('doctrine.odm.mongodb.document_manager');
+
+    $album = $dm->getRepository("MainBundle:Album")->findOneBy(array(
+      'id' => $id
+    ));
+
+    $user = $this->getUser();
+
+//    $user->getProfiles()->getListener()->setFavoritesAlbums(new ArrayCollection());
+    $user->getProfiles()->getListener()->getFavoritesAlbums()->add($album);
+    $dm->persist($user);
+    $dm->flush();
+
+//    return new Response(count($user->getProfiles()->getListener()->getFavoritesAlbums()));
+
+    $this->addFlash("notice", "Album ajouté avec susccès aux favoris");
+
+
+    return $this->redirectToRoute("core_artists_albums_show", array(
+      "id" => $id,
+      "namespace" => $album->getArtist()->getProfiles()->getArtist()->getNamespace()
+    ));
+  }
+
+  public function favoriteAlbumRemoveAction($id){
+    //    Retirer un album à la liste des favoris
+    $dm = $this->get('doctrine.odm.mongodb.document_manager');
+
+    $album = $dm->getRepository("MainBundle:Album")->findOneBy(array(
+      'id' => $id
+    ));
+
+    $user = $this->getUser();
+
+    $user->getProfiles()->getListener()->getFavoritesAlbums()->removeElement($album);
+    $dm->persist($album);
+    $dm->flush();
+
+    $this->addFlash("notice", "Album retiré avec susccès des favoris");
+
+
+    return $this->redirectToRoute("core_artists_albums_show", array(
+      "id" => $id,
+      "namespace" => $album->getArtist()->getProfiles()->getArtist()->getNamespace()
+    ));
+  }
+  
+//  Music to & from Favorites
+
+  public function favoriteMusicAddAction($id){
+    //    Ajouter un music à la liste des favoris
+    $dm = $this->get('doctrine.odm.mongodb.document_manager');
+
+    $music = $dm->getRepository("MainBundle:Music")->findOneBy(array(
+      'id' => $id
+    ));
+
+    $user = $this->getUser();
+
+    $user->getProfiles()->getListener()->getFavoritesMusics()->add($music);
+    $dm->persist($user);
+    $dm->flush();
+
+//    return new Response(count($user->getProfiles()->getListener()->getFavoritesMusics()));
+
+    $this->addFlash("notice", "Music ajouté avec susccès aux favoris");
+
+
+    return $this->redirectToRoute("core_artists_albums_show", array(
+      "id" => $music->getAlbum()->getId(),
+      "namespace" => $music->getArtist()->getProfiles()->getArtist()->getNamespace()
+    ));
+  }
+
+  public function favoriteMusicRemoveAction($id){
+    //    Retirer un music à la liste des favoris
+    $dm = $this->get('doctrine.odm.mongodb.document_manager');
+
+    $music = $dm->getRepository("MainBundle:Music")->findOneBy(array(
+      'id' => $id
+    ));
+
+    $user = $this->getUser();
+
+    $user->getProfiles()->getListener()->getFavoritesMusics()->removeElement($music);
+    $dm->persist($music);
+    $dm->flush();
+
+    $this->addFlash("notice", "Music retiré avec susccès des favoris");
+
+
+    return $this->redirectToRoute("core_artists_albums_show", array(
+      "id" => $music->getAlbum()->getId(),
+      "namespace" => $music->getArtist()->getProfiles()->getArtist()->getNamespace()
     ));
   }
 

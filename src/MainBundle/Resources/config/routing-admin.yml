@@ -28,6 +28,26 @@ admin_profile_favorites:
   path:     /me/favorites
   defaults: { _controller: MainBundle:Admin:favorites }
 
+admin_profile_favorites_add_album:
+  #  Ajouter un album aux favoris
+  path:     /me/favorites/albums/add/{id}
+  defaults: { _controller: MainBundle:Admin:favoriteAlbumAdd }
+
+admin_profile_favorites_remove_album:
+  #  Ajouter un album aux favoris
+  path:     /me/favorites/albums/remove/{id}
+  defaults: { _controller: MainBundle:Admin:favoriteAlbumRemove }
+
+admin_profile_favorites_add_music:
+  #  Ajouter un music aux favoris
+  path:     /me/favorites/musics/add/{id}
+  defaults: { _controller: MainBundle:Admin:favoriteMusicAdd }
+
+admin_profile_favorites_remove_music:
+  #  Ajouter un music aux favoris
+  path:     /me/favorites/musics/remove/{id}
+  defaults: { _controller: MainBundle:Admin:favoriteMusicRemove }
+
 #Admin Artist
 admin_artists:
   prefix:     /artists

@@ -26,11 +26,11 @@
           </div>
           <div class="album_btn">
             {% if app.user.profiles.listener.hasAlbumId(album.id) %}
-              <a href="#" class="ms_btn" title="Dans ma playlist">
+              {#<a href="#" class="ms_btn" title="Dans ma playlist">
                 <span class="fa fa-eye"></span>
                 Panier | {{ album.account.amount | amount_format }}
-              </a>
-              <a href="#" class="ms_btn" title="Dans ma playlist">
+              </a>#}
+              <a href="{{ path('admin_profile_playlist') }}" class="ms_btn" title="Dans ma playlist">
                 <span class="fa fa-home"></span>
                 Playlist
               </a>
@@ -48,10 +48,17 @@
               <span class="fa fa-check"></span>
               Acheter
             </a>#}
-            <a href="#" class="ms_btn">
-              <span class="fa fa-plus"></span>
-              Playlist
-            </a>
+            {% if app.user.profiles.listener.hasFavoriteAlbumId(album.id) %}
+              <a href="{{ path('admin_profile_favorites_remove_album', {'id': album.id}) }}" class="ms_btn" title="Retirer des favoris">
+                <span class="fa fa-heart"></span>
+                Favorites
+              </a>
+            {% else %}
+              <a href="{{ path('admin_profile_favorites_add_album', {'id': album.id}) }}" class="ms_btn ms_btn_white" title="Ajouter aux favoris">
+                <span class="fa fa-heart-o"></span>
+                Favorites
+              </a>
+            {% endif %}
           </div>
         </div>
       </div>
@@ -103,11 +110,24 @@
 									</span>
                   </div>
                   <ul class="more_option">
-                    <li><a href="#"><span class="opt_icon"><span class="icon icon_fav"></span></span>Add To Favourites</a></li>
-                    <li><a href="#"><span class="opt_icon"><span class="icon icon_queue"></span></span>Add To Queue</a></li>
-                    <li><a href="#"><span class="opt_icon"><span class="icon icon_dwn"></span></span>Download Now</a></li>
-                    <li><a href="#"><span class="opt_icon"><span class="icon icon_playlst"></span></span>Add To Playlist</a></li>
-                    <li><a href="#"><span class="opt_icon"><span class="icon icon_share"></span></span>Share</a></li>
+                    <li>
+                      {% if app.user.profiles.listener.hasFavoriteMusicId(music.id) %}
+                        <a href="{{ path('admin_profile_favorites_remove_music', {'id': music.id}) }}" title="Retirer des favoris">
+                          <span class="fa fa-heart"></span>
+                          Retirer
+                        </a>
+                      {% else %}
+                        <a href="{{ path('admin_profile_favorites_add_music', {'id': music.id,}) }}" title="Ajouter aux favoris">
+                          <span class="fa fa-heart-o"></span>
+                          J'aime
+                        </a>
+                      {% endif %}
+                    </li>
+                    {#                    <li><a href="#"><span class="opt_icon"><span class="icon icon_queue"></span></span>Add To Queue</a></li>#}
+                    {#                    <li><a href="#"><span class="opt_icon"><span class="icon icon_dwn"></span></span>Download Now</a></li>#}
+{#                    <li><a href="#"><span class="opt_icon"><span class="icon icon_playlst"></span></span>Soon: Acheter</a></li>#}
+                    {#                    <li><a href="#"><span class="opt_icon"><span class="icon icon_playlst"></span></span>Add To Playlist</a></li>#}
+                    {#                    <li><a href="#"><span class="opt_icon"><span class="icon icon_share"></span></span>Share</a></li>#}
                   </ul>
                 </div>
                 <div class="ms_divider"></div>
