@@ -47,4 +47,24 @@ class Listener
     $this->albums = $albums;
   }
 
+  public function hasAlbum(Album $album){
+    foreach ($this->albums as $album_user){
+      if($album->getId() == $album_user->getId()){
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public function hasAlbumId($album_id){
+    foreach ($this->albums as $album_user){
+      if($album_id == $album_user->getId()){
+        return true;
+      }
+    }
+
+    return false;
+  }
+
 }

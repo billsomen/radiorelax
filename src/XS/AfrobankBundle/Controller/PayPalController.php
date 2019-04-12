@@ -64,21 +64,24 @@ class PayPalController extends Controller
     ));
   }
 
-  public function payAlbums(DocumentManager $dm, User $user){
+  public function payAlbums(DocumentManager $dm, User $user, $order_id=0){
 //    Pay pending albums
     $cart = $user->getCart();
 
-    $listener = new Listener();
-    $user->getProfiles()->setListener($listener);
+    $listener = $user->getProfiles()->getListener();
+    if(empty($listener)){
+      $listener = new Listener();
+      $user->getProfiles()->setListener($listener);
+    }
 //    $listener = $user->getProfiles()->getListener();
 //    return count($cart->getAlbumsPending());
-
     foreach ($cart->getAlbumsPending() as $album){
 //    save order on local user store : on the profiles->listener
       $listener->getAlbums()->add($album);
       $artist = $album->getArtist();
 //      create transaction
       $transaction = new Transaction();
+      $transaction->setPayPalOrderId($order_id);
       $transaction->setSender($user);
       $transaction->setReceiver($artist);
       $transaction->setAmount($album->getPrice());
@@ -111,10 +114,21 @@ class PayPalController extends Controller
   public function addOrderAction($id){
     $client = self::client();
     $response = $client->execute(new OrdersGetRequest($id));
+    if(json_decode($response->result)["status"] == "COMPLETED"){
 //   check the total amounts and check if matched by iterating from top to bottom
-    $user = $this->getUser();
-    $dm = $this->get("doctrine.odm.mongodb.document_manager");
-    $this->payAlbums($dm, $user);
+      $user = $this->getUser();
+      $dm = $this->get("doctrine.odm.mongodb.document_manager");
+      $this->payAlbums($dm, $user, $id);
+
+      $this->addFlash("notice", "Payement reçu avec succès");
+    }
+    else{
+      $this->addFlash("error", "Erreur lors du paiement");
+    }
+
+    return $this->redirectToRoute("admin_profile");
+
+
 
 /*
 

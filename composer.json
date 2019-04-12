@@ -43,6 +43,7 @@
     "require": {
         "php": ">=7.1",
         "ext-intl": "*",
+        "ext-json": "^1.6",
         "alcaeus/mongo-php-adapter": "^1.1",
         "cloudinary/cloudinary_php": "dev-master",
         "doctrine/annotations": "^1.5",

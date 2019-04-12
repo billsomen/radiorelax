@@ -45,12 +45,12 @@
       <div class="ms_sidemenu_inner">
         <div class="ms_logo_inner">
           <div class="ms_logo">
-            <a href="{{ path('main_homepage', {'_locale': 'fr'}) }}">
+            <a href="{{ path('main_homepage') }}">
               <img src="{{ asset('assets/images/radio-relax-logo-light.png') }}" alt="{{ app_name }} Logo" width="80">
             </a>
           </div>
           <div class="ms_logo_open">
-            <a href="{{ path('main_homepage', {'_locale': 'fr'}) }}">
+            <a href="{{ path('main_homepage') }}">
               <img src="{{ asset('assets/images/radio-relax-logo-light.png') }}" alt="{{ app_name }} Logo" width="100">
             </a>
           </div>
@@ -89,8 +89,9 @@
         </div>
         <div class="ms_top_right">
           <div class="ms_top_lang">
-            <a href="{{ path('core_artists_homepage', {'_locale': 'en'}) }}"><img src="{{ asset('assets/images/uk.png') }}" width="30" title="{{ "locale.language.en.title"|trans }}"/></a>
-            <a href="{{ path('core_artists_homepage', {'_locale': 'fr'}) }}"><img src="{{ asset('assets/images/fr.png') }}" width="30" title="{{ "locale.language.fr.title"|trans }}"/></a>
+{#            <a href="{{ path('core_artists_homepage', {'_locale': 'en'}) }}"><img src="{{ asset('assets/images/uk.png') }}" width="30" title="{{ "locale.language.en.title"|trans }}"/></a>#}
+            <a href="{{ path('core_artists_homepage') }}"><img src="{{ asset('assets/images/fr.png') }}" width="30" title="{{ "locale.language.fr.title"|trans }}"/></a>
+            <a href="{{ path('admin_profile') }}"><img src="https://forum.affinity.serif.com/uploads/monthly_2018_05/M_member_46298.png" width="30" title="Mon Profil"/></a>
           </div>
           <div class="ms_top_btn">
             {#<a href="javascript:;" class="ms_btn reg_btn" data-toggle="modal" data-target="#myModal"><span>{{ 'button.im_listener_short'|trans }}</span></a>#}

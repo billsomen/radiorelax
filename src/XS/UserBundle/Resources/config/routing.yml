@@ -1,45 +1,45 @@
-xs_user_all:
+#xs_user_all:
+#    path:   /
+#    defaults:  { _controller: XSUserBundle:User:all }
+#
+#xs_user_search:
+#    path: /search/query={query}.town={town}.country={country}/sort={sort_tag}-{sort_by}/page={page}
+#    defaults: { _controller: XSUserBundle:User:search, query:0, country:0, sort_tag:0, sort_by:0, page:1, town:0 }
+#
+#xs_user_follow_user:
+#    path:   /follow/user/{id}
+#    defaults:  { _controller: XSUserBundle:User:followUser }
+
+xs_user_show:
     path:   /
-    defaults:  { _controller: XSUserBundle:User:all }
-
-xs_user_search:
-    path: /search/query={query}.town={town}.country={country}/sort={sort_tag}-{sort_by}/page={page}
-    defaults: { _controller: XSUserBundle:User:search, query:0, country:0, sort_tag:0, sort_by:0, page:1, town:0 }
-
-xs_user_follow_user:
-    path:   /follow/user/{id}
-    defaults:  { _controller: XSUserBundle:User:followUser }
+    defaults:  { _controller: XSUserBundle:User:show }
 
 xs_user_edit:
-    path:   /me/edit
+    path:   /edit
     defaults:  { _controller: XSUserBundle:User:edit }
 
 xs_user_subscribe:
-    path:   /me/pay
+    path:   /pay
     defaults:  { _controller: XSUserBundle:User:subscribe }
 
 #Contacts (my contacts)
 xs_user_contacts_json:
-    path: /me/_contacts
+    path: /_contacts
     defaults: { _controller: XSUserBundle:User:jsonMyContacts }
 
 xs_user_folder:
-    path:   /me/folder
+    path:   /folder
 #    Mon dossier :) !!!
     defaults:  { _controller: XSUserBundle:User:folder }
 
 xs_user_admissions:
-    path:   /me/admissions
+    path:   /admissions
 #    Mes admissions
     defaults:  { _controller: XSUserBundle:User: }
 
 xs_user_edit_profile:
-    path:   /me/edit/profile
+    path:   /edit/profile
     defaults:  { _controller: XSUserBundle:User:editProfile }
-
-xs_user_show:
-    path:   /me
-    defaults:  { _controller: XSUserBundle:User:show }
 
 xs_user_remove:
     path:   /remove/{id}
@@ -65,5 +65,5 @@ xs_user_ads:
 
 #News
 xs_user_news_remove:
-    path:   /me/news/remove/{id}
+    path:   /news/remove/{id}
     defaults:  { _controller: XSUserBundle:User:removeNews }

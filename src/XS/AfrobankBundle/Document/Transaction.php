@@ -93,6 +93,10 @@ class Transaction
   /** @MongoDB\Field(type="string")*/
 //    todo: A gerer : AutoIncrement Hexa a plusieurs chiffres..
   protected $code; //Code de transaction...
+
+  /** @MongoDB\Field(type="string")*/
+//   code de transaction Paypal
+  protected $pay_pal_order_id; //Code de transaction...
   
   /** @MongoDB\Field(type="string")*/
 //    todo: Inséré par le client et généré par le moyen 2 tpaiement
@@ -196,6 +200,22 @@ class Transaction
    */
   public function setLocationFrom($location_from) {
     $this->location_from = $location_from;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getPayPalOrderId()
+  {
+    return $this->pay_pal_order_id;
+  }
+
+  /**
+   * @param mixed $pay_pal_order_id
+   */
+  public function setPayPalOrderId($pay_pal_order_id): void
+  {
+    $this->pay_pal_order_id = $pay_pal_order_id;
   }
   
   /**

@@ -27,10 +27,10 @@
       <a class="navbar-brand pt-0 ms_top_lang" href="{{ path('admin_homepage') }}">
         <img src="{{ asset('assets/adminbundle/img/brand/blue.png') }}" class="navbar-brand-img" alt="...">
       </a>
-      <div class="ms_top_lang">
+      {#<div class="ms_top_lang">
         <a href="{{ path('admin_homepage', {'_locale':"fr"}) }}"><img src="{{ asset('assets/images/uk.png') }}" width="30" title="{{ "locale.language.en.title"|trans }}"/>{{ 'locale.language.fr.title'|trans }}</a>
         <a href="{{  path('admin_homepage', {'_locale':"en"})  }}"><img src="{{ asset('assets/images/fr.png') }}" width="30" title="{{ "locale.language.fr.title"|trans }}"/>{{ 'locale.language.en.title'|trans }}</a>
-      </div>
+      </div>#}
       <!-- User -->
       <ul class="nav align-items-center d-md-none">
         <li class="nav-item dropdown">
@@ -93,12 +93,24 @@
                 <i class="ni ni-world-2 text-blue"></i> Artistes
               </a>
             </li>
-          {% else %}
+          {% elseif "ROLE_ARTIST" in app.user.roles %}
             <li class="nav-item">
               <a class="nav-link" href="{{ path('admin_artists_show', {'id': app.user.id}) }}">
                 <i class="ni ni-sound-wave text-blue"></i> {{ 'menu.admin.artist_space'|trans }}
               </a>
             </li>
+            {% else %}
+              {#          Utilisateur classique qui souhaite juste consulter son profil#}
+              <li class="nav-item">
+                <a class="nav-link" href="{{ path('admin_profile_playlist') }}">
+                  <i class="ni ni-shop text-red"></i> {{ 'menu.admin.playlist'|trans }}
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#{{ path('admin_artists_show', {'id': app.user.id}) }}">
+                  <i class="ni ni-satisfied text-red"></i> {{ 'menu.admin.favorites'|trans }}
+                </a>
+              </li>
           {% endif %}
         </ul>
       </div>

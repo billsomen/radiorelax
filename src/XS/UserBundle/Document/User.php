@@ -648,4 +648,35 @@ class User implements AdvancedUserInterface
   {
     $this->cart = $cart;
   }
+
+  public function generateNamespace($input, $uniqueness = false){
+//    Set the efault input element...
+//    uniqueness est la clé qui intègre des trucs au namespace :). Pour s'assurer de son unicité (à l'inscription par exemple)
+
+//        Generates the final namespace from the namespace typed on the form.
+    $string = \transliterator_transliterate('Any-Latin; Latin-ASCII; [\u0080-\u7fff] remove', $input);
+    $tmp = preg_replace('/-{2,}/', '-',
+      preg_replace('/\s+/i', '-',
+        preg_replace('/[^0-9a-z-\s]/i', '-',
+          strtolower(
+            trim($string)
+          )
+        )
+      )
+    );
+
+    $last_index = strlen($tmp)-1;
+    if($last_index > 0){
+      if(in_array($tmp[$last_index], ['.', '-']) ){
+        $tmp = substr($tmp, 0, $last_index-1);
+      }
+    }
+
+
+    if($uniqueness){
+      $tmp = time().'-'.$tmp;
+    }
+    $this->setNamespace($tmp);
+    return $tmp;
+  }
 }

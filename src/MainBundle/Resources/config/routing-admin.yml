@@ -3,13 +3,30 @@ admin_homepage:
   path:     /
   defaults: { _controller: MainBundle:Admin:index }
 
-admin_profile:
-  path:     /profile
-  defaults: { _controller: MainBundle:Admin:index }
-
 admin_store:
   path:     /store
   defaults: { _controller: MainBundle:Admin:index }
+
+#Admin User
+
+admin_profile:
+  path:     /me
+  defaults: { _controller: MainBundle:Admin:index }
+
+admin_profile_playlist:
+#  Musics achetées
+  path:     /me/playlist
+  defaults: { _controller: MainBundle:Admin:playlist }
+
+admin_profile_playlist_album:
+#  Musics achetées
+  path:     /me/playlist/albums/{id}
+  defaults: { _controller: MainBundle:Admin:playlistAlbumShow }
+
+admin_profile_favorites:
+#  Musics favorites
+  path:     /me/favorites
+  defaults: { _controller: MainBundle:Admin:favorites }
 
 #Admin Artist
 admin_artists:
