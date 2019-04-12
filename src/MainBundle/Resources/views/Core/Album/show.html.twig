@@ -25,38 +25,45 @@
             </p>#}
           </div>
           <div class="album_btn">
-            {% if app.user.profiles.listener.hasAlbumId(album.id) %}
-              {#<a href="#" class="ms_btn" title="Dans ma playlist">
-                <span class="fa fa-eye"></span>
-                Panier | {{ album.account.amount | amount_format }}
+            {% if app.user %}
+              {% if app.user.profiles.listener.hasAlbumId(album.id) %}
+                {#<a href="#" class="ms_btn" title="Dans ma playlist">
+                  <span class="fa fa-eye"></span>
+                  Panier | {{ album.account.amount | amount_format }}
+                </a>#}
+                <a href="{{ path('admin_profile_playlist') }}" class="ms_btn" title="Dans ma playlist">
+                  <span class="fa fa-home"></span>
+                  Playlist
+                </a>
+              {% else %}
+                <a href="{{ path('xs_market_place_cart_add_album', {'id': album.id}) }}" class="ms_btn" title="Ajouter au panier">
+                  <span class="fa fa-cart-plus"></span>
+                  Panier | {{ album.account.amount | amount_format }}
+                </a>
+              {% endif %}
+              {#<a href="#" class="ms_btn" title="Dans le panier">
+                <span class="fa fa-check"></span>
+                Panier
               </a>#}
-              <a href="{{ path('admin_profile_playlist') }}" class="ms_btn" title="Dans ma playlist">
-                <span class="fa fa-home"></span>
-                Playlist
-              </a>
+              {#<a href="#" class="ms_btn">
+                <span class="fa fa-check"></span>
+                Acheter
+              </a>#}
+              {% if app.user.profiles.listener.hasFavoriteAlbumId(album.id) %}
+                <a href="{{ path('admin_profile_favorites_remove_album', {'id': album.id}) }}" class="ms_btn" title="Retirer des favoris">
+                  <span class="fa fa-heart"></span>
+                  Favorites
+                </a>
+              {% else %}
+                <a href="{{ path('admin_profile_favorites_add_album', {'id': album.id}) }}" class="ms_btn ms_btn_white" title="Ajouter aux favoris">
+                  <span class="fa fa-heart-o"></span>
+                  Favorites
+                </a>
+              {% endif %}
             {% else %}
-              <a href="{{ path('xs_market_place_cart_add_album', {'id': album.id}) }}" class="ms_btn" title="Ajouter au panier">
-                <span class="fa fa-cart-plus"></span>
-                Panier | {{ album.account.amount | amount_format }}
-              </a>
-            {% endif %}
-            {#<a href="#" class="ms_btn" title="Dans le panier">
-              <span class="fa fa-check"></span>
-              Panier
-            </a>#}
-            {#<a href="#" class="ms_btn">
-              <span class="fa fa-check"></span>
-              Acheter
-            </a>#}
-            {% if app.user.profiles.listener.hasFavoriteAlbumId(album.id) %}
-              <a href="{{ path('admin_profile_favorites_remove_album', {'id': album.id}) }}" class="ms_btn" title="Retirer des favoris">
-                <span class="fa fa-heart"></span>
-                Favorites
-              </a>
-            {% else %}
-              <a href="{{ path('admin_profile_favorites_add_album', {'id': album.id}) }}" class="ms_btn ms_btn_white" title="Ajouter aux favoris">
-                <span class="fa fa-heart-o"></span>
-                Favorites
+              <a href="{{ path('login', {'_locale': 'fr'}) }}" class="ms_btn ms_btn_white" title="Se connecter">
+                <span class="fa fa-sign-in"></span>
+                Se connecter
               </a>
             {% endif %}
           </div>
@@ -111,6 +118,7 @@
                   </div>
                   <ul class="more_option">
                     <li>
+                      {% if app.user %}
                       {% if app.user.profiles.listener.hasFavoriteMusicId(music.id) %}
                         <a href="{{ path('admin_profile_favorites_remove_music', {'id': music.id}) }}" title="Retirer des favoris">
                           <span class="fa fa-heart"></span>
@@ -120,6 +128,12 @@
                         <a href="{{ path('admin_profile_favorites_add_music', {'id': music.id,}) }}" title="Ajouter aux favoris">
                           <span class="fa fa-heart-o"></span>
                           J'aime
+                        </a>
+                      {% endif %}
+                      {% else %}
+                        <a href="{{ path('login', {'_locale': 'fr'}) }}" class="ms_btn ms_btn_white" title="Se connecter">
+                          <span class="fa fa-sign-in"></span>
+                          Se connecter
                         </a>
                       {% endif %}
                     </li>

@@ -76,9 +76,16 @@
           <div class="ms_top_lang">
 {#            <a href="{{ path('core_artists_homepage', {'_locale': 'en'}) }}"><img src="{{ asset('assets/images/uk.png') }}" width="30" title="{{ "locale.language.en.title"|trans }}"/></a>#}
 {#            <a href="{{ path('core_artists_homepage') }}"><img src="{{ asset('assets/images/fr.png') }}" width="30" title="{{ "locale.language.fr.title"|trans }}"/></a>#}
-            <a href="{{ path('admin_profile') }}">
-              <img src="https://forum.affinity.serif.com/uploads/monthly_2018_05/M_member_46298.png" width="30" title="Mon Profil"/>
-            </a>
+            {% if app.user %}
+              <a href="{{ path('admin_profile') }}">
+                <img src="https://forum.affinity.serif.com/uploads/monthly_2018_05/M_member_46298.png" width="30" title="Mon Profil"/>
+              </a>
+            {% else %}
+              <a href="{{ path('login', {'_locale': 'fr'}) }}" title="Se connecter">
+                <span class="fa fa-sign-in"></span>
+                Se connecter
+              </a>
+            {% endif %}
           </div>
           <div class="ms_top_btn">
             {#<a href="javascript:;" class="ms_btn reg_btn" data-toggle="modal" data-target="#myModal"><span>{{ 'button.im_listener_short'|trans }}</span></a>#}
