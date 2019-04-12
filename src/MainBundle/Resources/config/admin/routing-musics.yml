@@ -14,8 +14,13 @@ admin_musics_new_multiple:
   path:     /new_multiple/{id_album}
   defaults: { _controller: MainBundle:Music:newMultiple }
 
+admin_musics_update:
+  #  Un music : Edit
+  path:     /{id}/update
+  defaults: { _controller: MainBundle:Music:update }
+
 admin_musics_show:
-  #  Un musice : View and Edit
+  #  Un musice : View
   path:     /{id}
   defaults: { _controller: MainBundle:Music:show }
 

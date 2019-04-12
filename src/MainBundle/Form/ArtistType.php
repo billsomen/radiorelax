@@ -45,6 +45,13 @@ class ArtistType extends AbstractType
           'placeholder' => "Nom d'utilisateur"
         )
       ))
+      ->add('musicType', TextType::class, array(
+        'required' => false,
+        'attr' => array(
+          'class' => "form-control form-control-alternative",
+          'placeholder' => "Style de musique"
+        )
+      ))
       ->add('description', TextareaType::class, array(
         'required' => true,
         'attr' => array(

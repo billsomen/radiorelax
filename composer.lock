@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a841c7be07d968ab55217fada06edeca",
+    "content-hash": "12bb04f9eb452a2f2f2b8907926827ab",
     "packages": [
         {
             "name": "alcaeus/mongo-php-adapter",
@@ -72,17 +72,56 @@
             "time": "2019-02-08T07:16:38+00:00"
         },
         {
+            "name": "braintree/braintreehttp",
+            "version": "0.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/braintree/braintreehttp_php.git",
+                "reference": "204e36494d9e4b31033328df96af54b17f68b698"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/braintree/braintreehttp_php/zipball/204e36494d9e4b31033328df96af54b17f68b698",
+                "reference": "204e36494d9e4b31033328df96af54b17f68b698",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7",
+                "wiremock-php/wiremock-php": "1.43.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "BraintreeHttp\\": "lib/BraintreeHttp"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Braintree",
+                    "email": "code@getbraintree.com"
+                }
+            ],
+            "time": "2018-04-17T20:53:31+00:00"
+        },
+        {
             "name": "cloudinary/cloudinary_php",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cloudinary/cloudinary_php.git",
-                "reference": "b9ae0b25d1b57ef4fb7fc5ddbee5d82deb64f2e1"
+                "reference": "fd6a49f1ca585c896f0730ec46bf37967bb454db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cloudinary/cloudinary_php/zipball/b9ae0b25d1b57ef4fb7fc5ddbee5d82deb64f2e1",
-                "reference": "b9ae0b25d1b57ef4fb7fc5ddbee5d82deb64f2e1",
+                "url": "https://api.github.com/repos/cloudinary/cloudinary_php/zipball/fd6a49f1ca585c896f0730ec46bf37967bb454db",
+                "reference": "fd6a49f1ca585c896f0730ec46bf37967bb454db",
                 "shasum": ""
             },
             "require": {
@@ -121,7 +160,7 @@
                 "image management",
                 "sdk"
             ],
-            "time": "2019-02-28T12:55:01+00:00"
+            "time": "2019-03-07T12:15:03+00:00"
         },
         {
             "name": "composer/ca-bundle",
@@ -1056,16 +1095,16 @@
         },
         {
             "name": "doctrine/mongodb-odm",
-            "version": "1.2.6",
+            "version": "1.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/mongodb-odm.git",
-                "reference": "496ab5368afea176a1e368769a8eb643656cb7fb"
+                "reference": "0cd3c37dfc369abdb3cb8090a50def7ea161f469"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/mongodb-odm/zipball/496ab5368afea176a1e368769a8eb643656cb7fb",
-                "reference": "496ab5368afea176a1e368769a8eb643656cb7fb",
+                "url": "https://api.github.com/repos/doctrine/mongodb-odm/zipball/0cd3c37dfc369abdb3cb8090a50def7ea161f469",
+                "reference": "0cd3c37dfc369abdb3cb8090a50def7ea161f469",
                 "shasum": ""
             },
             "require": {
@@ -1136,7 +1175,7 @@
                 "odm",
                 "persistence"
             ],
-            "time": "2019-01-15T10:22:40+00:00"
+            "time": "2019-03-06T13:42:40+00:00"
         },
         {
             "name": "doctrine/mongodb-odm-bundle",
@@ -1842,6 +1881,55 @@
             "time": "2018-07-02T15:55:56+00:00"
         },
         {
+            "name": "paypal/paypal-checkout-sdk",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/paypal/Checkout-PHP-SDK.git",
+                "reference": "b321066fdce122cd63368b559d54674bdf2f12a8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/paypal/Checkout-PHP-SDK/zipball/b321066fdce122cd63368b559d54674bdf2f12a8",
+                "reference": "b321066fdce122cd63368b559d54674bdf2f12a8",
+                "shasum": ""
+            },
+            "require": {
+                "braintree/braintreehttp": "0.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PayPalCheckoutSdk\\": "lib/PayPalCheckoutSdk",
+                    "Sample\\": "samples/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PayPal",
+                    "homepage": "https://github.com/paypal/Checkout-PHP-SDK/contributors"
+                }
+            ],
+            "description": "PayPal's PHP SDK for Checkout REST APIs",
+            "homepage": "http://github.com/paypal/Checkout-PHP-SDK/",
+            "keywords": [
+                "checkout",
+                "orders",
+                "payments",
+                "paypal",
+                "rest",
+                "sdk"
+            ],
+            "time": "2019-02-04T06:59:08+00:00"
+        },
+        {
             "name": "psr/cache",
             "version": "1.0.1",
             "source": {
@@ -2465,7 +2553,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "BackEndTea@gmail.com"
+                    "email": "backendtea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
@@ -3031,16 +3119,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v2.6.2",
+            "version": "v2.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "7d7342c8a4059fefb9b8d07db0cc14007021f9b7"
+                "reference": "70c59531da43afe598c66135e39cac39475a2f51"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/7d7342c8a4059fefb9b8d07db0cc14007021f9b7",
-                "reference": "7d7342c8a4059fefb9b8d07db0cc14007021f9b7",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/70c59531da43afe598c66135e39cac39475a2f51",
+                "reference": "70c59531da43afe598c66135e39cac39475a2f51",
                 "shasum": ""
             },
             "require": {
@@ -3056,7 +3144,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev"
+                    "dev-master": "2.7-dev"
                 }
             },
             "autoload": {
@@ -3094,7 +3182,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2019-01-14T15:00:48+00:00"
+            "time": "2019-03-12T18:48:26+00:00"
         }
     ],
     "packages-dev": [
@@ -3227,7 +3315,8 @@
     "prefer-lowest": false,
     "platform": {
         "php": ">=7.1",
-        "ext-intl": "*"
+        "ext-intl": "*",
+        "ext-json": "^1.6"
     },
     "platform-dev": [],
     "platform-overrides": {

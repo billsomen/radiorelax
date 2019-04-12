@@ -1,6 +1,6 @@
 main_homepage:
     path:     /{_locale}
-    defaults: { _controller: MainBundle:Default:index, _locale: en_EN  }
+    defaults: { _controller: MainBundle:Default:index, _locale: fr  }
 
 main_artists:
   prefix:   /{_locale}/artists
@@ -8,15 +8,15 @@ main_artists:
 
 api_business_card:
     path:     /{_locale}/business-cards/{id}
-    defaults: { _controller: MainBundle:Api:businessCard, _locale: en_EN  }
+    defaults: { _controller: MainBundle:Api:businessCard, _locale: fr  }
 
 api_get_order:
     path:     /{_locale}/get-order/{id}
-    defaults: { _controller: MainBundle:Api:getOrder, _locale: en_EN  }
+    defaults: { _controller: MainBundle:Api:getOrder, _locale: fr  }
 
 edu_homepage:
   path:     /{_locale}/edu
-  defaults: { _controller: MainBundle:Edu:index, _locale: en_EN }
+  defaults: { _controller: MainBundle:Edu:index, _locale: fr }
 
 login:
   path: /{_locale}/login

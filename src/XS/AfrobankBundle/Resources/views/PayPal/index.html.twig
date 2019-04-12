@@ -1,0 +1,121 @@
+{% extends "MainBundle::base.html.twig" %}
+
+{% block title %}
+  Paiement PayPal
+{% endblock title %}
+
+{% block head_scripts %}
+  <script
+      src="https://www.paypal.com/sdk/js?client-id={{ paypal_client_id }}&currency=CAD">
+  </script>
+{% endblock %}
+
+{% block body_inner_main %}
+  <div class="ms_free_download ms_purchase_wrapper">
+    <div class="ms_heading">
+      <h1><i class="fa fa-shopping-cart"></i> Mon Panier - {{ cart.quantity }} albums</h1>
+    </div>
+    <div class="album_inner_list">
+      <div class="album_list_wrapper">
+        <div id="paypal-button-container">Results</div>
+        <ul class="album_list_name">
+          <li>#</li>
+          <li>Album</li>
+          <li>Songs Qty</li>
+          <li class="text-center">price</li>
+          <li class="text-center">Duration</li>
+          <li class="text-center"><i class="fa fa-plus"></i> Favoris</li>
+          {#<li class="text-center">More</li>#}
+          <li class="text-center">remove</li>
+        </ul>
+        {% for album in cart.albums %}
+          {% set link = path('core_artists_albums_show', {'id':album.id, "namespace":album.artist.profiles.artist.namespace}) %}
+          <ul>
+            <li>
+              <a href="{{ link }}">
+                <span class="play_no">
+                  {{ loop.index |album_list_number_format}}
+                </span>
+                <span class="play_hover"></span>
+              </a>
+            </li>
+            <li><a href="{{ link }}">{{ album.name }}</a></li>
+            <li><a href="{{ link }}">{{ album.musics | length }}</a></li>
+            <li class="text-center"><a href="{{ link }}">{{ album.price | amount_short_format }}</a></li>
+            <li class="text-center"><a href="{{ link }}">{{ album|album_duration }}</a></li>
+            <li class="text-center"><a href="{{ link }}"><span class="ms_icon1 ms_fav_icon"></span></a></li>
+            {#
+            TODO later
+            <li class="text-center ms_more_icon"><a href="javascript:;"><span class="ms_icon1 ms_active_icon"></span></a>
+              <ul class="more_option">
+                <li><a href="#"><span class="opt_icon"><span class="icon icon_fav"></span></span>Add To Favourites</a></li>
+                <li><a href="#"><span class="opt_icon"><span class="icon icon_queue"></span></span>Add To Queue</a></li>
+                <li><a href="#"><span class="opt_icon"><span class="icon icon_dwn"></span></span>Download Now</a></li>
+                <li><a href="#"><span class="opt_icon"><span class="icon icon_playlst"></span></span>Add To Playlist</a></li>
+                <li><a href="#"><span class="opt_icon"><span class="icon icon_share"></span></span>Share</a></li>
+              </ul>
+            </li>#}
+            <li class="text-center">
+              <a href="{{ path('xs_market_place_cart_remove_album', {'id': album.id}) }}" title="Retirer l'album du panier">
+                <span class="ms_close">
+									<img src="{{ asset('assets/corebundle/images/svg/close.svg') }}" alt="">
+                </span>
+              </a>
+            </li>
+          </ul>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="ms_view_more padder_bottom20">
+      <a href="#" class="ms_btn">
+        <i class="fa fa-check"></i>
+        Payer | {{ cart.amount | amount_format }}
+      </a>
+    </div>
+  </div>
+  
+  {#todo: Paypal integration script#}
+  <script>
+    paypal.Buttons({
+      createOrder: function(data, actions) {
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              value: "{{ cart.amount.value + 99 }}"
+            }
+          }]
+        });
+      },
+      onApprove: function(data, actions) {
+        // Capture the funds from the transaction
+        return actions.order.capture().then(function(details) {
+          // Show a success message to your buyer
+          alert('Transaction completed by ' + details.payer.name.given_name);
+          // Call your server to save the transaction
+          let path = "{{ path('xs_afrobank_paypal_order_add', {"id":"__id__"}) }}";
+          path = path.replace("__id__", data.orderID);
+          //On redirige l'utilisateur directement
+          document.location = path;
+          /*
+          console.log(data);
+          console.log(details);
+          // return fetch(path, {
+          let result = fetch(path, {
+              method: 'post',
+              body: JSON.stringify({
+                orderID: data.orderID
+              })
+            })
+              .then(function(response) {
+                return response.json();
+              })
+              .then(function(myJson) {
+                
+                console.log(JSON.stringify(myJson));
+              })
+          ;*/
+        });
+      }
+    }).render('#paypal-button-container');
+  </script>
+{% endblock %}

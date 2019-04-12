@@ -1,0 +1,738 @@
+<div class="row">
+  <div class="col-md-9 col-md-push-3">
+    <div class="toolbar mb-none row">
+      <div class="sorter">
+        <div class="sort-by">
+          {#<div class="row">
+            <div class="col-md-8">
+              <a href="{{ path(path, {'cancel': 1}) }}" class="no-decoration" title="Remise à zéro" data-tooltip>
+                Supprimer les Filtres
+              </a>
+              |
+              {{ products | length }} résultat(s) trouvé(s)
+              #}{#|#}{#
+            </div>
+            <div class="col-md-6">
+
+            </div>
+          </div>#}
+          <label>Trier par:</label>
+          <select>
+            <option value="Position">Position : Croissant</option>
+            <option value="Name">Proximité Ecole</option>
+            <option value="Price">Price : Décroissance</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+    <div id="_products_all_module">
+      {#{% if view == 'grid' %}
+      <ul class="products-grid columns3">
+        {% for product in products %}
+        <li>
+          <div class="product">
+            <figure class="product-image-area" style="height: 150px;overflow: hidden;">
+              #}{#<a href="{{ path('xs_market_place_products_show', {'id': product.id}) }}" title="{{ product.name~" - "~product.category~" | "~product.subCategory }}" class="product-image">
+                <img src="{{ product.profileUrl }}" alt="{{ product.name }}">
+                <img src="{{ product.profileUrl }}" alt="{{ product.name }}" class="product-hover-image">
+              </a>#}{#
+              <a href="{{ path('xs_market_place_products_show', {'id': product.id}) }}" title="{{ product.name }}" class="product-image">
+                <img src="http://designinspiration.com/images/2016/08/in15.jpg" alt="{{ product.house.type | trans }}">
+                <img src="http://www.coolings.co.uk/upload/images/PTMD_6.jpg" alt="{{ product.house.type | trans }}" class="product-hover-image">
+              </a>
+
+              #}{#<a href="#" class="product-quickview">
+                <i class="fa fa-share-square-o"></i>
+                <span>Quick View</span>
+              </a>#}{#
+              <div class="product-label"><span class="discount">{{ product.priceRatio | number_format }}%</span></div>
+              {% if product.dateAdd > date('-1 month')%}
+                <div class="product-label"><span class="new">{{ 'new'|trans }}</span></div>
+                #}{#{% else %}
+                  <div class="product-label"><span class="new">Old</span></div>#}{#
+              {% endif %}
+
+              #}{#<div class="product-label"><span class="new">New</span></div>#}{#
+            </figure>
+            <div class="product-details-area">
+              <h2 class="product-name">
+                <a href="#" data-tooltip="" title="{{ product.house.type | trans }} @{{ product.localisation.gmaps.formattedAddress }}">
+                  <i class="fa fa-location-arrow"></i>
+                  {{ product.localisation.gmaps.formattedAddress | truncate(50) }}</a>
+              </h2>
+              {% if product.house.school %}
+                <h4 class="product-name"><a data-tooltip="" href="demo-shop-6-product-details.html" title="Nom Ecole"><i class="fa fa-graduation-cap"></i>{{ product.house.school.name~', '~product.house.distanceSchool | number_format}} mètres</a></h4>
+              {% else %}
+                <h4 class="product-name"><a data-tooltip="" href="#" title="Aucun Campus"><i class="fa fa-graduation-cap"></i>Aucun</a></h4>
+              {% endif %}
+              #}{#<h2 class="product-name"><a href="{{ path('xs_market_place_products_show', {'id': product.id}) }}" title="{{ product.name }}">{{ product.name|length > 15 ? product.name|slice(0, 15) ~ '...' :product.name }}</a></h2>#}{#
+              <div class="product-ratings">
+                <div class="ratings-box">
+                  <div class="rating" style="width:84%"></div>
+                </div>
+              </div>
+
+              <div class="product-price-box">
+                <span class="old-price" title="{{ product.priceOld | amount_format }}">{{ product.priceOld | amount_short_format }}</span>
+                <span class="product-price" title="{{ product.payMonth | amount_format }} / mois" data-tooltip>{{ product.priceShown | amount_short_format }}</span>
+              </div>
+
+              <div class="product-actions">
+                {% include 'XSMarketPlaceBundle:WishList:addProduct.html.twig' with {'id' : product.id} %}
+                {% include 'XSMarketPlaceBundle:Cart:addProduct.html.twig' with {'id' : product.id} %}
+                {% include 'XSMarketPlaceBundle:CompareList:addProduct.html.twig' with {'id' : product.id} %}
+              </div>
+            </div>
+          </div>
+        </li>
+        {% endfor%}
+      </ul>
+      {% elseif view == 'list' %}#}
+      <ul class="products-list">
+        {% for product in products %}
+        <li style="background-color: whitesmoke; border-radius: 3.3px">
+          <div class="product product-list">
+            <figure class="product-image-area">
+              {#<a href="{{ path('xs_market_place_products_show', {'id': product.id}) }}" title="{{ product.name~" - "~product.category~" | "~product.subCategory }}" class="product-image">
+                <img src="{{ product.profileUrl }}" alt="{{ product.name }}">
+                <img src="{{ product.profileUrl }}" alt="{{ product.name }}" class="product-hover-image">
+              </a>#}
+              <a href="{{ path('xs_market_place_products_show', {'id': product.id}) }}" title="Visiter ce produit!" class="product-image">
+                <img src="http://designinspiration.com/images/2016/08/in15.jpg" alt="{{ product.house.type | trans }}">
+                <img src="http://www.coolings.co.uk/upload/images/PTMD_6.jpg" alt="{{ product.house.type | trans }}" class="product-hover-image">
+              </a>
+              <div class="product-label"><span class="discount">{{ product.priceRatio | number_format }}%</span></div>
+              {% if product.dateAdd > date('-1 month')%}
+                <div class="product-label"><span class="new">{{ 'new'|trans }}</span></div>
+              {% endif %}
+              <button type="button" class="btn btn-default mb-none" style="position: absolute; background-color:rgba(0%, 0%, 0%, .5); color: whitesmoke;bottom: 10px; left: 0px"><i class="fa fa-chevron-left"></i></button>
+              <button type="button" class="btn btn-default mb-none" style="position: absolute; background-color:rgba(0%, 0%, 0%, .5); color: whitesmoke;bottom: 10px; right: 0px"><i class="fa fa-chevron-right"></i></button>
+              {# <ul class="pagination mb-none" >
+                 <li><a href="#"><i class="fa fa-chevron-left"></i></a></li>
+                 <li><a href="#"><i class="fa fa-chevron-right"></i></a></li>
+               </ul>#}
+            </figure>
+            <div class="product-details-area">
+              <div class="col-md-6">
+                <h2 class="product-name"><a href="{{ path('xs_market_place_products_show', {'id': product.id}) }}" data-tooltip="" title="Visiter ce produit!">{{ product.name }}</a></h2>
+                {{ product.house.type | trans }}
+                |
+                {% if product.house.furnished %}
+                  meublé
+                {% else %}
+                  non meublé
+                {% endif %}
+                <div class="product-ratings" title="3.5 sur 5 par 45 personnes" data-tooltip="">
+                  <div class="ratings-box">
+                    <div class="rating" style="width:60%"></div>
+                  </div>
+                  <span style="color: orange">3.5</span> sur 5 par 45 personnes
+                </div>
+                <div class="product-short-desc">
+                  {#{{ product.desc |length > 15 ? product.desc|slice(0, 15) ~ '...' :product.desc }}#}
+                  {#{{ product.description }}#}
+                  <span href="#" class="no-decoration" data-tooltip="" title="{{ product.description }}">
+                    <i class="fa fa-map-marker"></i>
+                    {% if not product.localisation.gmaps.formattedAddress %}
+                      Aucune adresse spécifiée
+                    {% else %}
+                      {{ product.localisation.gmaps.formattedAddress }}
+                    {% endif %}
+                  </span>
+                </div>
+                <div class="product-actions">
+                  {% include 'XSMarketPlaceBundle:Cart:addProduct.html.twig' with {'id' : product.id}  %}
+                  {% include 'XSMarketPlaceBundle:WishList:addProduct.html.twig' with {'id' : product.id} %}
+                  {% include 'XSMarketPlaceBundle:CompareList:addProduct.html.twig' with {'id' : product.id} %}
+                  {#<a href="#" class="quickview" title="Quick View">
+                    <i class="fa fa-search"></i>
+                  </a>#}
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <ul class="list list-icons list-icons-style-2 list-side-borders pb-none mb-none">
+                  <li class="mt-none mb-none pb-none">
+                    <i class="fa fa-graduation-cap"></i>
+                    {% if product.house.school %}
+                      <div title="{{ product.house.school | school_format }}" data-tooltip="">
+                        Situé à près de <i><b>{{ product.house.distanceSchool | number_format(0) }} mètres</b></i> du Campus
+                        <i><b>{{ product.house.school.name}}</b></i>
+                      </div>
+                    {% else %}
+                      Situé à proximité d'aucune école
+                    {% endif %}
+                  </li>
+                  <li class="mt-none mb-none pb-none">
+                    <i class="fa fa-hotel"></i>
+                    {{ product.house | house_room_format }}
+                    {#12 toilettes, 2 salons, 5 salles à manger, 5 salles à manger, etc..#}
+                  </li>
+                  <li class="mt-none mb-none pb-none">
+                    <i class="fa fa-dollar"></i>
+                    <span class="product-price" title="Tarif mensuel estimatif" data-tooltip>{{ product.payMonth | amount_format }} / mois | <i><b>Tarif estimatif</b></i></span>
+                    <div class="product-price-box mt-none "><span class="old-price" title="{{ product.priceOld | amount_format }}">{{ product.priceOld | amount_format }} | Ancien Tarif</span></div>
+                  </li>
+                  <li class="mt-none mb-none pb-none">
+                    <i class="fa fa-dollar"></i>
+                    <span class="product-price" title="Tarif réel" data-tooltip>{{ product.priceShown | amount_format }} / {{ product.payFrequency | trans }} | <i><b>Tarif réel</b></i></span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          {#<div class="divider">
+            <i class="fa fa-chevron-down"></i>
+          </div>#}
+        </li>
+        {#<hr>#}
+        {% endfor%}
+      </ul>
+      {#{% endif %}#}
+    </div>
+    {#<div class="toolbar-bottom">
+      <div class="toolbar">
+        <div class="sorter">
+          <ul class="pagination">
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#"><i class="fa fa-caret-right"></i></a></li>
+          </ul>
+
+          <div class="limiter">
+            <label>Show:</label>
+            <select>
+              <option value="12">12</option>
+              <option value="24">24</option>
+              <option value="36">36</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>#}
+  </div>
+  <aside class="col-md-3 col-md-pull-9 sidebar shop-sidebar">
+    <div style="background-color: white; height: 30px; padding-top: 5px; padding-left: 0px" class="text-centr">
+      <a href="{{ path(path, {'cancel': 1}) }}" class="no-decoration" title="Remise à zéro" data-tooltip>
+        Supprimer les Filtres
+      </a>
+      |
+      {% set count_results = products | length %}
+      {{ count_results | number_format(0, '.', ' ') }} résultat{% if count_results > 1 %}s{% endif %}
+      {# trouvé(s)#}
+    </div>
+
+    <div class="panel-group">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-size">
+              Adresse, Ecole, Article, etc...
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-size" class="accordion-body collapse in">
+          <div class="panel-body">
+            <input class="form-control" type="text" placeholder="Adresse ou Ecole"/>
+            <div class="btn-group">
+              <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="javascript:;" aria-expanded="true">
+                Liens
+                <i class="fa fa-angle-down"></i>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="#">FilMorice</a></li>
+              </ul>
+            </div>
+            {# <hr>
+             <div class="filter-price-details">
+               <a href="#" class="btn btn-primary pull-right">FILTRER</a>
+             </div>#}
+            {#{% include '@XSCore/GMaps/_gmaps.form.insert-small.html.twig' with {'form':''} %}#}
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-category">
+              Catégories
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-category" class="accordion-body collapse in">
+          <div class="panel-body">
+            <ul>
+              {% for type in defaults.type %}
+                <li>
+                  {% if type in specs.type %}
+                    <a href="?house_type_minus={{ type }}" class="no-decoration"><input type="checkbox" disabled checked> {{ type | trans }}</a>
+                  {% else %}
+                    <a href="?house_type_plus={{ type }}" class="no-decoration"><input type="checkbox" disabled> {{ type | trans }}</a>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-furnished">
+              Meublé
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-furnished" class="accordion-body collapse in">
+          <div class="panel-body">
+            <ul>
+              {% for key, type in defaults.furnished %}
+                <li>
+                  {% if key == 1 %}
+                    {% set key_furnished = 'Oui, Meublé' %}
+                  {% else %}
+                    {% set key_furnished = 'Non Meublé' %}
+                  {% endif %}
+                  {#{% dump(specs.furnished) %}#}
+                  {% if key in specs.furnished %}
+                    <a href="?furnished_minus={{ key }}" class="no-decoration"><input type="checkbox" disabled checked> {{ key_furnished }}</a>
+                  {% else %}
+                    <a href="?furnished_plus={{ key }}" class="no-decoration"><input type="checkbox" disabled> {{ key_furnished }}</a>
+                  {% endif %}
+                </li>
+              {% endfor %}
+              {#<li><a href="?furnished=yes" class="no-decoration"><input type="checkbox" name="furnished" checked disabled> Oui, Meublé</a></li>#}
+              {#<li><a href="?furnished=no" class="no-decoration"><input type="checkbox" name="furnished" disabled> Non Meublé</a></li>#}
+              {#<li><a href="?furnished=any" class="no-decoration"><input type="checkbox" name="furnished" disabled> Qu'importe</a></li>#}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-price2">
+              Tarif mensuel (USD)
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-price2" class="accordion-body collapse in">
+          <div class="panel-body">
+            <form action="" method="get" class="filter-price">
+              <div class="range-slider" id="slider-price"></div>
+              <div class="filter-price-details">
+                {#<span>de</span>#}
+                <input type="number" style="display: none" id="slider-price-low" class="price-range-low form-control"  placeholder="Min" min="{{ specs.price.min }}" max="{{ specs.price.max}}" value="{{ defaults.price.min }}" step="1" name="min_price">
+                {#<span>à</span>#}
+                <input type="number" style="display: none" id="slider-price-high" class="price-range-high form-control"  placeholder="Max" value="{{ defaults.price.max }}" name="max_price">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-refresh"></i> Actualiser</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-school-distance">
+              Distance de l'école (m)
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-school-distance" class="accordion-body collapse in">
+          <div class="panel-body">
+            <form action="" method="get" class="filter-price">
+              <div class="range-slider" id="slider-school-distance"></div>
+              <div class="filter-price-details">
+                <span>de</span>
+                <input type="number" id="slider-school-distance-low" size="5" class="price-range-low form-control"
+                       placeholder="Min"
+                       min="{{ specs.school_distance.min }}" max="{{ specs.school_distance.max}}" value="{{ defaults.school_distance.min }}"
+                       step="1"
+                       name="min_school_distance">
+                <span>à</span>
+                <input type="number" id="slider-school-distance-high" size="5" class="price-range-high form-control" placeholder="Max"
+                       min="{{ specs.school_distance.min }}" max="{{ specs.school_distance.max}}" value="{{ defaults.school_distance.max }}"
+                       name="max_school_distance">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      {#<div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-length">
+              Longueur
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-length" class="accordion-body collapse in">
+          <div class="panel-body">
+            <form action="" method="get" class="filter-price">
+              <div class="range-slider" id="slider-length"></div>
+              <div class="filter-price-details">
+                <span>de</span>
+                <input type="number" id="slider-length-low" size="5" class="price-range-low form-control" placeholder="Min" min="0" max="56" value="2" step="1" name="min_length">
+                <span>à</span>
+                <input type="number" id="slider-length-high" size="5" class="price-range-high form-control" placeholder="Max" value="152" name="max_length">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>#}
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-route-distance">
+              Distance de la route (m)
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-route-distance" class="accordion-body collapse in">
+          <div class="panel-body">
+            <form action="" method="get" class="filter-price">
+              <div class="range-slider" id="slider-route-distance"></div>
+              <div class="filter-price-details">
+                <span>de</span>
+                <input type="number" id="slider-route-distance-low" size="5" class="price-range-low form-control" placeholder="Min"
+                       min="{{ specs.route_distance.min }}" max="{{ specs.route_distance.max}}" value="{{ defaults.route_distance.min }}"
+                       step="1" name="min_route_distance">
+                <span>à</span>
+                <input type="number" id="slider-route-distance-high" size="5" class="price-range-high form-control" placeholder="Max"
+                       min="{{ specs.route_distance.max }}" max="{{ specs.route_distance.max}}" value="{{ defaults.route_distance.max }}"
+                       name="max_route_distance">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-parking">
+              Places de Parking
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-parking" class="accordion-body collapse in">
+          <div class="panel-body">
+            <ul class="configurable-filter-list">
+              {% for i in 0..specs.parking.max %}
+                {% if i >= defaults.parking %}
+                  <li>
+                    <a href="?parking_gte={{ i }}" title="{{ i }} place(s) de Parking et plus" data-tooltip="" style="background-color: #0088CC; color: white">{{ i }}+</a>
+                  </li>
+                {% else %}
+                  <li>
+                    <a href="?parking_gte={{ i }}" title="{{ i }} place(s) de Parking et plus">{{ i }}+</a>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      {#<div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-size">
+              Superficie
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-size" class="accordion-body collapse in">
+          <div class="panel-body">
+            <ul class="configurable-filter-list">
+              <li>
+                <a href="#">S</a>
+              </li>
+              <li>
+                <a href="#">M</a>
+              </li>
+              <li>
+                <a href="#">L</a>
+              </li>
+              <li>
+                <a href="#">XL</a>
+              </li>
+              <li>
+                <a href="#">2XL</a>
+              </li>
+              <li>
+                <a href="#">3XL</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>#}
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-bath-room">
+              Salles de bain
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-bath-room" class="accordion-body collapse in">
+          <div class="panel-body">
+            <ul class="configurable-filter-list">
+              {% for i in 0..specs.bath_room.max %}
+                {% if i >= defaults.bath_room %}
+                  <li>
+                    <a href="?bath_room_gte={{ i }}" title="{{ i }} Salle(s) de bain et plus" data-tooltip="" style="background-color: #0088CC; color: white">{{ i }}+</a>
+                  </li>
+                {% else %}
+                  <li>
+                    <a href="?bath_room_gte={{ i }}" title="{{ i }} Salle(s) de bain et plus">{{ i }}+</a>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-kitchen">
+              Cuisines
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-kitchen" class="accordion-body collapse in">
+          <div class="panel-body">
+            <ul class="configurable-filter-list">
+              {% for i in 0..specs.kitchen.max %}
+                {% if i >= defaults.kitchen %}
+                  <li>
+                    <a href="?kitchen_gte={{ i }}" title="{{ i }} Cuisine(s) et plus" data-tooltip="" style="background-color: #0088CC; color: white">{{ i }}+</a>
+                  </li>
+                {% else %}
+                  <li>
+                    <a href="?kitchen_gte={{ i }}" title="{{ i }} Cuisines et plus">{{ i }}+</a>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-bed-room">
+              Chambres
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-bed-room" class="accordion-body collapse in">
+          <div class="panel-body">
+            <ul class="configurable-filter-list">
+              {% for i in 0..specs.bed_room.max %}
+                {% if i >= defaults.bed_room %}
+                  <li>
+                    <a href="?bed_room_gte={{ i }}" title="{{ i }} Chambre(s) et plus" data-tooltip="" style="background-color: #0088CC; color: white">{{ i }}+</a>
+                  </li>
+                {% else %}
+                  <li>
+                    <a href="?bed_room_gte={{ i }}" title="{{ i }} Chambre(s) et plus">{{ i }}+</a>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-living-room">
+              Salons
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-living-room" class="accordion-body collapse in">
+          <div class="panel-body">
+            <ul class="configurable-filter-list">
+              {% for i in 0..specs.living_room.max %}
+                {% if i >= defaults.living_room %}
+                  <li>
+                    <a href="?living_room_gte={{ i }}" title="{{ i }} Salon(s) et plus" data-tooltip="" style="background-color: #0088CC; color: white">{{ i }}+</a>
+                  </li>
+                {% else %}
+                  <li>
+                    <a href="?living_room_gte={{ i }}" title="{{ i }} Salon(s) et plus">{{ i }}+</a>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-ratings">
+              Avis Utilisateurs
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-ratings" class="accordion-body collapse in">
+          <div class="panel-body">
+            <ul class="configurable-filter-list">
+              {% for i in 1..5 %}
+                <li>
+                  {% if i == 1 %}
+                    <a href="#{{ i }}" data-plugin-tooltip="top" title="1 étoile et plus"><i class="fa fa-star"></i></a>
+                  {% else %}
+                    <a href="#{{ i }}" data-plugin-tooltip="top" title="{{ i }} étoiles et plus"><i class="fa fa-star"></i></a>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h4>A la Mode</h4>
+    <div class="owl-carousel owl-theme" data-plugin-options="{'items':1, 'margin': 5, 'dots': false, 'nav': true}">
+      <div>
+        <div class="product product-sm">
+          <figure class="product-image-area">
+            <a href="demo-shop-6-product-details.html" title="Product Name" class="product-image">
+              <img src="{{ asset('MarketPlace/assets/img/demos/shop/products/product13.jpg') }}" alt="Product Name">
+              <img src="{{ asset('MarketPlace/assets/img/demos/shop/products/product13-2.jpg') }}" alt="Product Name" class="product-hover-image">
+            </a>
+          </figure>
+          <div class="product-details-area">
+            <h2 class="product-name"><a href="demo-shop-6-product-details.html" title="Product Name">Diamond Ring - S</a></h2>
+            <div class="product-ratings">
+              <div class="ratings-box">
+                <div class="rating" style="width:0%"></div>
+              </div>
+            </div>
+
+            <div class="product-price-box">
+              <span class="product-price">$220.00</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product product-sm">
+          <figure class="product-image-area">
+            <a href="demo-shop-6-product-details.html" title="Product Name" class="product-image">
+              <img src="{{ asset('MarketPlace/assets/img/demos/shop/products/product14.jpg') }}" alt="Product Name">
+            </a>
+          </figure>
+          <div class="product-details-area">
+            <h2 class="product-name"><a href="demo-shop-6-product-details.html" title="Product Name">Diamond Ring - XL</a></h2>
+            <div class="product-ratings">
+              <div class="ratings-box">
+                <div class="rating" style="width:80%"></div>
+              </div>
+            </div>
+
+            <div class="product-price-box">
+              <span class="product-price">$180.00</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product product-sm">
+          <figure class="product-image-area">
+            <a href="demo-shop-6-product-details.html" title="Product Name" class="product-image">
+              <img src="{{ asset('MarketPlace/assets/img/demos/shop/products/product15.jpg') }}" alt="Product Name">
+            </a>
+          </figure>
+          <div class="product-details-area">
+            <h2 class="product-name"><a href="demo-shop-6-product-details.html" title="Product Name">Diamond Ring - 2XL</a></h2>
+            <div class="product-ratings">
+              <div class="ratings-box">
+                <div class="rating" style="width:0%"></div>
+              </div>
+            </div>
+
+            <div class="product-price-box">
+              <span class="product-price">$240.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="product product-sm">
+          <figure class="product-image-area">
+            <a href="demo-shop-6-product-details.html" title="Product Name" class="product-image">
+              <img src="img/demos/shop/products/product16.jpg" alt="Product Name">
+              <img src="img/demos/shop/products/product16-2.jpg" alt="Product Name" class="product-hover-image">
+            </a>
+          </figure>
+          <div class="product-details-area">
+            <h2 class="product-name"><a href="demo-shop-6-product-details.html" title="Product Name">Diamond Ring - 3XL</a></h2>
+            <div class="product-ratings">
+              <div class="ratings-box">
+                <div class="rating" style="width:60%"></div>
+              </div>
+            </div>
+
+            <div class="product-price-box">
+              <span class="product-price">$220.00</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product product-sm">
+          <figure class="product-image-area">
+            <a href="demo-shop-6-product-details.html" title="Product Name" class="product-image">
+              <img src="img/demos/shop/products/product17.jpg" alt="Product Name">
+            </a>
+          </figure>
+          <div class="product-details-area">
+            <h2 class="product-name"><a href="demo-shop-6-product-details.html" title="Product Name">Diamond Ring - M</a></h2>
+            <div class="product-ratings">
+              <div class="ratings-box">
+                <div class="rating" style="width:0%"></div>
+              </div>
+            </div>
+
+            <div class="product-price-box">
+              <span class="product-price">$180.00</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product product-sm">
+          <figure class="product-image-area">
+            <a href="demo-shop-6-product-details.html" title="Product Name" class="product-image">
+              <img src="img/demos/shop/products/product13.jpg" alt="Product Name">
+            </a>
+          </figure>
+          <div class="product-details-area">
+            <h2 class="product-name"><a href="demo-shop-6-product-details.html" title="Product Name">Diamond Ring - XL</a></h2>
+            <div class="product-ratings">
+              <div class="ratings-box">
+                <div class="rating" style="width:80%"></div>
+              </div>
+            </div>
+
+            <div class="product-price-box">
+              <span class="product-price">$240.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>

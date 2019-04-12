@@ -1,0 +1,528 @@
+{% extends 'XSMarketPlaceBundle:Layout:base.html.twig' %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block breadcrumb %}
+  <section class="page-header mb-lg">
+
+    <div class="container">
+      <ul class="breadcrumb">
+        <li><a href="#">Home</a></li>
+
+        <li><a href="#">Fashion</a></li>
+        <li class="active">Black Maxi Dress</li>
+      </ul>
+    </div>
+  </section>
+{% endblock %}
+
+{% block body_banner %}
+{% endblock %}
+
+{% block container %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-9">
+      <div class="product-view">
+        <div class="product-essential">
+          <div class="row">
+            <div class="product-img-box col-sm-5">
+              <div class="product-img-box-wrapper">
+                <div class="product-img-wrapper">
+                  <img id="product-zoom" src="{{ product.profileUrl }}" data-zoom-image="{{ product.profileUrl }}" alt="Product main image">
+                </div>
+
+                <a href="#" class="product-img-zoom" title="Zoom">
+                  <span class="glyphicon glyphicon-search"></span>
+                </a>
+              </div>
+
+              <div class="owl-carousel manual" id="productGalleryThumbs">
+                {% for photo_url in product.PhotosUrls %}
+                  <div class="product-img-wrapper">
+                    <a href="#" data-image="{{ photo_url }}" data-zoom-image="{{ photo_url }}" class="product-gallery-item">
+                      <img src="{{ photo_url }}" alt="product">
+                    </a>
+                  </div>
+                {% endfor %}
+                {% for cl_url in product.PhotosUrls %}
+                  <div class="product-img-wrapper">
+                    <a href="#" data-image="{{ photo_url }}" data-zoom-image="{{ photo_url }}" class="product-gallery-item">
+                      <img src="{{ photo_url }}" alt="product">
+                    </a>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div class="product-details-box col-sm-7">
+              {# <div class="product-nav-container">
+                 <div class="product-nav product-nav-prev">
+                   <a href="#" title="Previous Product">
+                     <i class="fa fa-chevron-left"></i>
+                   </a>
+
+                   <div class="product-nav-dropdown">
+                     <img src="{{ product.profileUrl }}" alt="Product">
+                     <h4>Prece</h4>
+                   </div>
+                 </div>
+                 <div class="product-nav product-nav-next">
+                   <a href="#" title="Next Product">
+                     <i class="fa fa-chevron-right"></i>
+                   </a>
+
+                   <div class="product-nav-dropdown">
+                     <img src="{{ product.profileUrl }}" alt="Product">
+                     <h4>Next</h4>
+                   </div>
+                 </div>
+               </div>#}
+              <h1 class="product-name">
+                {{ product.name }}
+              </h1>
+
+              <div class="product-rating-container">
+                <div class="product-ratings">
+                  <div class="ratings-box">
+                    <div class="rating" style="width:60%"></div>
+                  </div>
+                </div>
+                <div class="review-link">
+                  <a href="#" class="review-link-in" rel="nofollow"> <span class="count">1</span> customer review</a> |
+                  <a href="#" class="write-review-link" rel="nofollow">Add a review</a>
+                </div>
+              </div>
+
+              <div class="product-short-desc">
+                <p>{{ product.description }}</p>
+              </div>
+
+              <div class="product-detail-info">
+                <div class="product-price-box">
+                  <span class="old-price">{{ product.priceMin | amount_format }}</span>
+                  <span class="product-price">{{ product.priceShown | amount_format }}</span>
+                </div>
+                <p class="availability">
+                  <span class="font-weight-semibold">Paiement:</span>
+                  {{ product.payFrequency | trans }}
+                </p>
+                <p class="email-to-friend"><a href="#">Partager ce Produit</a></p>
+              </div>
+
+              <div class="product-actions">
+                {#<div class="product-detail-qty">
+                  <input type="text" value="1" class="vertical-spinner" id="product-vqty">
+                </div>#}
+                {% include 'XSMarketPlaceBundle:Cart:addProduct.html.twig' with {'id' : product.id}  %}
+                {% include 'XSMarketPlaceBundle:WishList:addProduct.html.twig' with {'id' : product.id} %}
+                {% include 'XSMarketPlaceBundle:CompareList:addProduct.html.twig' with {'id' : product.id} %}
+              </div>
+              <div class="product-share-box">
+                <div class="addthis_inline_share_toolbox"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tabs product-tabs">
+          <ul class="nav nav-tabs">
+            <li class="active">
+              <a href="#product-desc" data-toggle="tab">Description</a>
+            </li>
+            <li>
+              <a href="#product-add" data-toggle="tab">Additionnel</a>
+            </li>
+            {# <li>
+               <a href="#product-tags" data-toggle="tab">Mots Clés</a>
+             </li>#}
+            <li>
+              <a href="#product-reviews" data-toggle="tab">Revues</a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div id="product-desc" class="tab-pane active">
+              <div class="product-desc-area">
+                <p>{{ product.description }}</p>
+              </div>
+            </div>
+            <div id="product-add" class="tab-pane">
+              <table class="product-table">
+                <tbody>
+                <tr>
+                  <td class="table-label">Type de Logement</td>
+                  <td>
+                    <span class="text-primary">{{ product.house.type | trans }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="table-label">Tarif annoncé</td>
+                  <td>
+                    <span class="text-primary"><span class="cart-total-item">{{ product.priceShown | amount_format }} / {{ product.payFrequency | trans}}</span></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="table-label">Tarif / mois</td>
+                  <td>
+                    <span class="text-primary"><span class="cart-total-item">{{ product.payMonth | amount_format }}</span></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="table-label">Adresse</td>
+                  <td>
+                    <span class="text-primary">{{ product.localisation.gmaps.formattedAddress }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="table-label">Dimensions en mètre (LxlxH)</td>
+                  <td>
+                    <span class="text-primary">{{ product.house.length }} x {{ product.house.width }} x {{ product.house.height }} </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="table-label">Logement meublé ?</td>
+                  <td>
+                    {% if product.house.furnished %}
+                      <span class="text-primary">Oui</span>
+                    {% else %}
+                      <span class="text-primary">Non</span>
+                    {% endif %}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="table-label">Places de Parking</td>
+                  <td>
+                    <span class="text-primary">{{ product.house.parking }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="table-label">Qté Chambres</td>
+                  <td>
+                    <span class="text-primary">{{ product.house.room.bedRoom }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="table-label">Qté Salons</td>
+                  <td>
+                    <span class="text-primary">{{ product.house.room.LivingRoom }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="table-label">Qté Cuisines</td>
+                  <td>
+                    <span class="text-primary">{{ product.house.room.kitchen }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="table-label">Qté Salles de Bain</td>
+                  <td>
+                    <span class="text-primary">{{ product.house.room.toilet }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="table-label">Qté Bureaux</td>
+                  <td>
+                    <span class="text-primary">{{ product.house.room.office }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="table-label">Qté Salles à Manger</td>
+                  <td>
+                    <span class="text-primary">{{ product.house.room.diningRoom }}</span>
+                  </td>
+                </tr>
+                {#<tr>
+                  <td class="table-label">Qté Toilettes</td>
+                    <td>
+                      <span class="text-primary">{{ product.house.toilet }}</span>
+                    </td>
+                </tr>#}
+                </tbody>
+              </table>
+            </div>
+            {#<div id="product-tags" class="tab-pane">
+              <div class="product-tags-area">
+                <form action="#">
+                  <div class="form-group">
+                    <label>Add Your Tags:</label>
+                    <div class="clearfix">
+                      <input type="text" class="form-control pull-left" required>
+                      <input type="submit" class="btn btn-primary" value="Add Tags">
+                    </div>
+                  </div>
+                </form>
+                <p class="note">Use spaces to separate tags. Use single quotes (') for phrases.</p>
+              </div>
+            </div>#}
+            <div id="product-reviews" class="tab-pane">
+              {{ render(controller('XSCoreBundle:Review:add', {'target_id': product.id, 'target_name': 'Product'})) }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="slider-title">
+        <span class="inline-title">Also Purchased</span>
+        <span class="line"></span>
+      </h2>
+
+      <div class="owl-carousel owl-theme" data-plugin-options="{'items':4, 'margin':20, 'nav':true, 'dots': false, 'loop': false}">
+        <div class="product">
+          <figure class="product-image-area">
+            <a href="#" title="Product Name" class="product-image">
+              <img src="../img/demos/shop/products/product1.jpg" alt="Product Name">
+              <img src="../img/demos/shop/products/product1-2.jpg" alt="Product Name" class="product-hover-image">
+            </a>
+
+            <a href="#" class="product-quickview">
+              <i class="fa fa-share-square-o"></i>
+              <span>Quick View</span>
+            </a>
+            <div class="product-label"><span class="discount">-10%</span></div>
+            <div class="product-label"><span class="new">New</span></div>
+          </figure>
+          <div class="product-details-area">
+            <h2 class="product-name"><a href="#" title="Product Name">Noa Sheer Blouse</a></h2>
+            <div class="product-ratings">
+              <div class="ratings-box">
+                <div class="rating" style="width:60%"></div>
+              </div>
+            </div>
+
+            <div class="product-price-box">
+              <span class="old-price">$99.00</span>
+              <span class="product-price">$89.00</span>
+            </div>
+
+            <div class="product-actions">
+              <<a href="{{ path('xs_market_place_list_add_product', {'id': product.id, 'list': 'wish_list'}) }}" class="addtowishlist"  onclick="addThisToList(event, 'wish_list')" title="Ajouter à mes Voeux">
+                <i class="fa fa-heart"></i>
+              </a>
+              {% include 'XSMarketPlaceBundle:Cart:addProduct.html.twig' with {'id' : product.id} %}
+              <a href="{{ path('xs_market_place_list_add_product', {'id': product.id, 'list':'compare_list'}) }}" class="comparelink" title="Ajouter à la liste de Comparaison">
+                <i class="glyphicon glyphicon-signal"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="product">
+          <figure class="product-image-area">
+            <a href="#" title="Product Name" class="product-image">
+              <img src="../img/demos/shop/products/product2.jpg" alt="Product Name">
+              <img src="../img/demos/shop/products/product2-2.jpg" alt="Product Name" class="product-hover-image">
+            </a>
+
+            <a href="#" class="product-quickview">
+              <i class="fa fa-share-square-o"></i>
+              <span>Quick View</span>
+            </a>
+            <div class="product-label"><span class="discount">-25%</span></div>
+          </figure>
+          <div class="product-details-area">
+            <h2 class="product-name"><a href="#" title="Product Name">Women Fashion Blouse</a></h2>
+            <div class="product-ratings">
+              <div class="ratings-box">
+                <div class="rating" style="width:0%"></div>
+              </div>
+            </div>
+
+            <div class="product-price-box">
+              <span class="old-price">$120.00</span>
+              <span class="product-price">$90.00</span>
+            </div>
+
+            <div class="product-actions">
+              <a href="#" class="addtowishlist" title="Add to Wishlist">
+                <i class="fa fa-heart"></i>
+              </a>
+              <a href="#" class="addtocart" title="Add to Cart">
+                <i class="fa fa-shopping-cart"></i>
+                <span>Add to Cart</span>
+              </a>
+              <a href="#" class="comparelink" title="Add to Compare">
+                <i class="glyphicon glyphicon-signal"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="product">
+          <figure class="product-image-area">
+            <a href="#" title="Product Name" class="product-image">
+              <img src="../img/demos/shop/products/product3.jpg" alt="Product Name">
+            </a>
+
+            <a href="#" class="product-quickview">
+              <i class="fa fa-share-square-o"></i>
+              <span>Quick View</span>
+            </a>
+          </figure>
+          <div class="product-details-area">
+            <h2 class="product-name"><a href="#" title="Product Name">Fashion Dress</a></h2>
+            <div class="product-ratings">
+              <div class="ratings-box">
+                <div class="rating" style="width:60%"></div>
+              </div>
+            </div>
+
+            <div class="product-price-box">
+              <span class="product-price">$70.00</span>
+            </div>
+
+            <div class="product-actions">
+              <a href="#" class="addtowishlist" title="Add to Wishlist">
+                <i class="fa fa-heart"></i>
+              </a>
+              <a href="#" class="addtocart" title="Add to Cart">
+                <i class="fa fa-shopping-cart"></i>
+                <span>Add to Cart</span>
+              </a>
+              <a href="#" class="comparelink" title="Add to Compare">
+                <i class="glyphicon glyphicon-signal"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="product">
+          <figure class="product-image-area">
+            <a href="#" title="Product Name" class="product-image">
+              <img src="../img/demos/shop/products/product4.jpg" alt="Product Name">
+            </a>
+
+            <a href="#" class="product-quickview">
+              <i class="fa fa-share-square-o"></i>
+              <span>Quick View</span>
+            </a>
+            <div class="product-label"><span class="discount">-20%</span></div>
+          </figure>
+          <div class="product-details-area">
+            <h2 class="product-name"><a href="#" title="Product Name">Fashion Sweater</a></h2>
+            <div class="product-ratings">
+              <div class="ratings-box">
+                <div class="rating" style="width:80%"></div>
+              </div>
+            </div>
+
+            <div class="product-price-box">
+              <span class="old-price">$100.00</span>
+              <span class="product-price">$90.00</span>
+            </div>
+
+            <div class="product-actions">
+              <a href="#" class="addtowishlist" title="Add to Wishlist">
+                <i class="fa fa-heart"></i>
+              </a>
+              <a href="#" class="addtocart" title="Add to Cart">
+                <i class="fa fa-shopping-cart"></i>
+                <span>Add to Cart</span>
+              </a>
+              <a href="#" class="comparelink" title="Add to Compare">
+                <i class="glyphicon glyphicon-signal"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="product">
+          <figure class="product-image-area">
+            <a href="#" title="Product Name" class="product-image">
+              <img src="../img/demos/shop/products/product11.jpg" alt="Product Name">
+            </a>
+
+            <a href="#" class="product-quickview">
+              <i class="fa fa-share-square-o"></i>
+              <span>Quick View</span>
+            </a>
+          </figure>
+          <div class="product-details-area">
+            <h2 class="product-name"><a href="#" title="Product Name">Woman Shee Blouse</a></h2>
+            <div class="product-ratings">
+              <div class="ratings-box">
+                <div class="rating" style="width:0%"></div>
+              </div>
+            </div>
+
+            <div class="product-price-box">
+              <span class="product-price">$70.00</span>
+            </div>
+
+            <div class="product-actions">
+              <a href="#" class="addtowishlist" title="Add to Wishlist">
+                <i class="fa fa-heart"></i>
+              </a>
+              <a href="#" class="addtocart" title="Add to Cart">
+                <i class="fa fa-shopping-cart"></i>
+                <span>Add to Cart</span>
+              </a>
+              <a href="#" class="comparelink" title="Add to Compare">
+                <i class="glyphicon glyphicon-signal"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <aside class="col-md-3 sidebar product-sidebar">
+      <div class="feature-box feature-box-style-3">
+        <div class="feature-box-icon">
+          <i class="fa fa-truck"></i>
+        </div>
+        <div class="feature-box-info">
+          <h4>FREE SHIPPING</h4>
+          <p class="mb-none">Free shipping on all orders over $99.</p>
+        </div>
+      </div>
+
+      <div class="feature-box feature-box-style-3">
+        <div class="feature-box-icon">
+          <i class="fa fa-dollar"></i>
+        </div>
+        <div class="feature-box-info">
+          <h4>MONEY BACK GUARANTEE</h4>
+          <p class="mb-none">100% money back guarantee.</p>
+        </div>
+      </div>
+
+      <div class="feature-box feature-box-style-3">
+        <div class="feature-box-icon">
+          <i class="fa fa-support"></i>
+        </div>
+        <div class="feature-box-info">
+          <h4>ONLINE SUPPORT 24/7</h4>
+          <p class="mb-none">Lorem ipsum dolor sit amet.</p>
+        </div>
+      </div>
+
+      <hr class="mt-xlg">
+
+      <div class="owl-carousel owl-theme" data-plugin-options="{'items':1, 'margin': 5}">
+        <a href="#">
+          <img class="img-responsive" src="{{ asset('assets/img/demos/event/about/about-banner-1.jpg') }}" alt="Banner">
+        </a>
+        <a href="#">
+          <img class="img-responsive" src="{{ asset('assets/img/demos/event/about/about-banner-2.jpg') }}" alt="Banner">
+        </a>
+      </div>
+      <hr>
+    </aside>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascripts_final %}
+  <!-- Current Page Vendor and Views -->
+  <script src="{{ asset('assets/js/views/view.contact.js') }}"></script>
+
+  <script src="{{ asset('assets/vendor/bootstrap-touchspin/jquery.bootstrap-touchspin.js') }}"></script>
+  <script src="{{ asset('assets/vendor/elevatezoom/jquery.elevatezoom.js') }}"></script>
+  <!-- Demo -->
+  <script src="{{ asset('assets/js/demos/demo-shop-4.js') }}"></script>
+
+  <!-- Theme Custom -->
+  <script src="{{ asset('assets/js/custom.js') }}"></script>
+
+  <!-- Theme Initialization Files -->
+  <script src="{{ asset('assets/js/theme.init.js') }}"></script>
+  <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-581b726c069c6315"></script>
+{% endblock %}

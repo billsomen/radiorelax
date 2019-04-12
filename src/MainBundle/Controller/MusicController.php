@@ -2,8 +2,8 @@
 
 namespace MainBundle\Controller;
 
-use RadioRelax\AdminBundle\Form\MusicType;
-use RadioRelax\CoreBundle\Document\Music;
+use MainBundle\Document\Music;
+use MainBundle\Form\MusicType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +20,7 @@ class MusicController extends Controller
   {
     //    Show and Edit Artists
     $dm = $this->get('doctrine.odm.mongodb.document_manager');
-    $album = $dm->getRepository("RadioRelaxCoreBundle:Album")->findOneBy(array(
+    $album = $dm->getRepository("MainBundle:Album")->findOneBy(array(
       'id' => $id_album
     ));
     if(!empty($album)){
@@ -83,7 +83,7 @@ class MusicController extends Controller
         }
       }
 
-      return $this->render('RadioRelaxAdminBundle:Music:new.html.twig', array(
+      return $this->render('MainBundle:Admin/Music:new.html.twig', array(
         'artist' => $user,
         'album' => $album,
         'form' => $form->createView()
@@ -169,11 +169,57 @@ class MusicController extends Controller
     return $this->redirectToRoute('admin_profile');
   }
 
-  public function showAction($id, Request $request)
+  public function removeAction($id)
+  {
+    // For now, we're not able to remove any music
+    $this->addFlash('error', "Impossible de supprimer de la musique, merci de contacter un administrateur.");
+    return $this->redirectToRoute('admin_profile');
+    //    Remove the Music accordingly to its id
+    $dm = $this->get('doctrine.odm.mongodb.document_manager');
+    $music = $dm->getRepository("MainBundle:Music")->findOneBy(array(
+      'id' => $id
+    ));
+    if(!empty($music)){
+      $id_album = $music->getAlbum()->getId();
+      $dm->remove($music);
+      $dm->flush();
+      $this->addFlash('notice', "Musique supprimée avec succès");
+      return $this->redirectToRoute("admin_albums_show", array(
+        "id" => $id_album
+      ));
+    }
+    else{
+      $this->addFlash('error', "Musique inexistante");
+    }
+
+    return $this->redirectToRoute('admin_profile');
+  }
+
+  public function showAction($id)
+  {
+    //    Show Music
+    $dm = $this->get('doctrine.odm.mongodb.document_manager');
+    $music = $dm->getRepository("MainBundle:Music")->findOneBy(array(
+      'id' => $id
+    ));
+    if(!empty($music)){
+      $user = $music->getArtist();
+      return $this->render('MainBundle:Admin/Music:show.html.twig', array(
+        'artist' => $user,
+        'music' => $music,
+        'album' => $music->getAlbum(),
+      ));
+    }
+
+    $this->addFlash('error', "Musique inexistante");
+    return $this->redirectToRoute('admin_profile');
+  }
+
+  public function updateAction($id, Request $request)
   {
     //    Show and Edit Artists
     $dm = $this->get('doctrine.odm.mongodb.document_manager');
-    $music = $dm->getRepository("RadioRelaxCoreBundle:Music")->findOneBy(array(
+    $music = $dm->getRepository("MainBundle:Music")->findOneBy(array(
       'id' => $id
     ));
     if(!empty($music)){
@@ -185,9 +231,6 @@ class MusicController extends Controller
         if($form->isValid()){
 //          On enregistre et push l'image
           $tmp_name = !empty($_FILES['profile'])?$_FILES['profile']['tmp_name']:null;
-//          var_dump($_FILES);
-//          m;
-//          print_r($iii);
 
           $res["public_id"] = 0;
           if(!empty($tmp_name)){
@@ -218,7 +261,7 @@ class MusicController extends Controller
               ));*/
             }
           }
-          return new Response("45");
+//          return new Response("45");
 
           $this->addFlash("notice", "Mise à jour des informations de la musique terminée!");
           $dm->persist($music);
@@ -232,7 +275,7 @@ class MusicController extends Controller
         }
       }
 
-      return $this->render('RadioRelaxAdminBundle:Music:show.html.twig', array(
+      return $this->render('MainBundle:Admin/Music:_update.html.twig', array(
         'artist' => $user,
         'music' => $music,
         'album' => $music->getAlbum(),
@@ -243,4 +286,5 @@ class MusicController extends Controller
     $this->addFlash('error', "Musique inexistante");
     return $this->redirectToRoute('admin_profile');
   }
+
 }
