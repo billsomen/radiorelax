@@ -26,10 +26,7 @@
           <ul>
             <li>
               <a href="{{ link }}">
-                <span class="play_no">
-                  {{ loop.index |album_list_number_format}}
-                </span>
-                <span class="play_hover"></span>
+                {{ loop.index |album_list_number_format}}
               </a>
             </li>
             <li><a href="{{ link }}">{{ album.name }}</a></li>

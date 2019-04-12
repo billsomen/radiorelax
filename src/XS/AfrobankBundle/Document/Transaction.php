@@ -102,15 +102,15 @@ class Transaction
 //    Cours payé/à payer par cette transaction :)
   protected $course;
   
-  public function __construct($count){
+  public function __construct($count = 0){
     $this->setDateAdd(new \DateTime());
-    $this->state = 'pending';
+    $this->state = self::STATE_FINISHED;
     $this->fee = 0;
     $amount = new Amount();
     $amount->setValue(0);
     $this->amount = $amount;
     $this->generateCode($count);
-    $this->bank = 'Afrobank';
+    $this->bank = 'PayPal';
     $this->has_invoice = false;
   }
   

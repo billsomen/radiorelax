@@ -26,17 +26,22 @@ class Cart implements CartInterface
 //    Le panier de l'utilisateur.
   /** @MongoDB\ReferenceMany(targetDocument="MainBundle\Document\Album") */
   protected $albums;
-  
+
+//    Les albums en cours de paiement
+  /** @MongoDB\ReferenceMany(targetDocument="MainBundle\Document\Album") */
+  protected $albums_pending;
+
 //  The cart is lokced when there's a pending payment
   /** @MongoDB\Field(type="boolean") */
   protected $locked;
-  
+
   /**
    * Cart constructor.
    */
   public function __construct() {
     $this->locked = false;
     $this->albums = new ArrayCollection();
+    $this->albums_pending = new ArrayCollection();
   }
 
   public function getAmount()
@@ -51,7 +56,7 @@ class Cart implements CartInterface
 
     return $amount;
   }
-  
+
   public function getQuantity(){
     return count($this->albums);
   }
@@ -71,7 +76,7 @@ class Cart implements CartInterface
     }
     return false;
   }
-  
+
   public function removeAlbum($album){
 //       Remove an album if not exists
     if($this->isAlbumInCart($album)){
@@ -120,5 +125,42 @@ class Cart implements CartInterface
   public function setAlbums($albums): void
   {
     $this->albums = $albums;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getAlbumsPending()
+  {
+    return $this->albums_pending;
+  }
+
+  /**
+   * @param mixed $albums_pending
+   */
+  public function setAlbumsPending($albums_pending): void
+  {
+    $this->albums_pending = $albums_pending;
+  }
+
+  public function lockAlbums(){
+    $this->albums_pending = new ArrayCollection();
+    foreach ($this->albums as $album){
+      $this->albums_pending->add($album);
+    }
+  }
+
+  public function unLockAlbums(){
+//    Remove paid albums and update currents one
+    foreach ($this->albums_pending as $album_pending){
+      foreach ($this->albums as $album){
+        if ($album->getId() == $album_pending->getId()){
+          $this->albums->removeElement($album);
+
+          break;
+        }
+      }
+    }
+    $this->albums_pending = new ArrayCollection();
   }
 }

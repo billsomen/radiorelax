@@ -2,11 +2,19 @@
 
 namespace XS\AfrobankBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ODM\MongoDB\DocumentManager;
+use MainBundle\Document\Album;
+use MainBundle\Document\Listener;
 use PayPalCheckoutSdk\Core\PayPalHttpClient;
 use PayPalCheckoutSdk\Core\SandboxEnvironment;
 use PayPalCheckoutSdk\Orders\OrdersGetRequest;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+use XS\AfrobankBundle\Document\Account;
+use XS\AfrobankBundle\Document\Transaction;
+use XS\UserBundle\Document\User;
 
 ini_set('error_reporting', E_ALL); // or error_reporting(E_ALL);
 ini_set('display_errors', '1');
@@ -39,32 +47,125 @@ class PayPalController extends Controller
 
   public function indexAction()
   {
-    $cart = $this->getUser()->getCart();
+//    To make sure we don't pay for and element that is not on the cart, we lock the albums to be paid
+    $user = $this->getUser();
+    $cart = $user->getCart();
+
+    $cart->lockAlbums();
+    $dm = $this->get("doctrine.odm.mongodb.document_manager");
+    $user->setCart($cart);
+    $dm->persist($user);
+    $dm->flush();
+
+//    print_r("<br><br><br><br><br><br><br><br><br><br>".count($cart->getAlbumsPending()));
+
     return $this->render('XSAfrobankBundle:PayPal:index.html.twig', array(
       'cart' => $cart
     ));
   }
 
+  public function payAlbums(DocumentManager $dm, User $user){
+//    Pay pending albums
+    $cart = $user->getCart();
+
+    $listener = new Listener();
+    $user->getProfiles()->setListener($listener);
+//    $listener = $user->getProfiles()->getListener();
+//    return count($cart->getAlbumsPending());
+
+    foreach ($cart->getAlbumsPending() as $album){
+//    save order on local user store : on the profiles->listener
+      $listener->getAlbums()->add($album);
+      $artist = $album->getArtist();
+//      create transaction
+      $transaction = new Transaction();
+      $transaction->setSender($user);
+      $transaction->setReceiver($artist);
+      $transaction->setAmount($album->getPrice());
+
+      //    update album : add transaction
+      $album->getAccount()->getTransactions()->add($transaction);
+      if(empty($artist->getAccount())){
+        $account = new Account($artist);
+        $artist->setAccount($account);
+        $dm->persist($account);
+      }
+      $artist->getAccount()->getTransactions()->add($transaction);
+      $user->getAccount()->getTransactions()->add($transaction);
+
+      $dm->persist($transaction);
+      $dm->persist($album);
+      $dm->persist($artist);
+      $dm->persist($user);
+
+      $dm->flush();
+    }
+//    update cart and remove albums from cart
+    $cart->unLockAlbums();
+    $user->setCart($cart);
+//    persist all in database
+    $dm->persist($user);
+    $dm->flush();
+  }
+
   public function addOrderAction($id){
     $client = self::client();
     $response = $client->execute(new OrdersGetRequest($id));
+//   check the total amounts and check if matched by iterating from top to bottom
+    $user = $this->getUser();
+    $dm = $this->get("doctrine.odm.mongodb.document_manager");
+    $this->payAlbums($dm, $user);
 
-    //print json_encode($response->result);
-    print "Status Code: {$response->statusCode}\n";
-    print "Status: {$response->result->status}\n";
-    print "Order ID: {$response->result->id}\n";
-    print "Intent: {$response->result->intent}\n";
-    print "Links:\n";
-    foreach($response->result->links as $link)
-    {
-      print "\t{$link->rel}: {$link->href}\tCall Type: {$link->method}\n";
+/*
+
+    $cart = $user->getCart();
+
+    $listener = $user->getProfiles()->getListener();
+//    return count($cart->getAlbumsPending());
+
+    foreach ($cart->getAlbumsPending() as $album){
+//    save order on local user store : on the profiles->listener
+      $listener->getAlbums()->add($album);
+      $artist = $album->getArtist();
+//      create transaction
+      $transaction = new Transaction();
+      $transaction->setSender($user);
+      $transaction->setReceiver($artist);
+      $transaction->setAmount($album->getPrice());
+
+      //    update album : add transaction
+      $album->getAccount()->getTransactions()->add($transaction);
+      if(empty($artist->getAccount())){
+        $artist->setAccount(new Account());
+      }
+      $artist->getAccount()->getTransactions()->add($transaction);
+      $user->getAccount()->getTransactions()->add($transaction);
+
+      $dm->persist($transaction);
+      $dm->persist($album);
+      $dm->persist($artist);
+      $dm->persist($user);
+
+      $dm->flush();
     }
-    // 4. Save the transaction in your database. Implement logic to save transaction to your database for future reference.
-    print "Gross Amount: {$response->result->purchase_units[0]->amount->currency_code} {$response->result->purchase_units[0]->amount->value}\n";
+//    update cart and remove albums from cart
+    $cart->unLockAlbums();
+    $user->setCart($cart);
+//    persist all in database
+    $dm->persist($user);
+    $dm->flush();
+
+
+
+
+*/
+
+
+
+//    return new JsonResponse( $user->getCart()->getAlbumsPending());
+//    TODO: Later manager with MLM network transactions
 
     // To print the whole response body, uncomment the following line
     return new JsonResponse( $response->result);
   }
-
-
 }

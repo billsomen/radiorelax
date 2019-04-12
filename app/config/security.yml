@@ -43,4 +43,6 @@ security:
         target: coming_soon_homepage
 
   access_control:
-  - { path: ^/admin/, roles: ROLE_USER }
+  - { path: ^/(en|fr)/admin/, roles: ROLE_USER }
+  - { path: ^/(en|fr)/market/, roles: ROLE_USER }
+  - { path: ^/(en|fr)/bank, roles: ROLE_USER }
