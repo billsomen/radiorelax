@@ -135,7 +135,7 @@ class AdminController extends Controller
       "namespace" => $album->getArtist()->getProfiles()->getArtist()->getNamespace()
     ));
   }
-  
+
 //  Music to & from Favorites
 
   public function favoriteMusicAddAction($id){
@@ -184,6 +184,122 @@ class AdminController extends Controller
       "id" => $music->getAlbum()->getId(),
       "namespace" => $music->getArtist()->getProfiles()->getArtist()->getNamespace()
     ));
+  }
+
+  public function dashboardAction(){
+    //Tableau de bord de l'administrateur
+    $dm = $this->get('doctrine.odm.mongodb.document_manager');
+//    1. Stats
+    /*
+     * 1.1. Listeners
+     * 1.2. Albums
+     * 1.3. Musics
+     * 1.4. Artists
+     * 1.5. Transactions & Sales
+     */
+
+    $transactions = $dm->getRepository("XSAfrobankBundle:Transaction")->findAll();
+    /*$listeners = $dm->getRepository("XSUserBundle:User")->findBy(array(
+      'roles' => "ROLE_USER"
+    ));*/
+    $artists = $dm->getRepository("XSUserBundle:User")->findBy(array(
+      'roles' => "ROLE_ARTIST"
+    ));
+
+
+
+
+    $query = $dm->createQueryBuilder("XSUserBundle:User");
+
+    $query
+      ->field('roles')
+      ->in(["ROLE_USER"])
+      ->notIn(["ROLE_ARTIST"])
+    ;
+    $listeners = $query->getQuery()->execute();
+
+
+
+
+
+
+
+
+
+
+
+
+
+    $albums = $dm->getRepository("MainBundle:Album")->findAll();
+    $musics = $dm->getRepository("MainBundle:Music")->findAll();
+
+    $charts = array();
+    $labels = [];
+    foreach ($albums as $item){
+      /*if(isset($labels[date_format($music->getDateAdd(), "Y-M")])){
+        $labels[date_format($music->getDateAdd(), "Y-M")] = 0;
+      }*/
+      $labels[date_format($item->getDateAdd(), "Y-m-d")][] = 1;
+//      $charts["musics"]["labels"][""] = 1;
+    }
+
+    foreach ($labels as $key => $label){
+//      $charts["albums"]["labels"][] = explode('-', $key)[2];
+      $charts["albums"]["labels"][] = $key;
+      //        TODO: remove something below : *1000
+      $charts["albums"]["data"][] = count($label)*1000;
+    }
+
+    $charts["albums"]["datasets"][0] = array(
+      "label" => "Ajouts",
+      "data" => $charts["albums"]["data"]
+    );
+
+    unset($charts["albums"]["data"]);
+
+//Gestion des ventes
+    $labels = array();
+    foreach ($transactions as $item){
+      $labels[date_format($item->getDateAdd(), "Y-m")][] = $item->getAmount()->getValue();
+    }
+
+    foreach ($labels as $key => $label){
+      $charts["sales"]["labels"][] = $key;
+      $total = 0;
+      foreach ($label as $val){
+//        TODO: remove something below
+        $total += 500*rand(1, 9)+$val;
+      }
+      $charts["sales"]["data"][] = $total;
+    }
+
+    $charts["sales"]["datasets"][0] = array(
+      "label" => "Ajouts",
+      "data" => $charts["sales"]["data"]
+    );
+
+    unset($charts["sales"]["data"]);
+
+    $charts["albums"] = json_encode($charts["albums"]);
+    $charts["sales"] = json_encode($charts["sales"]);
+
+
+
+    $total_income = 0;
+    foreach ($transactions as $transaction){
+      $total_income += $transaction->getAmount()->getValue();
+    }
+
+    return $this->render('@Main/Admin/dashboard.html.twig', array(
+      "listeners" => $listeners,
+      "artists" => $artists,
+      "albums" => $albums,
+      "charts" => $charts,
+      "musics" => $musics,
+      "total_income" => $total_income,
+      "transactions" => $transactions
+    ));
+
   }
 
 

@@ -101,7 +101,9 @@ class Profiles
   {
     switch ($profile){
       case "artist":
-        $this->setArtist(new Artist());
+        if(empty($this->getArtist())){
+          $this->setArtist(new Artist());
+        }
         $this->setAccessArtist(true);
         $this->setDateArtist(new \DateTime());
         break;

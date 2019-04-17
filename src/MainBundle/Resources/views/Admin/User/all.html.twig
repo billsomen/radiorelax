@@ -1,0 +1,243 @@
+{% extends "MainBundle:Admin:base.html.twig" %}
+{#Visualisation et gestion de tous les Utilisateurs#}
+{% block title %}
+  Utilisateurs - {{ parent() }}
+{% endblock %}
+
+
+{% block body_inner_main %}
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Demande d'accès artiste  : {{ requesters |length }}</h3>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+            <tr>
+              <th scope="col">Nom</th>
+              <th scope="col">Date d'ajout</th>
+              <th scope="col">Email</th>
+              {#              <th scope="col">Lien</th>#}
+              {#<th scope="col">Completion</th>#}
+              <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in requesters | reverse %}
+              <tr>
+                <th scope="row">
+                  <div class="media align-items-center">
+                    <a href="#" class="avatar rounded-circle mr-3">
+                      <img alt="Image" src="{{ asset('assets/adminbundle/img/brand/favicon.png') }}">
+                    </a>
+                    <div class="media-body" style="width: 150px; word-wrap: normal; height: 50px">
+                      {#<a href="{{ path('radio_relax_admin_artists_show', {'id': artist.id}) }}"><span class="mb-0 text-sm">{{ artist.name }}</span></a>#}
+                      <span class="mb-0 text-sm">{{ user.nickname }}</span>
+                    </div>
+                  </div>
+                </th>
+                <td>
+                  {% if user.dateAdd %}
+                    {{ user.dateAdd | date("Y-m-d") }}
+                  {% else %}
+                    -
+                  {% endif %}
+                </td>
+                {# <td>
+                       <span class="badge badge-dot mr-4">
+                         <i class="bg-warning"></i> en attente
+                       </span>
+                 </td>#}
+                <td>
+                  <a href="mailto:{{ user.username }}" target="_top" title="Mail">{{ user.username }}</a>
+                </td>
+                <td class="text-right">
+                  <div class="dropdown">
+                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                      <a class="dropdown-item" href="{{ path('admin_users_remove_request_artist', {'id': user.id}) }}" title="Rendre Artiste">Annuler la demande</a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {#<div class="card-footer py-4">
+          <nav aria-label="...">
+            <ul class="pagination justify-content-end mb-0">
+              <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">
+                  <i class="fas fa-angle-left"></i>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+              <li class="page-item active">
+                <a class="page-link" href="#">1</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#">
+                  <i class="fas fa-angle-right"></i>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>#}
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <div class="card shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Utilisateurs  : {{ listeners |length }}</h3>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+            <tr>
+              <th scope="col">Nom</th>
+              <th scope="col">Date d'ajout</th>
+              <th scope="col">Email</th>
+              {#              <th scope="col">Lien</th>#}
+              {#<th scope="col">Completion</th>#}
+              <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in listeners | reverse %}
+              <tr>
+                <th scope="row">
+                  <div class="media align-items-center">
+                    <a href="#" class="avatar rounded-circle mr-3">
+                      <img alt="Image" src="{{ asset('assets/adminbundle/img/brand/favicon.png') }}">
+                    </a>
+                    <div class="media-body" style="width: 150px; word-wrap: normal; height: 50px">
+                      {#<a href="{{ path('radio_relax_admin_artists_show', {'id': artist.id}) }}"><span class="mb-0 text-sm">{{ artist.name }}</span></a>#}
+                      <span class="mb-0 text-sm">{{ user.nickname }}</span>
+                    </div>
+                  </div>
+                </th>
+                <td>
+                  {% if user.dateAdd %}
+                    {{ user.dateAdd | date("Y-m-d") }}
+                  {% else %}
+                    -
+                  {% endif %}
+                </td>
+                {# <td>
+                       <span class="badge badge-dot mr-4">
+                         <i class="bg-warning"></i> en attente
+                       </span>
+                 </td>#}
+                <td>
+                  <a href="mailto:{{ user.username }}" target="_top" title="Mail">{{ user.username }}</a>
+                </td>
+                <td class="text-right">
+                  <div class="dropdown">
+                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                      <a class="dropdown-item" href="{{ path('admin_users_make_artist', {'id': user.id}) }}" title="Rendre Artiste">Rendre artiste</a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <div class="card shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Artistes : {{ artists |length }}</h3>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+            <tr>
+              <th scope="col">Nom</th>
+              <th scope="col">Date d'ajout</th>
+              <th scope="col">Email</th>
+              {#              <th scope="col">Lien</th>#}
+              {#<th scope="col">Completion</th>#}
+              <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in artists | reverse %}
+              <tr>
+                <th scope="row">
+                  <div class="media align-items-center">
+                    <a href="#" class="avatar rounded-circle mr-3">
+                      <img alt="Image" src="{{ asset('assets/adminbundle/img/brand/favicon.png') }}">
+                    </a>
+                    <div class="media-body" style="width: 150px; word-wrap: normal; height: 50px">
+                      {#<a href="{{ path('radio_relax_admin_artists_show', {'id': artist.id}) }}"><span class="mb-0 text-sm">{{ artist.name }}</span></a>#}
+                      <span class="mb-0 text-sm">{{ user.nickname }}</span>
+                    </div>
+                  </div>
+                </th>
+                <td>
+                  {% if user.dateAdd %}
+                    {{ user.dateAdd | date("Y-m-d") }}
+                  {% else %}
+                    -
+                  {% endif %}
+                </td>
+                {# <td>
+                       <span class="badge badge-dot mr-4">
+                         <i class="bg-warning"></i> en attente
+                       </span>
+                 </td>#}
+                <td>
+                  <a href="mailto:{{ user.username }}" target="_top" title="Mail">{{ user.username }}</a>
+                </td>
+                <td class="text-right">
+                  <div class="dropdown">
+                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                      <a class="dropdown-item" href="{{ path('admin_users_remove_artist', {'id': user.id}) }}" title="Rendre Artiste">Supprimer l'accès Artiste</a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+

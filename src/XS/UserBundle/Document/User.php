@@ -129,6 +129,14 @@ class User implements AdvancedUserInterface
 //  Mon Panier
   protected $cart;
 
+  /** @MongoDB\Field(type="boolean") */
+//  Requete de profil artiste ?
+  protected $artist_request;
+
+  /** @MongoDB\Field(type="date") */
+//  Date de demande d'accès au profil artiste
+  protected $date_artist_request;
+
   /**
    * User constructor.
    */
@@ -146,6 +154,7 @@ class User implements AdvancedUserInterface
     $this->addRole('ROLE_USER');
     $this->profiles = new Profiles();
     $this->cart = new Cart();
+
   }
   
   public function __toString() {
@@ -672,11 +681,45 @@ class User implements AdvancedUserInterface
       }
     }
 
-
     if($uniqueness){
       $tmp = time().'-'.$tmp;
     }
     $this->setNamespace($tmp);
     return $tmp;
+  }
+
+  public function makeArtist(){
+    foreach ($this->roles as $role){
+      if("ROLE_ARTIST" == $role){
+        return;
+      }
+    }
+    $this->roles[] = "ROLE_ARTIST";
+    $this->profiles->add("artist");
+    return;
+  }
+
+  public function removeArtist(){
+    print_r($this->roles);
+    foreach ($this->roles as $role){
+      if("ROLE_ARTIST" == $role){
+        $this->roles = array_diff($this->roles, array($role));
+        print_r($this->roles);
+//        On ne supprime pas le compte artiste de l'utilisateur
+        return;
+      }
+    }
+    return;
+  }
+
+  public function addRequestArtistAccess(){
+//    demande d'accès au profil artist
+    $this->artist_request = true;
+    $this->date_artist_request = new \DateTime();
+  }
+
+  public function removeRequestArtistAccess(){
+//    demande d'accès au profil artist
+    $this->artist_request = false;
   }
 }
