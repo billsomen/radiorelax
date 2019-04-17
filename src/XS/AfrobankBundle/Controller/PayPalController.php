@@ -114,7 +114,7 @@ class PayPalController extends Controller
   public function addOrderAction($id){
     $client = self::client();
     $response = $client->execute(new OrdersGetRequest($id));
-    if(json_decode($response->result)["status"] == "COMPLETED"){
+    if($response->result->status == "COMPLETED"){
 //   check the total amounts and check if matched by iterating from top to bottom
       $user = $this->getUser();
       $dm = $this->get("doctrine.odm.mongodb.document_manager");

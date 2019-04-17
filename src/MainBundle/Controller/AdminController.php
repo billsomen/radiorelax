@@ -206,8 +206,7 @@ class AdminController extends Controller
       'roles' => "ROLE_ARTIST"
     ));
 
-
-
+//    Listeners
 
     $query = $dm->createQueryBuilder("XSUserBundle:User");
 
@@ -218,18 +217,6 @@ class AdminController extends Controller
     ;
     $listeners = $query->getQuery()->execute();
 
-
-
-
-
-
-
-
-
-
-
-
-
     $albums = $dm->getRepository("MainBundle:Album")->findAll();
     $musics = $dm->getRepository("MainBundle:Music")->findAll();
 
@@ -239,7 +226,7 @@ class AdminController extends Controller
       /*if(isset($labels[date_format($music->getDateAdd(), "Y-M")])){
         $labels[date_format($music->getDateAdd(), "Y-M")] = 0;
       }*/
-      $labels[date_format($item->getDateAdd(), "Y-m-d")][] = 1;
+      $labels[date_format($item->getDateAdd(), "Y-m")][] = 1;
 //      $charts["musics"]["labels"][""] = 1;
     }
 
@@ -247,7 +234,7 @@ class AdminController extends Controller
 //      $charts["albums"]["labels"][] = explode('-', $key)[2];
       $charts["albums"]["labels"][] = $key;
       //        TODO: remove something below : *1000
-      $charts["albums"]["data"][] = count($label)*1000;
+      $charts["albums"]["data"][] = count($label)*100;
     }
 
     $charts["albums"]["datasets"][0] = array(

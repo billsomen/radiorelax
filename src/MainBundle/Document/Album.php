@@ -46,7 +46,7 @@ class Album extends FilesTemplate
     $this->name = $name;
     $this->musics = new ArrayCollection();
     $this->account = new EntityAccount();
-    $this->price = new Amount();
+    $this->price = new Amount(.99);
   }
 
   /**
