@@ -13,6 +13,11 @@ use XS\UserBundle\Form\UserType;
 
 class AdminController extends Controller
 {
+  public function favoritesAction(Request $request){
+    return $this->render('MainBundle:Admin/Me:show.html.twig', array(
+      'user' => $this->getUser()
+    ));
+  }
   public function playlistAction(Request $request){
     //    Show and Edit Artists
     $dm = $this->get('doctrine.odm.mongodb.document_manager');

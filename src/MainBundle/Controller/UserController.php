@@ -2,6 +2,7 @@
 
 namespace MainBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -25,9 +26,19 @@ class UserController extends Controller
       'roles' => "ROLE_ARTIST"
     ));
 //    3. Demandeurs de requête artiste
-    $requesters = $dm->getRepository("XSUserBundle:User")->findBy(array(
-      'artist_request' => "ROLE_USER"
-    ));
+    $query = $dm->createQueryBuilder("XSUserBundle:User");
+
+    $query
+      ->field('roles')
+      ->notIn(["ROLE_ARTIST", "ROLE_ADMIN"])
+      ->field('artist_request')
+      ->equals(true)
+    ;
+    $requesters = $query->getQuery()->execute();
+
+    /*$requesters = $dm->getRepository("XSUserBundle:User")->findBy(array(
+      'artist_request' => true
+    ));*/
 
     return $this->render("@Main/Admin/User/all.html.twig", array(
       "listeners" => $listeners,
@@ -127,6 +138,52 @@ class UserController extends Controller
   }
 
   /**
+   * @param $id string The id of the user to cancel request
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse
+   */
+  public function addRequestArtistAction($id)
+  {
+//    add artist request
+    $dm = $this->get("doctrine.odm.mongodb.document_manager");
+    $user = $dm->getRepository("XSUserBundle:User")->findOneBy(array(
+      "id" => $id
+    ));
+    if(!empty($user)){
+      $user->addRequestArtistAccess();
+//    Envoyer un mail :)
+      $receiver = $user->getUsername();
+      $sender = $this->getParameter("mailer_user");
+      $message = \Swift_Message::newInstance()
+        ->setSubject("Demande de profil artiste envoyée.")
+//              ->setFrom([$sender => $this->getParameter("app_name")])
+        ->setFrom([$sender => $this->getParameter("app_name")])
+        ->setTo(array($receiver))
+        ->setBody(
+          "Votre demande d'accès au profil artiste a été envoyée."
+          ,
+          'text/plain'
+        )
+      ;
+
+      try{
+        $r = $this->get('mailer')->send($message);
+        $this->addFlash("notice", "La demande d'accès au profil artiste à été envoyée");
+        //      On enregistre le çompte
+        $dm->persist($user);
+        $dm->flush();
+      }catch (\Exception $exception){
+        $this->addFlash("error", "Erreur lors de l'envoi du mail à l'utilisateur.");
+      }
+    }
+    else{
+      $this->addFlash("error", "L'utilisateur n'existe pas!");
+    }
+
+    return $this->redirectToRoute("admin_homepage");
+  }
+
+  /**
+   * @Security("has_role('ROLE_ADMIN')")
    * @param $id string The id of the user to cancel request
    * @return \Symfony\Component\HttpFoundation\RedirectResponse
    */

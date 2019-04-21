@@ -16,8 +16,12 @@ admin_users_remove_artist:
   path:     /{id}/remove_artist
   defaults: { _controller: MainBundle:User:removeArtist }
 
+admin_users_add_request_artist:
+  #  Effectuer une demande de profil artiste
+  path:     /{id}/add_request_artist
+  defaults: { _controller: MainBundle:User:addRequestArtist }
+
 admin_users_remove_request_artist:
-#  Valider un artiste temporaire et créer son compte
-#  Un mail sera envoyé, avec son lien d'artiste :)
+  #  Rejeter une demande de devenir Artiste :)
   path:     /{id}/remove_request_artist
   defaults: { _controller: MainBundle:User:removeRequestArtist }

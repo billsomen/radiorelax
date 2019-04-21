@@ -20,11 +20,12 @@ class Listener
 {
 //  Par défaut, tout le monde peut y accéder, donc pas besoin d'en vérifier l'accès
   /** @MongoDB\ReferenceMany(targetDocument="Album") */
-//  Les albums de l'artist
+//  Les albums que j'ai açheté en tant qu'auditeur
   protected $albums;
 
   /** @MongoDB\ReferenceMany(targetDocument="Album") */
-//  Les albums achetés par l'auditeur
+//  Les albums aimés par l'auditeur
+//Faut pas oublier de mettre des previews dans çette partie ou juste des liens vers les albums dans la vue auditeur :)
   protected $favorites_albums;
 
   /** @MongoDB\ReferenceMany(targetDocument="Music") */

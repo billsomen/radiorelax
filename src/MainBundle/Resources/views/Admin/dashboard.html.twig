@@ -1,11 +1,11 @@
 {% extends "MainBundle:Admin:base.html.twig" %}
 
 {% block title %}
-   Tableau de bord!
+   {{ "admin.dashboard.title"|trans }}
 {% endblock %}
 
 {% block inner_header %}
-  <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8" title="Informations">
+  <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8" title="{{ "admin.dashboard.phrase"|trans }}">
     <div class="container-fluid">
       <div class="header-body">
         <!-- Card stats -->
@@ -16,7 +16,7 @@
               <div class="card-body">
                 <div class="row">
                   <div class="col">
-                    <h5 class="card-title text-uppercase text-muted mb-0">Autiteurs</h5>
+                    <h5 class="card-title text-uppercase text-muted mb-0">{{ 'admin.listener.title'|trans }}</h5>
                     <span class="h2 font-weight-bold mb-0">{{ ((listeners|length))|number_format(0) }}</span>
                   </div>
                   <div class="col-auto">
@@ -27,7 +27,7 @@
                 </div>
                 <p class="mt-3 mb-0 text-muted text-sm">
                   <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> x%</span>
-                  <span class="text-nowrap">depuis le lancement</span>
+                  <span class="text-nowrap">{{ 'admin.phrases.since_launch'|trans }}</span>
                 </p>
               </div>
             </div>
@@ -37,7 +37,7 @@
               <div class="card-body">
                 <div class="row">
                   <div class="col">
-                    <h5 class="card-title text-uppercase text-muted mb-0">Artistes</h5>
+                    <h5 class="card-title text-uppercase text-muted mb-0">{{ 'admin.artist.title'|trans }}</h5>
                     <span class="h2 font-weight-bold mb-0">{{ ((artists|length))|number_format(0) }}</span>
                   </div>
                   <div class="col-auto">
@@ -48,7 +48,7 @@
                 </div>
                 <p class="mt-3 mb-0 text-muted text-sm">
                   <span class="text-danger mr-2"><i class="fas fa-arrow-right"></i> n%</span>
-                  <span class="text-nowrap">depuis le lancement</span>
+                  <span class="text-nowrap">{{ 'admin.phrases.since_launch'|trans }}</span>
                 </p>
               </div>
             </div>
@@ -79,7 +79,7 @@
               <div class="card-body">
                 <div class="row">
                   <div class="col">
-                    <h5 class="card-title text-uppercase text-muted mb-0">Albums</h5>
+                    <h5 class="card-title text-uppercase text-muted mb-0">{{ 'admin.album.title'|trans }}</h5>
                     <span class="h2 font-weight-bold mb-0">{{ ((albums|length))|number_format(0) }}</span>
                   </div>
                   <div class="col-auto">
@@ -90,7 +90,7 @@
                 </div>
                 <p class="mt-3 mb-0 text-muted text-sm">
                   <span class="text-warning mr-2"><i class="fas fa-arrow-down"></i> x%</span>
-                  <span class="text-nowrap">depuis le lancement</span>
+                  <span class="text-nowrap">{{ 'admin.phrases.since_launch'|trans }}</span>
                 </p>
               </div>
             </div>
@@ -100,7 +100,7 @@
               <div class="card-body">
                 <div class="row">
                   <div class="col">
-                    <h5 class="card-title text-uppercase text-muted mb-0">Ventes</h5>
+                    <h5 class="card-title text-uppercase text-muted mb-0">{{ 'admin.sales.title'|trans }}</h5>
                     <span class="h2 font-weight-bold mb-0">{{ total_income|number_format }}CAD</span>
                   </div>
                   <div class="col-auto">
@@ -111,7 +111,7 @@
                 </div>
                 <p class="mt-3 mb-0 text-muted text-sm">
                   <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> m%</span>
-                  <span class="text-nowrap">depuis le lancement</span>
+                  <span class="text-nowrap">{{ 'admin.phrases.since_launch'|trans }}</span>
                 </p>
               </div>
             </div>
@@ -129,8 +129,8 @@
         <div class="card-header bg-transparent">
           <div class="row align-items-center">
             <div class="col">
-              <h6 class="text-uppercase text-light ls-1 mb-1">Albums</h6>
-              <h2 class="text-white mb-0">Total ventes</h2>
+              <h6 class="text-uppercase text-light ls-1 mb-1">{{ 'admin.album.title'|trans }}</h6>
+              <h2 class="text-white mb-0">{{ 'admin.sales.total'|trans }}</h2>
             </div>
           </div>
         </div>
@@ -148,8 +148,8 @@
         <div class="card-header bg-transparent">
           <div class="row align-items-center">
             <div class="col">
-              <h6 class="text-uppercase text-muted ls-1 mb-1">Albums</h6>
-              <h2 class="mb-0">Total ajouts</h2>
+              <h6 class="text-uppercase text-muted ls-1 mb-1">{{ 'admin.album.title'|trans }}</h6>
+              <h2 class="mb-0">{{ 'admin.add.total'|trans }}</h2>
             </div>
           </div>
         </div>
