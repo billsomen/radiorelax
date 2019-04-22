@@ -35,8 +35,8 @@ admin_profile_favorites_add_album:
 
 admin_profile_favorites_remove_album:
   #  Ajouter un album aux favoris
-  path:     /me/favorites/albums/remove/{id}
-  defaults: { _controller: MainBundle:Admin:favoriteAlbumRemove }
+  path:     /me/favorites/albums/remove/{id}/{from_admin}
+  defaults: { _controller: MainBundle:Admin:favoriteAlbumRemove, from_admin:0 }
 
 admin_profile_favorites_add_music:
   #  Ajouter un music aux favoris
@@ -47,6 +47,19 @@ admin_profile_favorites_remove_music:
   #  Ajouter un music aux favoris
   path:     /me/favorites/musics/remove/{id}
   defaults: { _controller: MainBundle:Admin:favoriteMusicRemove }
+
+#Admin User
+#rendre/retirer Artiste, réinitialiser le compte
+admin_users:
+  prefix:     /users
+  resource: "admin/routing-users.yml"
+
+#Admin Bank
+#Gérer les finances : paiements et transactions
+admin_dashboard:
+  path:     /dashboard
+  defaults: { _controller: MainBundle:Admin:dashboard }
+#  resource: "admin/routing-finances.yml"
 
 #Admin Artist
 admin_artists:

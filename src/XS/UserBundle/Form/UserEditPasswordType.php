@@ -13,29 +13,21 @@ class UserEditPasswordType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
-      ->remove('password')
-      ->add('oldPassword', PasswordType::class)
+      ->add('oldPassword', PasswordType::class, array(
+        "attr" => array(
+          "class" => "form-control"
+        )
+      ))
       ->add('password', RepeatedType::class, array(
        'type' => PasswordType::class,
        'invalid_message' => 'Les deux mots de passe doivent correspondre',
        'options' => array(
-         'required' => true
+         'required' => true,
+         "attr" => array(
+           "class" => "form-control"
+         )
        ),
      ))
-      ->remove('terms')
-      
-      ->remove('name')
-      ->remove('firstname')
-      ->remove('nickname')
-      ->remove('email')
-      ->remove('telephones')
-      ->remove('profile')
-      ->remove('localisation')
-      ->remove('birthdate')
-      ->remove('gender')
-      ->remove('fb_id')
-      ->remove('username')
-      ->remove('profile')
     ;
   }
   

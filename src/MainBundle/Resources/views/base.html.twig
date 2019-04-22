@@ -68,7 +68,7 @@
         {% endfor %}
         <div class="ms_top_left">
           <div class="ms_top_search">
-            <span class="comming_soon_below_logo">{{ 'app.bundle.coming_soon.phrase'|trans }}</span>
+            <span class="comming_soon_below_logo">{{ 'app.bundle.coming_soon.phrase' |trans }}</span>
           </div>
         
         </div>
@@ -78,7 +78,8 @@
 {#            <a href="{{ path('core_artists_homepage') }}"><img src="{{ asset('assets/images/fr.png') }}" width="30" title="{{ "locale.language.fr.title"|trans }}"/></a>#}
             {% if app.user %}
               <a href="{{ path('admin_profile') }}">
-                <img src="https://forum.affinity.serif.com/uploads/monthly_2018_05/M_member_46298.png" width="30" title="Mon Profil"/>
+                <img src="{{ asset('assets/adminbundle/img/brand/favicon.png') }}" width="30" title="Mon Profil"/>
+{#                <img src="https://forum.affinity.serif.com/uploads/monthly_2018_05/M_member_46298.png" width="30" title="Mon Profil"/>#}
               </a>
             {% else %}
               <a href="{{ path('login', {'_locale': 'fr'}) }}" title="Se connecter">
@@ -88,7 +89,7 @@
             {% endif %}
           </div>
           <div class="ms_top_btn">
-            {#<a href="javascript:;" class="ms_btn reg_btn" data-toggle="modal" data-target="#myModal"><span>{{ 'button.im_listener_short'|trans }}</span></a>#}
+{#            <a href="javascript:;" class="ms_btn reg_btn" data-toggle="modal" data-target="#myModal"><span>{{ 'button.im_listener_short'|trans }}</span></a>#}
             {#<a href="javascript:;" class="ms_btn login_btn" data-toggle="modal" data-target="#myModal1"><span>{{ 'button.im_artist_short'|trans }}</span></a>#}
           </div>
         </div>
@@ -97,7 +98,6 @@
       {% block body_inner_main %}
       
       {% endblock %}
-    
     </div>
     
     

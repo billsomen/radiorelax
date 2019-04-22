@@ -252,7 +252,8 @@ class MainExtension extends \Twig_Extension
   }
 
   public function amountShortFormat(Amount $amount){
-    $data =  $amount->getCurrency().' '.$this->shortNumber($amount->getValue());
+//    $data =  $amount->getCurrency().' '.$this->shortNumber($amount->getValue());
+    $data =  $amount->getCurrency().' '.($amount->getValue());
     return $data;
   }
 

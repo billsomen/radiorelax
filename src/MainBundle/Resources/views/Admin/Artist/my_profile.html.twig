@@ -9,42 +9,25 @@
   {{ user.nickname }}
 {% endblock %}
 
-{% block inner_header %}
-  <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url({{ asset('assets/img/theme/profile-cover.jpg')}}); background-size: cover; background-position: center top;">
-    <!-- Mask -->
-    <span class="mask bg-gradient-default opacity-8"></span>
-    <!-- Header container -->
-    <div class="container-fluid d-flex align-items-center">
-      <div class="row">
-        <div class="col-lg-7 col-md-10">
-          <h1 class="display-2 text-white">Profil de {{ user.nickname }}</h1>
-          <p class="text-white mt-0 mb-5">
-            {% if user.profiles.accessArtist %}
-              {{ user.profiles.artist.description }}
-            {% else %}
-              //
-            {% endif %}
-          </p>
-          {#<a href="#" class="btn btn-info">Edit profile</a>#}
-        </div>
-      </div>
-    </div>
-  </div>
-{% endblock %}
-
 {% block body_inner_main %}
   <div class="row">
     <div class="col-xl-6 order-xl-0">
       <div class="card bg-secondary shadow">
         <div class="card-header bg-white border-0">
           <div class="row align-items-center">
-            <div class="col-8">
+            <div class="col-6">
               <h3 class="mb-0">{{ 'admin.my_account'|trans }}</h3>
             </div>
-            <div class="col-4 text-right">
-             {# <a class="btn btn-sm btn-danger" title="{{ 'button.delete'|trans }}" href="#{{ path('admin_artists_remove', {'id': user.id}) }}">
-                <i class="fa fa-trash text-white"></i>
-              </a>#}
+            <div class="col-6 text-right">
+              {# <a class="btn btn-sm btn-danger" title="{{ 'button.delete'|trans }}" href="#{{ path('admin_artists_remove', {'id': user.id}) }}">
+                 <i class="fa fa-trash text-white"></i>
+               </a>#}
+              {% if "ROLE_ARTIST" not in user.roles %}
+                <a href="{{ path('admin_users_add_request_artist', {'id': user.id}) }}" class="btn btn-sm btn-success" title="{{ 'button.become_artist'|trans }}">
+                  <i class="fa fa-plus text-white"></i>
+                  <i class="fa fa-music text-white"></i>
+                </a>
+              {% endif %}
               <button form="artist_form" type="submit" class="btn btn-sm btn-primary">{{ 'button.save'|trans }}</button>
             </div>
           </div>
@@ -75,18 +58,18 @@
         </div>
       </div>
     </div>
-
+    
     <div class="col-xl-6 order-xl-0">
       <div class="card bg-secondary shadow">
         <div class="card-header bg-white border-0">
           <div class="row align-items-center">
             <div class="col-8">
-              <h3 class="mb-0">{{ 'admin.my_account'|trans }}</h3>
+              <h3 class="mb-0">{{ 'admin.security'|trans }}</h3>
             </div>
             <div class="col-4 text-right">
-             {# <a class="btn btn-sm btn-danger" title="{{ 'button.delete'|trans }}" href="#{{ path('admin_artists_remove', {'id': user.id}) }}">
-                <i class="fa fa-trash text-white"></i>
-              </a>#}
+              {# <a class="btn btn-sm btn-danger" title="{{ 'button.delete'|trans }}" href="#{{ path('admin_artists_remove', {'id': user.id}) }}">
+                 <i class="fa fa-trash text-white"></i>
+               </a>#}
               <button form="password_form" type="submit" class="btn btn-sm btn-primary">{{ 'button.save'|trans }}</button>
             </div>
           </div>

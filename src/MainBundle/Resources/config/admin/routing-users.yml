@@ -1,0 +1,27 @@
+#Dashboard de gestion des artistes
+admin_users_homepage:
+#  Tous les artistes
+  path:     /
+  defaults: { _controller: MainBundle:User:all }
+
+admin_users_make_artist:
+#  Valider un artiste temporaire et créer son compte
+#  Un mail sera envoyé, avec son lien d'artiste :)
+  path:     /{id}/make_artist
+  defaults: { _controller: MainBundle:User:makeArtist }
+  
+admin_users_remove_artist:
+#  Valider un artiste temporaire et créer son compte
+#  Un mail sera envoyé, avec son lien d'artiste :)
+  path:     /{id}/remove_artist
+  defaults: { _controller: MainBundle:User:removeArtist }
+
+admin_users_add_request_artist:
+  #  Effectuer une demande de profil artiste
+  path:     /{id}/add_request_artist
+  defaults: { _controller: MainBundle:User:addRequestArtist }
+
+admin_users_remove_request_artist:
+  #  Rejeter une demande de devenir Artiste :)
+  path:     /{id}/remove_request_artist
+  defaults: { _controller: MainBundle:User:removeRequestArtist }

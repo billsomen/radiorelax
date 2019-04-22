@@ -2,12 +2,29 @@
 
 {#Visualisation et gestion de tous les artistes#}
 {% block title %}
-  {{ user.nickname }} - {{ parent() }}
+  {{ user.nickname }} - {{ "menu.admin.favorites"|trans }}
 {% endblock %}
 
 {% block page_title %}
-  {{ user.nickname }}
+  {{ "menu.admin.favorites"|trans }}
 {% endblock %}
+{#
+{% block inner_header %}
+  #}{#<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url({{ asset('assets/img/theme/profile-cover.jpg')}}); background-size: cover; background-position: center top;">
+    <!-- Mask -->
+    <span class="mask bg-gradient-default opacity-8"></span>
+    <!-- Header container -->
+    <div class="container-fluid d-flex align-items-center">
+      <div class="row">
+        <div class="col-lg-7 col-md-10">
+          <h1 class="display-2 text-white">{{ "menu.admin.favorites"|trans }}</h1>
+#}{##}{#          <p class="text-white mt-0 mb-5">Les albums que j'ai déjà acheté</p>#}{##}{#
+          #}{##}{#<a href="#" class="btn btn-info">Edit profile</a>#}{##}{#
+        </div>
+      </div>
+    </div>
+  </div>#}{#
+{% endblock %}#}
 
 {% block body_inner_main %}
   <div class="row">
@@ -18,8 +35,8 @@
             <div class="col">
               <div class="card-profile-stats d-flex justify-content-center mt-md-5">
                 <div>
-                  <span class="heading">{{ user.profiles.listener.albums | length }}</span>
-                  <span class="description">Albums</span>
+                  <span class="heading">{{ user.profiles.listener.favoritesAlbums | length }}</span>
+                  <span class="description">{{ "menu.admin.favorites"|trans }}</span>
                 </div>
               </div>
             </div>
@@ -30,12 +47,13 @@
                 <thead class="thead-light">
                 <tr>
                   <th scope="col">Nom</th>
-                  <th scope="col" title="Date de sortie">Année</th>
+                  <th scope="col" title="Date de sortie">Date</th>
                   <th scope="col">Qté Sons</th>
+                  <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for album in user.profiles.listener.albums %}
+                {% for album in user.profiles.listener.favoritesAlbums %}
                   <tr>
                     <th scope="row">
                       <div class="media align-items-center">
@@ -52,6 +70,11 @@
                     </td>
                     <td>
                       {{ album.musics | length }}
+                    </td>
+                    <td>
+                      <a title="Retirer de la liste" href="{{ path('admin_profile_favorites_remove_album', {'id': album.id, 'from_admin':1}) }}" class="btn btn-sm btn-danger">
+                        <span class="fa fa-times text-white"></span>
+                      </a>
                     </td>
                   </tr>
                 {% endfor %}
