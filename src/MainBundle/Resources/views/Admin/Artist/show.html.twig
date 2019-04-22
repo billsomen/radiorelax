@@ -36,20 +36,20 @@
                   <span class="heading">{{ user.profiles.artist.albums | length }}</span>
                   <span class="description">Albums</span>
                 </div>
-               {# <div>
-                  <span class="heading">X</span>
-                  <span class="description">Musiques</span>
-                </div>
-                <div>
-                  <span class="heading">X</span>
-                  <span class="description">Minutes</span>
-                </div>#}
+                {# <div>
+                   <span class="heading">X</span>
+                   <span class="description">Musiques</span>
+                 </div>
+                 <div>
+                   <span class="heading">X</span>
+                   <span class="description">Minutes</span>
+                 </div>#}
               </div>
             </div>
           </div>
           <div class="text-center">
             <h3>
-              {{ user.nickname }}<span class="font-weight-light">, Age</span>
+              {{ user.nickname }}{#<span class="font-weight-light"></span>#}
             </h3>
             <div class="h5 font-weight-300">
               <i class="ni location_pin mr-2"></i>
@@ -164,6 +164,26 @@
               <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
+                    <label class="form-control-label" for="input-genre">Genre</label>
+                    {% set current_genre = user.profiles.artist.genre %}
+                    <select name="genre" id="input-genre" class="form-control form-control-alternative">
+                      {% if current_genre %}
+                        <option value="{{ current_genre }}" selected>> {{ current_genre | capitalize }} </option>
+                        {% for genre in genres if genre != current_genre %}
+                          <option value="{{ genre }}">{{ genre | capitalize }}</option>
+                        {% endfor %}
+                      {% else %}
+                        {% for genre in genres if genre != current_genre %}
+                          <option value="{{ genre }}">{{ genre | capitalize }}</option>
+                        {% endfor %}
+                      {% endif %}
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
                     <label class="form-control-label" for="input-email">Addresse Email</label>
                     {{ form_widget(form.email) }}
                   </div>
@@ -186,7 +206,14 @@
               <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-first-name">Photo de profil</label>
+                    <label class="form-control-label" for="input-first-name">
+                      Photo de profil
+                      {% if user.profiles.artist.profilePic %}
+                        (Modifier)
+                      {% else %}
+                        (Ajouter)
+                      {% endif %}
+                    </label>
                     <input type="file" id="input-first-name" name="profile" class="form-control form-control-alternative">
                   </div>
                 </div>

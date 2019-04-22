@@ -7,6 +7,7 @@ use MainBundle\Form\ArtistType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use XS\UserBundle\Document\User;
 
 class ArtistController extends Controller
@@ -114,7 +115,7 @@ class ArtistController extends Controller
     ));
     if(!empty($user)){
       $artist = $user->getProfiles()->getArtist();
-      if(empty($artist)){
+      /*if(empty($artist)){
         //
         $user->getProfiles()->add("artist");
         $artist = $user->getProfiles()->getArtist();
@@ -124,10 +125,10 @@ class ArtistController extends Controller
         $user->getProfiles()->setArtist($artist);
 
         $dm->flush();
-      }
+      }*/
 //      $artist = !empty($user->getArtist())?$user->getArtist():new Artist();
       $form = $this->createForm(ArtistType::class, $artist);
-
+      $genres = json_decode(file_get_contents("genres.json"));
       if($request->isMethod('post')){
         $form->handleRequest($request);
         if($form->isValid()){
@@ -159,13 +160,26 @@ class ArtistController extends Controller
               $this->addFlash("error", "CDN non Disponible!");
             }
           }
+//          genre management
+          $genre = $request->get("genre");
+
+//          print_r($genre);
+
+          if(!empty($genre)){
+            $artist->setGenre($genre);
+            $user->getProfiles()->setArtist($artist);
+          }
+
+          /*print_r($user->getProfiles()->getArtist()->getGenre());
+          return new Response("");*/
+
 //          else{
-            $this->addFlash("notice", "Mise à jour du profil de l'artiste terminée!");
-            $dm->persist($user);
-            $dm->flush();
-            return $this->redirectToRoute("admin_artists_show", array(
-              "id" => $id
-            ));
+          $this->addFlash("notice", "Mise à jour du profil de l'artiste terminée!");
+          $dm->persist($user);
+          $dm->flush();
+          return $this->redirectToRoute("admin_artists_show", array(
+            "id" => $id
+          ));
 //          }
         }
         else{
@@ -175,6 +189,7 @@ class ArtistController extends Controller
 
       return $this->render('MainBundle:Admin/Artist:show.html.twig', array(
         'user' => $user,
+        'genres' => $genres,
         'form' => $form->createView()
       ));
     }

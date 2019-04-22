@@ -1,3 +1,58 @@
+{#The main layout#}{#
+
+{% block full_page %}
+<!DOCTYPE html>
+  {% block html %}
+    <html>
+    {% block head %}
+      <head>
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','GTM-KLW7H7C');</script>
+        <!-- End Google Tag Manager -->
+      </head>
+    {% endblock %}
+    {% block body %}
+      <body>
+      <script type="text/javascript">
+        dataLayer = [];
+        dataLayer = [{
+          'productSku': 'pbz00123',
+          'productName': 'The Original Rider Waite Tarot cards',
+          'productPrice': '9.99'
+        }];
+      </script>
+     
+      <a href="/artists">Hello</a>
+      <a href="#" onclick="dataLayer.push({
+    'bookCategory': 'fiction',
+    'bookTitle': 'Cien años de soledad',
+    'bookAuthor': 'Gabriel García Márquez'
+});">Book details</a>
+      <!-- Google Tag Manager (noscript) -->
+      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KLW7H7C"
+                        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+      <!-- End Google Tag Manager (noscript) -->
+      </body>
+    {% endblock %}
+    </html>
+  {% endblock %}
+{% endblock %}
+#}
+{#end of the main layout#}{#
+
+
+#}
+
+
+
+
+
+
+
 {% extends "MainBundle::base.html.twig" %}
 
 {% block title %}
@@ -13,7 +68,6 @@
             <h1>{{ "title.artists"|trans }}</h1>
           </div>
         </div>
-        <a href="{{ path('promo') }}" class="sqs-block-button-element" >Test :)</a>
         {% for user in users if user.profiles.accessArtist %}
           <div class="col-lg-3 col-md-4 col-sm-6">
             <div class="ms_rcnt_box marger_bottom30">

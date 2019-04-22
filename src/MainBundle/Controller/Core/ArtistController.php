@@ -10,10 +10,12 @@ class ArtistController extends Controller
   {
 //    All the artists to Manage
     $dm = $this->get("doctrine_mongodb");
-    $users = $dm->getRepository("XSUserBundle:User")->findAll();
+    $users = $dm->getRepository("XSUserBundle:User")->findBy(array(
+      'roles' => "ROLE_ARTIST"
+    ));
     return $this->render("MainBundle:Core/Artist:all.html.twig",
       array(
-        'users' => $users,
+        'users' => $users
       )
     );
   }
