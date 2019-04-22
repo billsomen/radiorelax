@@ -1,3 +1,7 @@
+promo:
+    path:     /promo
+    defaults: { _controller: MainBundle:Default:index, _locale: fr  }
+
 main_homepage:
     path:     /{_locale}
     defaults: { _controller: MainBundle:Default:index, _locale: fr  }
