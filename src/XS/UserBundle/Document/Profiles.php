@@ -10,7 +10,6 @@ namespace XS\UserBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use MainBundle\Document\Artist;
-use MainBundle\Document\Listener;
 
 /**
  * Class Profiles
@@ -33,21 +32,8 @@ class Profiles
   protected $artist;
 
   /** @MongoDB\Field(type="date") */
-//    Champ contenant la date à laquelle on a été ajouté comme artiste
+//    Champ contenant la variale Artiste
   protected $date_artist;
-
-  /** @MongoDB\EmbedOne(targetDocument="MainBundle\Document\Listener") */
-//    Champ contenant la variale Listener : pour tous les utilisateurs por d&faut
-  protected $listener;
-
-  /**
-   * Profiles constructor.
-   */
-  public function __construct()
-  {
-//    Le profil Listener est créé par défaut, donc, on l'instancie au constructeur de cette classe
-    $this->add("listener");
-  }
 
   /**
    * @return mixed
@@ -63,22 +49,6 @@ class Profiles
   public function setAccessArtist($accessArtist): void
   {
     $this->accessArtist = $accessArtist;
-  }
-
-  /**
-   * @return mixed
-   */
-  public function getListener()
-  {
-    return $this->listener;
-  }
-
-  /**
-   * @param mixed $listener
-   */
-  public function setListener($listener): void
-  {
-    $this->listener = $listener;
   }
 
   /**
@@ -101,14 +71,9 @@ class Profiles
   {
     switch ($profile){
       case "artist":
-        if(empty($this->getArtist())){
-          $this->setArtist(new Artist());
-        }
+        $this->setArtist(new Artist());
         $this->setAccessArtist(true);
         $this->setDateArtist(new \DateTime());
-        break;
-      case "listener":
-        $this->setListener(new Listener());
         break;
     }
   }
@@ -120,9 +85,6 @@ class Profiles
         $this->setArtist(null);
         $this->setAccessArtist(false);
         $this->setDateArtist(new \DateTime());
-        break;
-      case "listener":
-        $this->setListener(null);
         break;
     }
   }
@@ -142,4 +104,6 @@ class Profiles
   {
     $this->date_artist = $date_artist;
   }
+
+
 }

@@ -9,6 +9,23 @@
   {{ user.nickname }}
 {% endblock %}
 
+{% block inner_header %}
+  <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url({{ asset('assets/img/theme/profile-cover.jpg')}}); background-size: cover; background-position: center top;">
+    <!-- Mask -->
+    <span class="mask bg-gradient-default opacity-8"></span>
+    <!-- Header container -->
+    <div class="container-fluid d-flex align-items-center">
+      <div class="row">
+        <div class="col-lg-7 col-md-10">
+          <h1 class="display-2 text-white">Profil de {{ user.nickname }}</h1>
+          <p class="text-white mt-0 mb-5">{{ user.profiles.artist.description }}</p>
+          {#<a href="#" class="btn btn-info">Edit profile</a>#}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
 {% block body_inner_main %}
   <div class="row">
     <div class="col-xl-6 order-xl-2 mb-5 mb-xl-0">
@@ -28,10 +45,10 @@
             {#<a href="#" class="btn btn-sm btn-default float-right">Message</a>#}
           </div>
         </div>
-        <div class="card-body pt-0 pt-md-2">
+        <div class="card-body pt-0 pt-md-4">
           <div class="row">
             <div class="col">
-              <div class="card-profile-stats d-flex justify-content-center mt-md-0">
+              <div class="card-profile-stats d-flex justify-content-center mt-md-5">
                 <div>
                   <span class="heading">{{ user.profiles.artist.albums | length }}</span>
                   <span class="description">Albums</span>
@@ -143,6 +160,9 @@
               <h3 class="mb-0">Compte Artiste</h3>
             </div>
             <div class="col-4 text-right">
+              <a class="btn btn-sm btn-danger" title="{{ 'button.delete'|trans }}" href="#{{ path('admin_artists_remove', {'id': user.id}) }}">
+                <i class="fa fa-trash text-white"></i>
+              </a>
               <button form="artist_form" type="submit" class="btn btn-sm btn-primary">{{ 'button.save'|trans }}</button>
             </div>
           </div>

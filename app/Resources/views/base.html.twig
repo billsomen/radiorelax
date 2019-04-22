@@ -6,16 +6,6 @@
     {% block head %}
       <head>
         {#The Global position for Google Analytiçs#}
-{#        todo#}
-        <!-- Google Tag Manager -->
-        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-          })(window,document,'script','dataLayer','GTM-MF5GBNF');</script>
-        <!-- End Google Tag Manager -->
-{#        end todo#}
-        
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-131757964-1"></script>
         <script>
@@ -39,19 +29,12 @@
             {% endblock %}
           </title>
           {% block stylesheets %}{% endblock %}
-          {% block head_scripts %}{% endblock %}
           <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         {% endblock %}
       </head>
     {% endblock %}
     {% block body %}
       <body {% block body_style %}{% endblock %}>
-{#      todo temp#}
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MF5GBNF"
-                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-{#      end todo temp#}
       {% block body_inner %}
       {% endblock %}
       {% block javascripts %}{% endblock %}

@@ -10,7 +10,6 @@
   <link rel="stylesheet" type="text/css" href="{{ asset('assets/corebundle/js/plugins/player/volume.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ asset('assets/corebundle/js/plugins/scroll/jquery.mCustomScrollbar.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ asset('assets/corebundle/css/style.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ asset('assets/corebundle/css/custom.css') }}">
   <!-- Favicon Link -->
 {% endblock %}
 
@@ -20,6 +19,22 @@
 
 {% block body_inner %}
   <!--Loader-->
+  <div class="ms_inner_loader">
+    <div class="ms_loader">
+      <div class="ms_bars">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+    </div>
+  </div>
   <!--Main Wrapper Start-->
   <div class="ms_main_wrapper">
     <!---Side Menu Start-->
@@ -30,12 +45,12 @@
       <div class="ms_sidemenu_inner">
         <div class="ms_logo_inner">
           <div class="ms_logo">
-            <a href="{{ path('main_homepage') }}">
+            <a href="{{ path('main_homepage', {'_locale': 'fr'}) }}">
               <img src="{{ asset('assets/images/radio-relax-logo-light.png') }}" alt="{{ app_name }} Logo" width="80">
             </a>
           </div>
           <div class="ms_logo_open">
-            <a href="{{ path('main_homepage') }}">
+            <a href="{{ path('main_homepage', {'_locale': 'fr'}) }}">
               <img src="{{ asset('assets/images/radio-relax-logo-light.png') }}" alt="{{ app_name }} Logo" width="100">
             </a>
           </div>
@@ -68,28 +83,17 @@
         {% endfor %}
         <div class="ms_top_left">
           <div class="ms_top_search">
-            <span class="comming_soon_below_logo">{{ 'app.bundle.coming_soon.phrase' |trans }}</span>
+            <span class="comming_soon_below_logo">{{ 'app.bundle.coming_soon.phrase'|trans }}</span>
           </div>
         
         </div>
         <div class="ms_top_right">
           <div class="ms_top_lang">
-{#            <a href="{{ path('core_artists_homepage', {'_locale': 'en'}) }}"><img src="{{ asset('assets/images/uk.png') }}" width="30" title="{{ "locale.language.en.title"|trans }}"/></a>#}
-{#            <a href="{{ path('core_artists_homepage') }}"><img src="{{ asset('assets/images/fr.png') }}" width="30" title="{{ "locale.language.fr.title"|trans }}"/></a>#}
-            {% if app.user %}
-              <a href="{{ path('admin_profile') }}">
-                <img src="{{ asset('assets/adminbundle/img/brand/favicon.png') }}" width="30" title="Mon Profil"/>
-{#                <img src="https://forum.affinity.serif.com/uploads/monthly_2018_05/M_member_46298.png" width="30" title="Mon Profil"/>#}
-              </a>
-            {% else %}
-              <a href="{{ path('login', {'_locale': 'fr'}) }}" title="Se connecter">
-                <span class="fa fa-sign-in"></span>
-                Se connecter
-              </a>
-            {% endif %}
+            <a href="{{ path('core_artists_homepage', {'_locale': 'en'}) }}"><img src="{{ asset('assets/images/uk.png') }}" width="30" title="{{ "locale.language.en.title"|trans }}"/></a>
+            <a href="{{ path('core_artists_homepage', {'_locale': 'fr'}) }}"><img src="{{ asset('assets/images/fr.png') }}" width="30" title="{{ "locale.language.fr.title"|trans }}"/></a>
           </div>
           <div class="ms_top_btn">
-{#            <a href="javascript:;" class="ms_btn reg_btn" data-toggle="modal" data-target="#myModal"><span>{{ 'button.im_listener_short'|trans }}</span></a>#}
+            {#<a href="javascript:;" class="ms_btn reg_btn" data-toggle="modal" data-target="#myModal"><span>{{ 'button.im_listener_short'|trans }}</span></a>#}
             {#<a href="javascript:;" class="ms_btn login_btn" data-toggle="modal" data-target="#myModal1"><span>{{ 'button.im_artist_short'|trans }}</span></a>#}
           </div>
         </div>
@@ -98,6 +102,7 @@
       {% block body_inner_main %}
       
       {% endblock %}
+    
     </div>
     
     
