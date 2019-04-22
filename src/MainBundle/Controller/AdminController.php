@@ -14,60 +14,14 @@ use XS\UserBundle\Form\UserType;
 class AdminController extends Controller
 {
   public function favoritesAction(Request $request){
-    return $this->render('MainBundle:Admin/Me:show.html.twig', array(
+    return $this->render('MainBundle:Admin/Me:favorites.show.html.twig', array(
       'user' => $this->getUser()
     ));
   }
-  public function playlistAction(Request $request){
+  public function playlistAction(){
     //    Show and Edit Artists
-    $dm = $this->get('doctrine.odm.mongodb.document_manager');
     $user = $this->getUser();
     if(!empty($user)){
-      if($request->isMethod('post')){
-        $form->handleRequest($request);
-        if($form->isValid()){
-//          Si le namespaçe n'existe pas, on le génère
-          $user->getProfiles()->getArtist()->generateNamespace();
-//          On enregistre et push l'image
-          $tmp_name = $_FILES['profile']['tmp_name'];
-          $params_clnry = array(
-            'api_key' => $this->getParameter('cloudinary_api_key'),
-            'cloud_name' => $this->getParameter('cloudinary_cloud_name'),
-            'api_secret' => $this->getParameter('cloudinary_api_secret'),
-//            'preset' => $this->getParameter('cloudinary_preset'),
-//            "resource_type" => "raw",
-          );
-
-          $res["url"] = 0;
-          if(!empty($tmp_name)){
-            try{
-              $filename = time();
-              \Cloudinary::config($params_clnry);
-              $res = \Cloudinary\Uploader::upload($tmp_name, array(
-                "resource_type" => "auto",
-                "public_id" => "TEST_RR/".$user->getId()."/images/".$filename
-              ));
-              unlink($tmp_name);
-              $artist->setProfilePic($res['public_id']);
-            }
-            catch(\Exception $exception){
-              $this->addFlash("error", "CDN non Disponible!");
-            }
-          }
-//          else{
-          $this->addFlash("notice", "Mise à jour du profil de l'artiste terminée!");
-          $dm->persist($user);
-          $dm->flush();
-          return $this->redirectToRoute("admin_artists_show", array(
-            "id" => $id
-          ));
-//          }
-        }
-        else{
-          $this->addFlash("error", "Formulaire mal défini");
-        }
-      }
-
       return $this->render('MainBundle:Admin/Me:show.html.twig', array(
         'user' => $user
       ));
@@ -118,7 +72,7 @@ class AdminController extends Controller
     ));
   }
 
-  public function favoriteAlbumRemoveAction($id){
+  public function favoriteAlbumRemoveAction($id, $from_admin){
     //    Retirer un album à la liste des favoris
     $dm = $this->get('doctrine.odm.mongodb.document_manager');
 
@@ -134,6 +88,10 @@ class AdminController extends Controller
 
     $this->addFlash("notice", "Album retiré avec susccès des favoris");
 
+
+    if($from_admin){
+      return $this->redirectToRoute("admin_profile_favorites");
+    }
 
     return $this->redirectToRoute("core_artists_albums_show", array(
       "id" => $id,

@@ -78,7 +78,8 @@
 {#            <a href="{{ path('core_artists_homepage') }}"><img src="{{ asset('assets/images/fr.png') }}" width="30" title="{{ "locale.language.fr.title"|trans }}"/></a>#}
             {% if app.user %}
               <a href="{{ path('admin_profile') }}">
-                <img src="https://forum.affinity.serif.com/uploads/monthly_2018_05/M_member_46298.png" width="30" title="Mon Profil"/>
+                <img src="{{ asset('assets/adminbundle/img/brand/favicon.png') }}" width="30" title="Mon Profil"/>
+{#                <img src="https://forum.affinity.serif.com/uploads/monthly_2018_05/M_member_46298.png" width="30" title="Mon Profil"/>#}
               </a>
             {% else %}
               <a href="{{ path('login', {'_locale': 'fr'}) }}" title="Se connecter">

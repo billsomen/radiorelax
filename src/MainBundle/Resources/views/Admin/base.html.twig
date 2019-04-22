@@ -43,7 +43,7 @@
           </a>
           <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
             <div class=" dropdown-header noti-title">
-              <h6 class="text-overflow m-0">Bienvenue!</h6>
+              <h6 class="text-overflow m-0">{{ 'menu.admin.welcome'|trans }}</h6>
             </div>
             {#<a href="{{ path('admin_profile') }}" class="dropdown-item">
               <i class="ni ni-single-02"></i>
@@ -52,7 +52,7 @@
             <div class="dropdown-divider"></div>
             <a href="{{ path('logout') }}" class="dropdown-item">
               <i class="ni ni-user-run"></i>
-              <span>Déconnexion</span>
+              <span>{{ 'menu.admin.logout'|trans }}</span>
             </a>
           </div>
         </li>
@@ -76,7 +76,7 @@
           </div>
         </div>
         <ul class="navbar-nav">
-          {% if "ROLE_ADMIN" in app.user.roles %}
+          {% if is_granted('ROLE_ADMIN') %}
             <li class="nav-item">
               <a class="nav-link" href="{{ path('admin_dashboard') }}">
                 <i class="ni ni-tv-2 text-blue"></i> Tableau de bord
@@ -93,7 +93,7 @@
               </a>
             </li>#}
           {% endif %}
-          {% if "ROLE_ARTIST" in app.user.roles %}
+          {% if is_granted('ROLE_ARTIST') %}
             <li class="nav-item">
               <a class="nav-link" href="{{ path('admin_artists_show', {'id': app.user.id}) }}">
                 <i class="ni ni-sound-wave text-blue"></i> {{ 'menu.admin.artist_space'|trans }}
@@ -134,7 +134,7 @@
           {% endfor %}
           <!-- Brand -->
           {#<a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="{{ path('admin_homepage') }}">#}
-          <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="{{ path('admin_homepage') }}">
+          <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="#">
             {% block page_title %}
               Tableau de Bord
             {% endblock %}
@@ -161,6 +161,10 @@
                   <i class="ni ni-single-02"></i>
                   <span>{{ 'menu.admin.profile'|trans }}</span>
                 </a>
+                <a href="{{ path('core_artists_homepage') }}" class="dropdown-item">
+                  <i class="ni ni-planet"></i>
+                  <span>{{ 'menu.admin.go_visit'|trans }}</span>
+                </a>
                 <div class="dropdown-divider"></div>
                 <a href="{{ path('logout') }}" class="dropdown-item">
                   <i class="ni ni-user-run"></i>
@@ -174,7 +178,7 @@
     {% endblock %}
     <!-- Header -->
     {% block inner_header %}
-      <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8" title="Informations">
+      <div class="header bg-gradient-primary pb-2 pt-2 pt-md-6">
         <div class="container-fluid">
           <div class="header-body">
             <!-- Card stats -->
@@ -184,7 +188,7 @@
     {% endblock %}
     <!-- Page content -->
     {% block page_content %}
-      <div class="container-fluid mt--7">
+      <div class="container-fluid mt-2">
         {% block body_inner_main %}
         {% endblock %}
         <!-- Footer -->

@@ -335,6 +335,7 @@ menu:
     profile: Mon Profil
     welcome: Bienvenue!
     logout: Déconnection
+    go_visit: Retourner au site
     artist_space: Compte Artiste
 
 xs_user:

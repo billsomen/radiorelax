@@ -35,8 +35,8 @@ admin_profile_favorites_add_album:
 
 admin_profile_favorites_remove_album:
   #  Ajouter un album aux favoris
-  path:     /me/favorites/albums/remove/{id}
-  defaults: { _controller: MainBundle:Admin:favoriteAlbumRemove }
+  path:     /me/favorites/albums/remove/{id}/{from_admin}
+  defaults: { _controller: MainBundle:Admin:favoriteAlbumRemove, from_admin:0 }
 
 admin_profile_favorites_add_music:
   #  Ajouter un music aux favoris
