@@ -68,25 +68,25 @@ class SecurityController extends Controller{
 //    Ici la nouvelle methode de connexion, mode Google.
   public function loginAction(Request $request){
 //    $user = new User();
+//    $password = $user->generateStrongPassword(12);
+//    print_r($password);
     if($this->getUser() != null){
       return $this->redirectToRoute('radio_relax_coming_soon_homepage');
     }
 
-    $dm = $this->get('doctrine.odm.mongodb.document_manager');
-
-    /*$user = new User();
-    $user->setUsername("somen@somen.io");
+    /*$dm = $this->get('doctrine.odm.mongodb.document_manager');
+    $user = $dm->getRepository("XSUserBundle:User")->findOneBy(array(
+      'username' => "695456180"
+    ));
 
     $factory = $this->get('security.encoder_factory');
     $encoder = $factory->getEncoder($user);
-    $user->getRoles()[] = "ROLE_ADMIN";
-    $password = $encoder->encodePassword("somen", $user->getSalt());
+    $password = $encoder->encodePassword("a", $user->getSalt());
     $user->setPassword($password);
 
     $dm->persist($user);
-    $dm->flush();*/
-
-
+    $dm->flush();
+    */
     $session = $request->getSession();
     $session->set('token_login', null);
     $form = $this->createFormBuilder()

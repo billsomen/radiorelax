@@ -1,137 +1,42 @@
-{% extends "@Main/Admin/base.html.twig" %}
+{% extends 'base.html.twig' %}
 
-{#Visualisation et gestion de tous les artistes#}
 {% block title %}
-    {{ user.nickname }} - {{ parent() }}
+    {{ app.user.nickname }} | Bled-Downloader
 {% endblock %}
 
-{% block page_title %}
-    {{ user.nickname }}
+{% block header_bottom %}
 {% endblock %}
 
-{% block inner_header %}
-    <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url({{ asset('assets/img/theme/profile-cover.jpg')}}); background-size: cover; background-position: center top;">
-        <!-- Mask -->
-        <span class="mask bg-gradient-default opacity-8"></span>
-        <!-- Header container -->
-        <div class="container-fluid d-flex align-items-center">
-            <div class="row">
-                <div class="col-lg-7 col-md-10">
-                    <h1 class="display-2 text-white">Profil de {{ user.nickname }}</h1>
-                    <p class="text-white mt-0 mb-5">
-                        {% if user.profiles.accessArtist %}
-                            {{ user.profiles.artist.description }}
-                        {% else %}
-                            //
-                        {% endif %}
-                    </p>
-                    {#<a href="#" class="btn btn-info">Edit profile</a>#}
+{% block body %}
+    <div class="content">
+        <div class="content_top">
+            <div class="back-links">
+                <p><a href="{{ path('main_homepage') }}">Accueil</a>&gt;<a href="#" class="active">Connexion</a></p>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="section group">
+            <div class="col span_2_of_3">
+                <div class="contact-form">
+                    <h2>Mon compte</h2>
+                </div>
+            </div>
+            <div class="col span_1_of_3">
+                <div class="contact_info">
+                    <h2>Retrouvez-nous</h2>
+                    <div class="map">
+                        <iframe width="100%" height="175" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3980.801637434308!2d11.496323314242069!3d3.852709749500174!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x108bcfbe9b4b8167%3A0x86b34283a0889fdd!2sRESTAURANT+CRADAT!5e0!3m2!1sen!2sus!4v1451696598188" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="company_address">
+                    <h2>Information :</h2>
+                    <p>Cameroun, Yaoundé</p>
+                    <p>Carrefour Cradat, A coté du glacier italien</p>
+                    <p><i class="fa fa-phone"></i> (+237) 695-949-869</p>
+                    <p>Email: <span><a href="mailto:bleddownloader@gmail.com">bleddownloader@gmail.com</a></span></p>
                 </div>
             </div>
         </div>
     </div>
 {% endblock %}
-
-{% block body_inner_main %}
-    <div class="row">
-        <div class="col-xl-6 order-xl-0">
-            <div class="card bg-secondary shadow">
-                <div class="card-header bg-white border-0">
-                    <div class="row align-items-center">
-                        <div class="col-8">
-                            <h3 class="mb-0">{{ 'admin.my_account'|trans }}</h3>
-                        </div>
-                        <div class="col-4 text-right">
-                            <a class="btn btn-sm btn-danger" title="{{ 'button.delete'|trans }}" href="#{{ path('admin_artists_remove', {'id': user.id}) }}">
-                                <i class="fa fa-trash text-white"></i>
-                            </a>
-                            <button form="artist_form" type="submit" class="btn btn-sm btn-primary">{{ 'button.save'|trans }}</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    {#<form method="post" action="{{ path('admin_profile') }}" name="artist_form" id="artist_form" enctype="multipart/form-data">
-                        {{ form_row(form._token) }}
-                        <h6 class="heading-small text-muted mb-4">Profil Utilisateur</h6>
-                        <div class="pl-lg-4">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="input-username">Nom d'utilisateur</label>
-                                        {{ form_widget(form.nickname) }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="input-email">Addresse Email</label>
-                                        {{ form_widget(form.username) }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>#}
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-xl-6 order-xl-0">
-            <div class="card bg-secondary shadow">
-                <div class="card-header bg-white border-0">
-                    <div class="row align-items-center">
-                        <div class="col-8">
-                            <h3 class="mb-0">{{ 'admin.my_account'|trans }}</h3>
-                        </div>
-                        <div class="col-4 text-right">
-                            <a class="btn btn-sm btn-danger" title="{{ 'button.delete'|trans }}" href="#{{ path('admin_artists_remove', {'id': user.id}) }}">
-                                <i class="fa fa-trash text-white"></i>
-                            </a>
-                            <button form="password_form" type="submit" class="btn btn-sm btn-primary">{{ 'button.save'|trans }}</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    {#<form method="post" action="{{ path('admin_profile') }}" name="password_form" id="password_form" enctype="multipart/form-data">
-                        <div class="row">
-                            {{ form_errors(formPassword) }}
-                        </div>
-                        {{ form_row(formPassword._token) }}
-                        <h6 class="heading-small text-muted mb-4">Sécurité</h6>
-                        <div class="pl-lg-4">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="input-username">Mot de passe actuel</label>
-                                        {{ form_widget(formPassword.oldPassword) }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="input-username">Nouveau mot de passe</label>
-                                        {{ form_widget(formPassword.password.first) }}
-                                    </div>
-                                    {% if form_errors(formPassword.password.first) is not empty %}
-                                        <div class="alert alert-danger">{{ form_errors(formPassword.password.first) }}</div>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="input-username">Confirmation de mot de passe</label>
-                                        {{ form_widget(formPassword.password.second) }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>#}
-                </div>
-            </div>
-        </div>
-    </div>
-{% endblock %}
-
 

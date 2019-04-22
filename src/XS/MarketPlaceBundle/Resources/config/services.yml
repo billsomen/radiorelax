@@ -1,4 +1,0 @@
-services:
-#    xs_market_place.example:
-#        class: XS\MarketPlaceBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]

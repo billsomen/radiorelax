@@ -1,7 +1,12 @@
 app:
-  phrase: Une radio branchée sur de nouveaux horizons!
+  phrase: A radio that makes you feel new sensations!
   home:
     title: Accueil
+    specs:
+      it_consultant: IT Consultant
+      web_evangelist: Formateur Web
+      msc_engineer: Ing. de conception IT & MEC
+      web_developer: Développeur Web
   about:
     title: A propos
     phrase: Salut, voici un aperçu de qui je suis
@@ -313,8 +318,8 @@ app:
     soon: Bientôt disponible :)
 
 button:
-  save: Enregistrer
-  become_artist: Devenir artiste
+  send_message: Envoyer le message
+  download_cv: Télécharger le CV
 
 form:
   full_name: Nom complet
@@ -327,33 +332,6 @@ locale:
       title: Français
     en:
       title: English
-
-menu:
-  admin:
-    playlist: Ma Playlist
-    favorites: Mes Favoris
-    profile: Mon Profil
-    welcome: Bienvenue!
-    logout: Déconnection
-    go_visit: Retourner au site
-    artist_space: Compte Artiste
-
-xs_user:
-  login:
-    welcome: Bienvenue
-    title: Connectez-vous pour accéder à votre compte
-    action: Se connecter
-    hint: Se connecter maintenant
-  signin:
-    hint: S'incrire maintenant
-    welcome: Bienvenue
-    title: Créer un nouveau compte
-    action: S'inscrire
-  user:
-    username: Adresse email
-    password: Mot de passe
-    nickname: Nom d'utilisateur
-
 
 mail:
   register:
@@ -368,24 +346,3 @@ flashbags:
     error:
       already_exist: A user with the same credentials has already been registered. Use another email address, or contact us.
 
-admin:
-  my_account: Compte
-  security: Sécurité
-  title: Espace Admin
-  dashboard:
-    title: Tableau de bord
-    phrase: Espace de gestion intégré
-  listener:
-    title: Auditeur
-  artist:
-    title: Artiste
-  album:
-    title: Albums
-  sales:
-    title: Ventes
-    total: Total ventes
-  add:
-    title: Ajouts
-    total: Total ajouts
-  phrases:
-    since_launch: depuis le lancement

@@ -26,9 +26,6 @@ class Artist
   /** @MongoDB\Field(type="string") */
   protected $link;
 
-  /** @MongoDB\Field(type="string") */
-  protected $music_type;
-
   /** @MongoDB\EmbedOne("XS\CoreBundle\Document\GMaps") */
   protected $gmaps;
 
@@ -253,21 +250,4 @@ class Artist
     $gmaps->setFormattedAddress($gmaps->getLnLocality().", ".$gmaps->getLnCountry());
     $this->gmaps = $gmaps;
   }
-
-  /**
-   * @return mixed
-   */
-  public function getMusicType()
-  {
-    return $this->music_type;
-  }
-
-  /**
-   * @param mixed $music_type
-   */
-  public function setMusicType($music_type): void
-  {
-    $this->music_type = $music_type;
-  }
-
 }
