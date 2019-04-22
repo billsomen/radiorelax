@@ -1,0 +1,70 @@
+{% if cart %}
+  <div class="row">
+    <div class="col-md-12">
+      <div id="_products_all_module">
+        <ul class="products-grid columns4">
+          {% for product_cart in cart.productsCarts %}
+            {% set product = product_cart.product %}
+            <li>
+              <div class="product">
+                <figure class="product-image-area" style="height: 150px;overflow: hidden;">
+                  {#<a href="{{ path('xs_market_place_products_show', {'id': product.id}) }}" title="{{ product.name~" - "~product.category~" | "~product.subCategory }}" class="product-image">
+                    <img src="{{ product.profileUrl }}" alt="{{ product.name }}">
+                    <img src="{{ product.profileUrl }}" alt="{{ product.name }}" class="product-hover-image">
+                  </a>#}
+                  <a href="#show" title="{{ product.name }}" class="product-image">
+                    <img src="http://designinspiration.com/images/2016/08/in15.jpg" alt="{{ product.house.type | trans }}">
+                    <img src="http://www.coolings.co.uk/upload/images/PTMD_6.jpg" alt="{{ product.house.type | trans }}" class="product-hover-image">
+                  </a>
+
+                  {#<a href="#" class="product-quickview">
+                    <i class="fa fa-share-square-o"></i>
+                    <span>Quick View</span>
+                  </a>#}
+                  <div class="product-label"><span class="discount">{{ product.priceRatio | number_format }}%</span></div>
+                    <div class="product-label"><span class="new">{{ product_cart.dateAdd | time_diff }}</span></div>
+
+                  {#<div class="product-label"><span class="new">New</span></div>#}
+                </figure>
+                <div class="product-details-area">
+                  <h2 class="product-name">
+                    <a href="demo-shop-6-product-details.html" title="{{ product.house.type | trans }}">
+                      <i class="fa fa-location-arrow"></i>
+                      {{ product.localisation.gmaps.formattedAddress }}</a>
+                  </h2>
+                  {% if product.house.school %}
+                    <h4 class="product-name"><a href="demo-shop-6-product-details.html" title="Nom Ecole"><i class="fa fa-graduation-cap"></i>{{ product.house.school.name~', '~product.house.distanceSchool | number_format}} mètres</a></h4>
+                  {% else %}
+                    <h4 class="product-name"><a href="#" title="Aucun Campus"><i class="fa fa-graduation-cap"></i>Aucun</a></h4>
+                  {% endif %}
+                  {#<h2 class="product-name"><a href="{{ path('xs_market_place_products_show', {'id': product.id}) }}" title="{{ product.name }}">{{ product.name|length > 15 ? product.name|slice(0, 15) ~ '...' :product.name }}</a></h2>#}
+                  <div class="product-ratings">
+                    <div class="ratings-box">
+                      <div class="rating" style="width:60%"></div>
+                    </div>
+                  </div>
+
+                  <div class="product-price-box">
+                    <span class="old-price">${{ product.priceOld | number_format }}</span>
+                    <span class="product-price">${{ product.priceShown | number_format }}</span>
+                  </div>
+
+                  <div class="product-actions">
+                    <a href="{{ path('xs_market_place_list_remove_product', {'id': product.id, 'list': 'wish_list'}) }}" class="addtowishlist" title="Retirer de mes Voeux">
+                      <i class="fa fa-close"></i>
+                    </a>
+                    {% include 'XSMarketPlaceBundle:Cart:addProduct.html.twig' with {'id' : product.id} %}
+                    {#<a href="{{ path('xs_market_place_compare_list_add_product', {'id': product.id}) }}" class="comparelink" title="Ajouter à la liste de Comparaison">#}
+                    <a href="{{ path('xs_market_place_list_add_product', {'id': product.id, 'list':'compare_list'}) }}" class="comparelink" title="Ajouter à la liste de Comparaison">
+                      <i class="glyphicon glyphicon-signal"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </li>
+          {% endfor%}
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endif %}

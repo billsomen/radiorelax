@@ -905,7 +905,9 @@ var Charts = (function() {
 	};
 
 })();
+/*
 
+TODO : removed for atomicity
 //
 // Orders chart
 //
@@ -1061,3 +1063,4 @@ var SalesChart = (function() {
 	}
 
 })();
+*/

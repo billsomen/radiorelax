@@ -1,6 +1,6 @@
 admin:
   resource: "@MainBundle/Resources/config/routing-admin.yml"
-  prefix:   /admin/{_locale}/
+  prefix:   /{_locale}/admin
 
 main:
   resource: "@MainBundle/Resources/config/routing.yml"
@@ -8,11 +8,17 @@ main:
   requirements:
     _locale:  en|fr
 
-#core:
-#  resource: "@CoreBundle/Resources/config/routing.yml"
-#  prefix:   /
-#  requirements:
-#    _locale:  en|fr
+xs_market_place:
+  resource: "@XSMarketPlaceBundle/Resources/config/routing.yml"
+  prefix:   /{_locale}/market
+
+xs_user:
+  resource: "@XSUserBundle/Resources/config/routing.yml"
+  prefix:   /{_locale}/me
+
+xs_afrobank:
+  resource: "@XSAfrobankBundle/Resources/config/routing.yml"
+  prefix:   /{_locale}/bank
 
 logout:
   path: /logout

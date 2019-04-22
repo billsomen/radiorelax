@@ -11,10 +11,8 @@ security:
     XS\UserBundle\Document\User: sha512
 
   role_hierarchy:
-    ROLE_ADMIN: ROLE_USER, ROLE_BLED, ROLE_EDU_ADMIN, ROLE_BLED_ADMIN
-    ROLE_BLED: ROLE_USER
-    ROLE_EDU_ADMIN: ROLE_USER
-    ROLE_BLED_ADMIN: ROLE_USER, ROLE_BLED
+    ROLE_ADMIN: ROLE_USER, ROLE_ARTIST
+    ROLE_ARTIST: ROLE_USER
 
   # http://symfony.com/doc/current/book/security.html
   # where-do-users-come-from-user-providers >
@@ -40,7 +38,9 @@ security:
 
       logout:
         path: logout
-        target: coming_soon_homepage
+        target: main_homepage
 
   access_control:
-  - { path: ^/admin/, roles: ROLE_USER }
+  - { path: ^/(en|fr)/admin/, roles: ROLE_USER }
+  - { path: ^/(en|fr)/market/, roles: ROLE_USER }
+  - { path: ^/(en|fr)/bank, roles: ROLE_USER }

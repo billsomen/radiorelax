@@ -6,7 +6,7 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-  locale: en
+  locale: fr
 
 monolog:
   handlers:
@@ -50,6 +50,8 @@ twig:
     cloudinary_api_key: "%cloudinary_api_key%"
     cloudinary_cloud_name: "%cloudinary_cloud_name%"
     cloudinary_api_secret: "%cloudinary_api_secret%"
+    paypal_client_id: "%paypal_client_id%"
+    paypal_secret: "%paypal_secret%"
 
 
 # Doctrine Configuration

@@ -43,6 +43,7 @@
     "require": {
         "php": ">=7.1",
         "ext-intl": "*",
+        "ext-json": "^1.6",
         "alcaeus/mongo-php-adapter": "^1.1",
         "cloudinary/cloudinary_php": "dev-master",
         "doctrine/annotations": "^1.5",
@@ -53,6 +54,7 @@
         "google/recaptcha": "^1.1",
         "incenteev/composer-parameter-handler": "^2.0",
         "mongodb/mongodb": "^1.1",
+        "paypal/paypal-checkout-sdk": "1.0.0",
         "sensio/distribution-bundle": "^5.0.19",
         "sensio/framework-extra-bundle": "^5.0.0",
         "swiftmailer/swiftmailer": "^5.4.1",

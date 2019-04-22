@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+{% block header_top %}
+  {{ render(controller('MainBundle:PageHeader:headerTop')) }}
+{% endblock %}
+{% block header_menu %}
+  {% include '@XSAfrobank/_Partials/headerMenu.html.twig' %}
+{% endblock %}
+{% block body_head %}
+  <div class="page-head">
+    <div class="container">
+      <!-- BEGIN PAGE TITLE -->
+      <div class="page-title">
+        <h1>
+          Finances
+          <i class="icon-wallet"></i> |
+          {#<small>Enseignement Général !</small>#}
+          <small>Transferts, prêts, investissements, etc.</small>
+        </h1>
+      </div>
+      <!-- END PAGE TITLE -->
+    </div>
+  </div>
+{% endblock %}

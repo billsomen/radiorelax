@@ -1,0 +1,73 @@
+{#Modal, nouvelle transaction.#}
+<div class="modal fade" id="accountTransactions-{{ receiver.id }}" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{{ path('xs_afrobank_transaction_modal_admin', {'to': receiver.id}) }}" method="post">
+                <div class="row">
+                    {{ form_errors(form) }}
+                </div>
+                {{ form_row(form._token) }}
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title"><i class="icon-wallet"></i> Gestion de Transactions</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="portlet light ">
+                        <div class="portlet-title tabbable-line">
+                            <div class="caption caption-md">
+                                <i class="icon-globe theme-font hide"></i>
+                                <span class="caption-subject font-blue-madison bold uppercase"><i class="icon-user"></i> {{ receiver.nickname ~' | '~ receiver.username }}</span>
+                            </div>
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#contact" data-toggle="tab">Ajouter </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="tab-content">
+                                <div class="tab-pane active row" id="contact">
+                                    <div class="form-group col-md-12">
+                                        <label class="control-label">Type</label>
+                                        {#Depot, etc.#}
+                                        {{ form_widget(form.type, {
+                                            'attr': {
+                                                'class': 'form-wizard-list'
+                                            }
+                                        })}}
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label class="control-label">Mode de paiement</label>
+                                        {#bank#}
+                                        {{ form_widget(form.bank, {
+                                            'attr': {
+                                                'class': 'form-wizard-list'
+                                            }
+                                        })}}
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label class="control-label">Montant (XAF)</label>
+                                        {{ form_widget(form.amount.value, {
+                                            'attr': {
+                                                'title': 'Montant de la transaction',
+                                                'min': '500',
+                                                'class': 'form-control',
+                                                'placeholder': '500',
+                                            }
+                                        })}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn dark btn-outline" data-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn blue">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

@@ -97,8 +97,10 @@ class UserController extends Controller
   {
 //            todo: Pour l'instant, on ne voit pas le profil des autres membres...
 //        On le modifie juste, comme ci-bas...
-    return $this->redirectToRoute('xs_user_edit');
-//        return $this->render('@XSUser/User/show.html.twig');
+//    return $this->redirectToRoute('xs_user_edit');
+        return $this->render('@XSUser/User/show.html.twig', array(
+          "user" => $this->getUser()
+        ));
   }
   
   /**

@@ -1,0 +1,35 @@
+xs_afrobank_home:
+    path: /
+    defaults: { _controller: XSAfrobankBundle:Afrobank:index }
+
+xs_afrobank_paypal:
+    prefix: /paypal
+    resource: "routing-paypal.yml"
+
+xs_afrobank_add:
+    path: /_add
+    defaults: { _controller: XSAfrobankBundle:Afrobank:add }
+
+xs_afrobank_admin:
+    path: /admin
+    defaults: { _controller: XSAfrobankBundle:Afrobank:admin }
+
+xs_afrobank_credit_account:
+    path: /admin/creditAccount:{namespace}
+    defaults: { _controller: XSAfrobankBundle:Afrobank:creditAccount }
+
+xs_afrobank_transaction_add:
+    path: /transactions/_add
+    defaults: { _controller: XSAfrobankBundle:Transaction:modalAdd }
+
+xs_afrobank_transaction_send_money:
+    path: /transactions/_sendMoneyTo:{namespace}
+    defaults: { _controller: XSAfrobankBundle:Transaction:sendMoney }
+
+xs_afrobank_transaction_modal_admin:
+    path: /transactions/_modal_admin/to:{to}
+    defaults: { _controller: XSAfrobankBundle:Transaction:modalAdmin }
+
+xs_afrobank_transaction_update:
+    path: /transactions/{id}
+    defaults: { _controller: XSAfrobankBundle:Transaction:update }

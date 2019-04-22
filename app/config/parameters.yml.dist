@@ -26,3 +26,6 @@ parameters:
     cloudinary_cloud_name:  "%env(CLOUDINARY_CLOUD_NAME)%"
     cloudinary_api_secret:  "%env(CLOUDINARY_API_SECRET)%"
 
+    paypal_client_id: "%env(PAYPAL_CLIENT_ID)%"
+    paypal_secret: "%env(PAYPAL_SECRET)%"
+

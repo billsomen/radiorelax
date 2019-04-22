@@ -1,0 +1,832 @@
+<div class="row">
+  <div class="col-md-9 col-md-push-3">
+    <div class="toolbar mb-none">
+      <div class="sorter">
+        <div class="sort-by">
+          <label>Trier par:</label>
+          <select>
+            <option value="Position">Position</option>
+            <option value="Name">Name</option>
+            <option value="Price">Price</option>
+          </select>
+          <a href="#" title="Set Desc Direction">
+            <i class="fa fa-arrow-up"></i>
+            {#<img src="{{ asset('assets/img/demos/shop/i_asc_arrow.gif') }}" alt="Set Desc Direction">#}
+          </a>
+        </div>
+
+        <div class="view-mode">
+          {% if view == 'grid' %}
+            <span title="Grid"><i class="fa fa-th"></i></span>
+            <a href="{{ path(path, {'view': 'list'}) }}"  target-view="_products_all_module" target-data="{{ path('xs_market_place_products_all', {'view': 'list'}) }}" title="List">
+              <i class="fa fa-list-ul"></i>
+            </a>
+          {% else %}
+            <a href="{{ path(path, {'view': 'grid'}) }}" target-view="_products_all_module" target-data="{{ path('xs_market_place_products_all', {'view': 'grid'}) }}" title="Grid">
+              <i class="fa fa-th"></i>
+            </a>
+            <span title="List"><i class="fa fa-list-ul"></i></span>
+          {% endif %}
+        </div>
+
+        {#<ul class="pagination">
+          <li class="active"><a href="#">1</a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#"><i class="fa fa-caret-right"></i></a></li>
+        </ul>
+
+        <div class="limiter">
+          <label>Show:</label>
+          <select>
+            <option value="12">12</option>
+            <option value="24">24</option>
+            <option value="36">36</option>
+          </select>
+        </div>#}
+      </div>
+    </div>
+    <div id="_products_all_module">
+      {% if view == 'grid' %}
+      <ul class="products-grid columns3">
+        {% for product in products %}
+        <li>
+          <div class="product">
+            <figure class="product-image-area" style="height: 150px;overflow: hidden;">
+              {#<a href="{{ path('xs_market_place_products_show', {'id': product.id}) }}" title="{{ product.name~" - "~product.category~" | "~product.subCategory }}" class="product-image">
+                <img src="{{ product.profileUrl }}" alt="{{ product.name }}">
+                <img src="{{ product.profileUrl }}" alt="{{ product.name }}" class="product-hover-image">
+              </a>#}
+              <a href="{{ path('xs_market_place_products_show', {'id': product.id}) }}" title="{{ product.name }}" class="product-image">
+                <img src="http://designinspiration.com/images/2016/08/in15.jpg" alt="{{ product.house.type | trans }}">
+                <img src="http://www.coolings.co.uk/upload/images/PTMD_6.jpg" alt="{{ product.house.type | trans }}" class="product-hover-image">
+              </a>
+
+              {#<a href="#" class="product-quickview">
+                <i class="fa fa-share-square-o"></i>
+                <span>Quick View</span>
+              </a>#}
+              <div class="product-label"><span class="discount">{{ product.priceRatio | number_format }}%</span></div>
+              {% if product.dateAdd > date('-1 month')%}
+                <div class="product-label"><span class="new">{{ 'new'|trans }}</span></div>
+                {#{% else %}
+                  <div class="product-label"><span class="new">Old</span></div>#}
+              {% endif %}
+
+              {#<div class="product-label"><span class="new">New</span></div>#}
+            </figure>
+            <div class="product-details-area">
+              <h2 class="product-name">
+                <a href="#" title="{{ product.house.type | trans }} @{{ product.localisation.gmaps.formattedAddress }}">
+                  <i class="fa fa-location-arrow"></i>
+                  {{ product.localisation.gmaps.formattedAddress | truncate(50) }}</a>
+              </h2>
+              {% if product.house.school %}
+                <h4 class="product-name"><a href="demo-shop-6-product-details.html" title="Nom Ecole"><i class="fa fa-graduation-cap"></i>{{ product.house.school.name~', '~product.house.distanceSchool | number_format}} mètres</a></h4>
+              {% else %}
+                <h4 class="product-name"><a href="#" title="Aucun Campus"><i class="fa fa-graduation-cap"></i>Aucun</a></h4>
+              {% endif %}
+              {#<h2 class="product-name"><a href="{{ path('xs_market_place_products_show', {'id': product.id}) }}" title="{{ product.name }}">{{ product.name|length > 15 ? product.name|slice(0, 15) ~ '...' :product.name }}</a></h2>#}
+              <div class="product-ratings">
+                <div class="ratings-box">
+                  <div class="rating" style="width:35%"></div>
+                </div>
+              </div>
+
+              <div class="product-price-box">
+                <span class="old-price" title="{{ product.priceOld | amount_format }}">{{ product.priceOld | amount_short_format }}</span>
+                <span class="product-price" title="{{ product.priceShown | amount_format }}">{{ product.priceShown | amount_short_format }}</span>
+              </div>
+
+              <div class="product-actions">
+                {% include 'XSMarketPlaceBundle:WishList:addProduct.html.twig' with {'id' : product.id} %}
+                {% include 'XSMarketPlaceBundle:Cart:addProduct.html.twig' with {'id' : product.id} %}
+                {% include 'XSMarketPlaceBundle:CompareList:addProduct.html.twig' with {'id' : product.id} %}
+              </div>
+            </div>
+          </div>
+        </li>
+        {% endfor%}
+      </ul>
+      {% elseif view == 'list' %}
+      <ul class="products-list">
+        {% for product in products %}
+        <li>
+          <div class="product product-list">
+            <figure class="product-image-area" {#style="height: 150px;overflow: hidden;"#}>
+              {#<a href="{{ path('xs_market_place_products_show', {'id': product.id}) }}" title="{{ product.name~" - "~product.category~" | "~product.subCategory }}" class="product-image">
+                <img src="{{ product.profileUrl }}" alt="{{ product.name }}">
+                <img src="{{ product.profileUrl }}" alt="{{ product.name }}" class="product-hover-image">
+              </a>#}
+              <a href="#show" title="{{ product.name }}" class="product-image">
+                <img src="http://designinspiration.com/images/2016/08/in15.jpg" alt="{{ product.house.type | trans }}">
+                <img src="http://www.coolings.co.uk/upload/images/PTMD_6.jpg" alt="{{ product.house.type | trans }}" class="product-hover-image">
+              </a>
+              <div class="product-label"><span class="discount">{{ product.priceRatio | number_format }}%</span></div>
+              {% if product.dateAdd > date('-1 month')%}
+                <div class="product-label"><span class="new">{{ 'new'|trans }}</span></div>
+              {% endif %}
+            </figure>
+            <div class="product-details-area">
+              <h2 class="product-name"><a href="{{ path('xs_market_place_products_show', {'id': product.id}) }}" title="{{ product.name }}">{{ product.name }}</a></h2>
+              {{ product.house.type | trans }}
+              <div class="product-ratings">
+                <div class="ratings-box">
+                  <div class="rating" style="width:60%"></div>
+                </div>
+              </div>
+              <div class="product-short-desc">
+                {#{{ product.desc |length > 15 ? product.desc|slice(0, 15) ~ '...' :product.desc }}#}
+                {{ product.description }}
+              </div>
+              <div class="product-price-box">
+                <span class="old-price" title="{{ product.priceOld | amount_format }}">{{ product.priceOld | amount_format }}</span>
+                <span class="product-price" title="{{ product.priceShown | amount_format }}">{{ product.priceShown | amount_format }}</span>
+              </div>
+              <div class="product-short-desc">
+                <h5>
+                  <a href="#" class="no-decoration" title="{{ product.house.type | trans }} @{{ product.localisation.gmaps.formattedAddress }}">
+                    <i class="fa fa-location-arrow"></i>
+                    {{ product.localisation.gmaps.formattedAddress }}</a>
+                </h5>
+                <h6 class="product-name">
+                  {% if product.house.school %}
+                    <a href="#" title="Nom de l'Ecole"><i class="fa fa-graduation-cap"></i>{{ product.house.school.name~', '~product.house.distanceSchool | number_format}} mètres</a>
+                  {% else %}
+                    <a href="#" title="Aucun Campus"><i class="fa fa-graduation-cap"></i>Aucun</a>
+                  {% endif %}
+                </h6>
+              </div>
+              <div class="product-actions">
+                {% include 'XSMarketPlaceBundle:Cart:addProduct.html.twig' with {'id' : product.id}  %}
+                {% include 'XSMarketPlaceBundle:WishList:addProduct.html.twig' with {'id' : product.id} %}
+                {% include 'XSMarketPlaceBundle:CompareList:addProduct.html.twig' with {'id' : product.id} %}
+                {#<a href="#" class="quickview" title="Quick View">
+                  <i class="fa fa-search"></i>
+                </a>#}
+              </div>
+            </div>
+          </div>
+        </li>
+        {% endfor%}
+      </ul>
+      {% endif %}
+    </div>
+    {#<div class="toolbar-bottom">
+      <div class="toolbar">
+        <div class="sorter">
+          <ul class="pagination">
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#"><i class="fa fa-caret-right"></i></a></li>
+          </ul>
+
+          <div class="limiter">
+            <label>Show:</label>
+            <select>
+              <option value="12">12</option>
+              <option value="24">24</option>
+              <option value="36">36</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>#}
+  </div>
+  <aside class="col-md-3 col-md-pull-9 sidebar shop-sidebar">
+    <div class="panel-group">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-size">
+              Adresse
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-size" class="accordion-body collapse in">
+          <div class="panel-body">
+            <input class="form-control" type="text" placeholder="Adresse ou Ecole"/>
+           {# <hr>
+            <div class="filter-price-details">
+              <a href="#" class="btn btn-primary pull-right">FILTRER</a>
+            </div>#}
+            {#{% include '@XSCore/GMaps/_gmaps.form.insert-small.html.twig' with {'form':''} %}#}
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-category">
+              Catégories
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-category" class="accordion-body collapse in">
+          <div class="panel-body">
+            <ul>
+              {% for i in 1..5 %}
+                <li>
+                  <input type="checkbox"> <a href="#" class="no-decoration">Chambre</a>
+                </li>
+              {% endfor %}
+            </ul>
+            {#{% for i in 1..5 %}
+              <a class="btn btn-default" href="javascript:;">
+                Chambre
+              </a>
+            {% endfor %}#}
+            {#<div class="btn-group">
+              <a class="btn btn-default btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                Catégorie : Chambre
+                <i class="fa fa-angle-down"></i>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Chambre</a></li>
+                <li><a href="#">Studio</a></li>
+                <li><a href="#">Appartement</a></li>
+                <li><a href="#">Campus</a></li>
+                <li><a href="#">Tout</a></li>
+              </ul>
+            </div>#}
+            {#<ul>
+              <li><a href="#">Chambre</a></li>
+              <li><a href="#">Studio</a></li>
+              <li><a href="#">Appartement</a></li>
+              <li><a href="#">Campus</a></li>
+            </ul>#}
+
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-price2">
+              Tarif mensuel (USD)
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-price2" class="accordion-body collapse in">
+          <div class="panel-body">
+            <div class="filter-price">
+              <div class="price-slider"></div>
+              <div class="filter-price-details">
+                <span>de</span>
+                <input type="text" class="price-range-low form-control" placeholder="Min">
+                <span>à</span>
+                <input type="text" class="price-range-high form-control" placeholder="Max">
+                <a href="#" class="btn btn-primary">FILTRER</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {# <div class="panel panel-default">
+         <div class="panel-heading">
+           <h4 class="panel-title">
+             <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-size">
+               Pays
+             </a>
+           </h4>
+         </div>
+         <div id="panel-filter-size" class="accordion-body collapse in">
+           <div class="panel-body">
+             <a href="#" class="btn btn-default">CAMROUN</a> <a href="#" class="btn btn-default">CAMROUN</a> <a href="#" class="btn btn-default">CAMROUN</a>
+             <ul class="configurable-filter-">
+               <li>
+                 <a data-plugin-tooltip="152" href="#" data-original-title="Cameroun">CM</a>
+               </li>
+               <li>
+                 <a href="#" class="btn btn-default">CAMROUN</a>
+               </li>
+               <li>
+                 <a href="#">L</a>
+               </li>
+               <li>
+                 <a href="#">XL</a>
+               </li>
+               <li>
+                 <a href="#">2XL</a>
+               </li>
+               <li>
+                 <a href="#">3XL</a>
+               </li>
+             </ul>
+           </div>
+         </div>
+       </div>
+       <div class="panel panel-default">
+         <div class="panel-heading">
+           <h4 class="panel-title">
+             <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-size">
+               Ville
+             </a>
+           </h4>
+         </div>
+         <div id="panel-filter-size" class="accordion-body collapse in">
+           <div class="panel-body">
+             <ul class="configurable-filter-list">
+               <li>
+                 <a href="#">S</a>
+               </li>
+               <li>
+                 <a href="#">M</a>
+               </li>
+               <li>
+                 <a href="#">L</a>
+               </li>
+               <li>
+                 <a href="#">XL</a>
+               </li>
+               <li>
+                 <a href="#">2XL</a>
+               </li>
+               <li>
+                 <a href="#">3XL</a>
+               </li>
+             </ul>
+           </div>
+         </div>
+       </div>#}
+      {#<div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-size">
+              Ecole
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-size" class="accordion-body collapse in">
+          <div class="panel-body">
+            <ul class="configurable-filter-list">
+              <li>
+                <a href="#">S</a>
+              </li>
+              <li>
+                <a href="#">M</a>
+              </li>
+              <li>
+                <a href="#">L</a>
+              </li>
+              <li>
+                <a href="#">XL</a>
+              </li>
+              <li>
+                <a href="#">2XL</a>
+              </li>
+              <li>
+                <a href="#">3XL</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>#}
+      {#<div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-size">
+              Disponibilité (date start, date end)
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-size" class="accordion-body collapse in">
+          <div class="panel-body">
+            <ul class="configurable-filter-list">
+              <li>
+                <a href="#">S</a>
+              </li>
+              <li>
+                <a href="#">M</a>
+              </li>
+              <li>
+                <a href="#">L</a>
+              </li>
+              <li>
+                <a href="#">XL</a>
+              </li>
+              <li>
+                <a href="#">2XL</a>
+              </li>
+              <li>
+                <a href="#">3XL</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>#}
+      {#<div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-size">
+              Quantité
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-size" class="accordion-body collapse in">
+          <div class="panel-body">
+            <ul class="configurable-filter-list">
+              <li>
+                <a href="#">S</a>
+              </li>
+              <li>
+                <a href="#">M</a>
+              </li>
+              <li>
+                <a href="#">L</a>
+              </li>
+              <li>
+                <a href="#">XL</a>
+              </li>
+              <li>
+                <a href="#">2XL</a>
+              </li>
+              <li>
+                <a href="#">3XL</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>#}
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-size4">
+              Longueur
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-price4" class="accordion-body collapse in">
+          <div class="panel-body">
+            <form class="filter-price" method="get">
+              <div class="price-slider"></div>
+              <div class="filter-price-details">
+                <span>de</span>
+                <input type="text" class="price-range-low form-control" placeholder="Min" name="min_lenght">
+                <span>à</span>
+                <input type="text" class="price-range-high form-control" placeholder="Max" name="max_lenght">
+                <button type="submit" class="btn btn-primary">FILTRER</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-size">
+              Meublé
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-size" class="accordion-body collapse in">
+          <div class="panel-body">
+            <label><input type="radio" name="furnished" checked>Oui, Meublé</label>
+            <label><input type="radio" name="furnished">Non Meublé</label>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-price5">
+              Distance de la route
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-price5" class="accordion-body collapse in">
+          <div class="panel-body">
+            {#<div class="filter-price">
+              <div id="price-slider"></div>
+              <div class="filter-price-details">
+                <span>from</span>
+                <input type="text" id="price-range-low" class="form-control" placeholder="Min">
+                <span>to</span>
+                <input type="text" id="price-range-high" class="form-control" placeholder="Max">
+                <a href="#" class="btn btn-primary">FILTER</a>
+              </div>
+            </div>#}
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-size">
+              Parking ?
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-size" class="accordion-body collapse in">
+          <div class="panel-body">
+            <ul class="configurable-filter-list">
+              {% for i in 1..12 %}
+                <li>
+                  <a href="#">{{ i }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      {#<div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-size">
+              Pièces
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-size" class="accordion-body collapse in">
+          <div class="panel-body">
+            <ul class="configurable-filter-list">
+              <li>
+                <a href="#">S</a>
+              </li>
+              <li>
+                <a href="#">M</a>
+              </li>
+              <li>
+                <a href="#">L</a>
+              </li>
+              <li>
+                <a href="#">XL</a>
+              </li>
+              <li>
+                <a href="#">2XL</a>
+              </li>
+              <li>
+                <a href="#">3XL</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>#}
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-size">
+              Superficie
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-size" class="accordion-body collapse in">
+          <div class="panel-body">
+            <ul class="configurable-filter-list">
+              <li>
+                <a href="#">S</a>
+              </li>
+              <li>
+                <a href="#">M</a>
+              </li>
+              <li>
+                <a href="#">L</a>
+              </li>
+              <li>
+                <a href="#">XL</a>
+              </li>
+              <li>
+                <a href="#">2XL</a>
+              </li>
+              <li>
+                <a href="#">3XL</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-size">
+              Salles de bain
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-size" class="accordion-body collapse in">
+          <div class="panel-body">
+            <ul class="configurable-filter-list">
+              {% for i in 1..12 %}
+                <li>
+                  <a href="#">{{ i }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-size">
+              Cuisines
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-size" class="accordion-body collapse in">
+          <div class="panel-body">
+            <ul class="configurable-filter-list">
+              {% for i in 1..12 %}
+                <li>
+                  <a href="#">{{ i }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-size">
+              Chambres
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-size" class="accordion-body collapse in">
+          <div class="panel-body">
+            <ul class="configurable-filter-list">
+              {% for i in 1..12 %}
+                <li>
+                  <a href="#">{{ i }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-size">
+              Salons
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-size" class="accordion-body collapse in">
+          <div class="panel-body">
+            <ul class="configurable-filter-list">
+              {% for i in 1..12 %}
+                <li>
+                  <a href="#">{{ i }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-size">
+              Avis Utilisateurs
+            </a>
+          </h4>
+        </div>
+        <div id="panel-filter-size" class="accordion-body collapse in">
+          <div class="panel-body">
+            <ul class="configurable-filter-list">
+              {% for i in 1..5 %}
+                <li>
+                  {% if i == 1 %}
+                    <a href="#{{ i }}" data-plugin-tooltip="top" title="1 étoile"><i class="fa fa-star"></i></a>
+                  {% else %}
+                    <a href="#{{ i }}" data-plugin-tooltip="top" title="{{ i }} étoiles"><i class="fa fa-star"></i></a>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h4>A la Mode</h4>
+    <div class="owl-carousel owl-theme" data-plugin-options="{'items':1, 'margin': 5, 'dots': false, 'nav': true}">
+      <div>
+        <div class="product product-sm">
+          <figure class="product-image-area">
+            <a href="demo-shop-6-product-details.html" title="Product Name" class="product-image">
+              <img src="{{ asset('MarketPlace/assets/img/demos/shop/products/product13.jpg') }}" alt="Product Name">
+              <img src="{{ asset('MarketPlace/assets/img/demos/shop/products/product13-2.jpg') }}" alt="Product Name" class="product-hover-image">
+            </a>
+          </figure>
+          <div class="product-details-area">
+            <h2 class="product-name"><a href="demo-shop-6-product-details.html" title="Product Name">Diamond Ring - S</a></h2>
+            <div class="product-ratings">
+              <div class="ratings-box">
+                <div class="rating" style="width:0%"></div>
+              </div>
+            </div>
+
+            <div class="product-price-box">
+              <span class="product-price">$220.00</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product product-sm">
+          <figure class="product-image-area">
+            <a href="demo-shop-6-product-details.html" title="Product Name" class="product-image">
+              <img src="{{ asset('MarketPlace/assets/img/demos/shop/products/product14.jpg') }}" alt="Product Name">
+            </a>
+          </figure>
+          <div class="product-details-area">
+            <h2 class="product-name"><a href="demo-shop-6-product-details.html" title="Product Name">Diamond Ring - XL</a></h2>
+            <div class="product-ratings">
+              <div class="ratings-box">
+                <div class="rating" style="width:80%"></div>
+              </div>
+            </div>
+
+            <div class="product-price-box">
+              <span class="product-price">$180.00</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product product-sm">
+          <figure class="product-image-area">
+            <a href="demo-shop-6-product-details.html" title="Product Name" class="product-image">
+              <img src="{{ asset('MarketPlace/assets/img/demos/shop/products/product15.jpg') }}" alt="Product Name">
+            </a>
+          </figure>
+          <div class="product-details-area">
+            <h2 class="product-name"><a href="demo-shop-6-product-details.html" title="Product Name">Diamond Ring - 2XL</a></h2>
+            <div class="product-ratings">
+              <div class="ratings-box">
+                <div class="rating" style="width:0%"></div>
+              </div>
+            </div>
+
+            <div class="product-price-box">
+              <span class="product-price">$240.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="product product-sm">
+          <figure class="product-image-area">
+            <a href="demo-shop-6-product-details.html" title="Product Name" class="product-image">
+              <img src="img/demos/shop/products/product16.jpg" alt="Product Name">
+              <img src="img/demos/shop/products/product16-2.jpg" alt="Product Name" class="product-hover-image">
+            </a>
+          </figure>
+          <div class="product-details-area">
+            <h2 class="product-name"><a href="demo-shop-6-product-details.html" title="Product Name">Diamond Ring - 3XL</a></h2>
+            <div class="product-ratings">
+              <div class="ratings-box">
+                <div class="rating" style="width:60%"></div>
+              </div>
+            </div>
+
+            <div class="product-price-box">
+              <span class="product-price">$220.00</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product product-sm">
+          <figure class="product-image-area">
+            <a href="demo-shop-6-product-details.html" title="Product Name" class="product-image">
+              <img src="img/demos/shop/products/product17.jpg" alt="Product Name">
+            </a>
+          </figure>
+          <div class="product-details-area">
+            <h2 class="product-name"><a href="demo-shop-6-product-details.html" title="Product Name">Diamond Ring - M</a></h2>
+            <div class="product-ratings">
+              <div class="ratings-box">
+                <div class="rating" style="width:0%"></div>
+              </div>
+            </div>
+
+            <div class="product-price-box">
+              <span class="product-price">$180.00</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product product-sm">
+          <figure class="product-image-area">
+            <a href="demo-shop-6-product-details.html" title="Product Name" class="product-image">
+              <img src="img/demos/shop/products/product13.jpg" alt="Product Name">
+            </a>
+          </figure>
+          <div class="product-details-area">
+            <h2 class="product-name"><a href="demo-shop-6-product-details.html" title="Product Name">Diamond Ring - XL</a></h2>
+            <div class="product-ratings">
+              <div class="ratings-box">
+                <div class="rating" style="width:80%"></div>
+              </div>
+            </div>
+
+            <div class="product-price-box">
+              <span class="product-price">$240.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
