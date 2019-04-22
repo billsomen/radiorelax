@@ -2,6 +2,7 @@
 
 namespace MainBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use MainBundle\Document\Album;
 use MainBundle\Form\AlbumType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -142,6 +143,12 @@ class AlbumController extends Controller
             $this->addFlash("error", "Formulaire mal défini");
           }
         }
+//        On récupère les transactions
+        $transactions = new ArrayCollection();
+        if(!empty($album->getAccount())){
+          $transactions = $album->getAccount()->getTransactions();
+        }
+
 //        On update l'ordre des musiques de l'album
         $ordered_list = [];
         $order_key = 20;
@@ -162,6 +169,7 @@ class AlbumController extends Controller
           'artist' => $user,
           'album' => $album,
           'musics' => $ordered_list,
+          "transactions" => $transactions,
           'form' => $form->createView()
         ));
       }

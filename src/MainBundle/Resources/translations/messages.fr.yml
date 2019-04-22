@@ -389,3 +389,7 @@ admin:
     total: Total ajouts
   phrases:
     since_launch: depuis le lancement
+
+label:
+  music:
+    of: Musiques de

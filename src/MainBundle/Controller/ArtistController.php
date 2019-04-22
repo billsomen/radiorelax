@@ -2,6 +2,7 @@
 
 namespace MainBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use MainBundle\Document\Artist;
 use MainBundle\Form\ArtistType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -104,6 +105,99 @@ class ArtistController extends Controller
     }
 
     return $this->redirectToRoute('admin_artists_homepage');
+  }
+
+  public function dashboardAction($id){
+    //Tableau de bord de l'artiste
+    $dm = $this->get('doctrine.odm.mongodb.document_manager');
+//    1. Stats
+    /*
+     * 1.1. Listeners
+     * 1.2. Albums
+     * 1.3. Musics
+     * 1.4. Artists
+     * 1.5. Transactions & Sales
+     */
+
+    $user = $dm->getRepository("XSUserBundle:User")->findOneBy(array(
+      "id" => $id
+    ));
+
+    $artist_profile = $user->getProfiles()->getArtist();
+
+    $transactions = new ArrayCollection();
+
+    $albums = $artist_profile->getAlbums();
+
+    $charts = array();
+    $labels = [];
+    foreach ($albums as $item){
+      /*if(isset($labels[date_format($music->getDateAdd(), "Y-M")])){
+        $labels[date_format($music->getDateAdd(), "Y-M")] = 0;
+      }*/
+      if(!empty($item->getAccount())){
+        foreach ($item->getAccount()->getTransactions() as $item_transaction){
+          $transactions->add($item_transaction);
+        }
+      }
+      $labels[date_format($item->getDateAdd(), "Y-m")][] = 1;
+//      $charts["musics"]["labels"][""] = 1;
+    }
+
+    foreach ($labels as $key => $label){
+//      $charts["albums"]["labels"][] = explode('-', $key)[2];
+      $charts["albums"]["labels"][] = $key;
+      //        TODO: remove something below : *1000
+      $charts["albums"]["data"][] = count($label)*1000;
+    }
+
+    $charts["albums"]["datasets"][0] = array(
+      "label" => "Ajouts",
+      "data" => $charts["albums"]["data"]
+    );
+
+    unset($charts["albums"]["data"]);
+
+//Gestion des ventes
+    $labels = array();
+    foreach ($transactions as $item){
+      $labels[date_format($item->getDateAdd(), "Y-m")][] = $item->getAmount()->getValue();
+    }
+
+    foreach ($labels as $key => $label){
+      $charts["sales"]["labels"][] = $key;
+      $total = 0;
+      foreach ($label as $val){
+//        TODO: remove something below
+        $total += 500*rand(1, 9)+$val;
+      }
+      $charts["sales"]["data"][] = $total;
+    }
+
+    $charts["sales"]["datasets"][0] = array(
+      "label" => "Ajouts",
+      "data" => $charts["sales"]["data"]
+    );
+
+    unset($charts["sales"]["data"]);
+
+    $charts["albums"] = json_encode($charts["albums"]);
+    $charts["sales"] = json_encode($charts["sales"]);
+
+
+
+    $total_income = 0;
+    foreach ($transactions as $transaction){
+      $total_income += $transaction->getAmount()->getValue();
+    }
+
+    return $this->render('@Main/Admin/Artist/dashboard.html.twig', array(
+      "albums" => $albums,
+      "charts" => $charts,
+      "total_income" => $total_income,
+      "transactions" => $transactions
+    ));
+
   }
 
   public function showAction($id, Request $request)

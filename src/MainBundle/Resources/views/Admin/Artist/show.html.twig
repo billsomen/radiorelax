@@ -56,81 +56,76 @@
               {{ user.profiles.artist.gmaps.country }}
             </div>
             <hr class="my-4" />
-            <div class="card shadow">
-              <div class="card-header bg-white border-0">
-                <div class="row align-items-center">
-                  <div class="col-8">
-                    <h3 class="mb-0">Mes Albums</h3>
-                  </div>
-                  <div class="col-4 text-right">
-                    <a href="{{ path('admin_albums_new', {"id_artist":user.id}) }}" class="btn btn-sm btn-primary">Ajouter</a>
-                  </div>
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table align-items-center table-flush">
-                    <thead class="thead-light">
-                    <tr>
-                      <th scope="col">Nom</th>
-                      <th scope="col" title="Date de sortie">Date</th>
-                      <th scope="col">Sons</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                      <th scope="row">
-                        <div class="media align-items-center">
-                          <a href="{{ path('admin_albums_show', {'id': 1 }) }}" class="avatar rounded-circle mr-3">
-                            <img alt="Image placeholder" src="{{ asset('assets/adminbundle/img/theme/team-4-800x800.jpg') }}">
-                          </a>
-                          <div class="media-body">
-                            <a href="#"><span class="mb-0 text-sm">#Musiques sans albums</span></a>
-                          </div>
-                        </div>
-                      </th>
-                      <td>dernier ajouté</td>
-                      <td>4</td>
-                    </tr>
-                    {% for album in user.profiles.artist.albums %}
-                      <tr>
-                        <th scope="row">
-                          <div class="media align-items-center">
-                            <a href="{{ path('admin_albums_show', {'id': album.id }) }}" class="avatar rounded-circle mr-3">
-                              <img alt="Image placeholder" src="{{ album.profile | cloudinary_img }}">
-                            </a>
-                            <div class="media-body">
-                              <a href="{{ path('admin_albums_show', {'id': album.id }) }}"><span class="mb-0 text-sm">{{ album.name }}</span></a>
-                            </div>
-                          </div>
-                        </th>
-                        <td>
-                          {{ album.dateAdd | date("Y") }}
-                        </td>
-                        <td>
-                          {{ album.musics | length }}
-                        </td>
-                        {#<td class="text-right">
-                          <div class="dropdown">
-                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="fas fa-ellipsis-v"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                              <a class="dropdown-item" href="#">Editer</a>
-                              <a class="dropdown-item" href="#">Supprimer</a>
-                              <a class="dropdown-item" href="#">Ajouter Album</a>
-                              <a class="dropdown-item" href="#">Réinitialiser le Compte</a>
-                            </div>
-                          </div>
-                        </td>#}
-                      </tr>
-                    {% endfor %}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+          </div>
+          <div style="display: flex">
+            <div style="margin: auto; width: 50%">
+              <h3 class="mb-0">Mes Albums</h3>
             </div>
-            {#<a href="#">Tous ses albums</a>#}
+            <div style="margin: auto; width: 50%;" class="text-right">
+              <a href="{{ path('admin_albums_new', {"id_artist":user.id}) }}" class="btn btn-sm btn-primary">Ajouter</a>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                <tr>
+                  <th scope="col">Nom</th>
+                  <th scope="col" title="Date de sortie">Date</th>
+                  <th scope="col">Sons</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <th scope="row">
+                    <div class="media align-items-center">
+                      <a href="{{ path('admin_albums_show', {'id': 1 }) }}" class="avatar rounded-circle mr-3">
+                        <img alt="Image placeholder" src="{{ asset('assets/adminbundle/img/theme/team-4-800x800.jpg') }}">
+                      </a>
+                      <div class="media-body">
+                        <a href="#"><span class="mb-0 text-sm">#Musiques sans albums</span></a>
+                      </div>
+                    </div>
+                  </th>
+                  <td>dernier ajouté</td>
+                  <td>4</td>
+                </tr>
+                {% for album in user.profiles.artist.albums %}
+                  <tr>
+                    <th scope="row">
+                      <div class="media align-items-center">
+                        <a href="{{ path('admin_albums_show', {'id': album.id }) }}" class="avatar rounded-circle mr-3">
+                          <img alt="Image placeholder" src="{{ album.profile | cloudinary_img }}">
+                        </a>
+                        <div class="media-body">
+                          <a href="{{ path('admin_albums_show', {'id': album.id }) }}"><span class="mb-0 text-sm">{{ album.name }}</span></a>
+                        </div>
+                      </div>
+                    </th>
+                    <td>
+                      {{ album.dateAdd | date("Y") }}
+                    </td>
+                    <td>
+                      {{ album.musics | length }}
+                    </td>
+                    {#<td class="text-right">
+                      <div class="dropdown">
+                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                          <a class="dropdown-item" href="#">Editer</a>
+                          <a class="dropdown-item" href="#">Supprimer</a>
+                          <a class="dropdown-item" href="#">Ajouter Album</a>
+                          <a class="dropdown-item" href="#">Réinitialiser le Compte</a>
+                        </div>
+                      </div>
+                    </td>#}
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

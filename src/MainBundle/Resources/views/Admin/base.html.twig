@@ -95,6 +95,11 @@
           {% endif %}
           {% if is_granted('ROLE_ARTIST') %}
             <li class="nav-item">
+              <a class="nav-link" href="{{ path('admin_artists_dashboard', {'id':app.user.id}) }}">
+                <i class="ni ni-tv-2 text-blue"></i> Tableau de bord
+              </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="{{ path('admin_artists_show', {'id': app.user.id}) }}">
                 <i class="ni ni-sound-wave text-blue"></i> {{ 'menu.admin.artist_space'|trans }}
               </a>
