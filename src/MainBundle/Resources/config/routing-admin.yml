@@ -23,6 +23,13 @@ admin_profile_playlist_album:
   path:     /me/playlist/albums/{id}
   defaults: { _controller: MainBundle:Admin:playlistAlbumShow }
 
+#TODO : MLM Network
+admin_profile_mlm_network:
+#  Musics favorites
+  path:     /me/mlm_network
+  defaults: { _controller: MainBundle:Admin:mlm }
+
+
 admin_profile_favorites:
 #  Musics favorites
   path:     /me/favorites

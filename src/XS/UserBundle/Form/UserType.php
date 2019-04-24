@@ -34,6 +34,15 @@ class UserType extends AbstractType
           'placeholder' => "xs_user.user.nickname"
         )
       ))
+      ->add('godfatherNamespace', TextType::class, array(
+        'required' => true,
+        'attr' => array(
+          'class' => "form-control",
+          'maxlength' => 10,
+          'minlength' => 5,
+          'placeholder' => "xs_user.user.godfather_namespace"
+        )
+      ))
       ->add('username', EmailType::class, array(
         'required' => true,
         'attr' => array(

@@ -332,6 +332,7 @@ menu:
   admin:
     playlist: Ma Playlist
     favorites: Mes Favoris
+    mlm_network: Mon réseau MLM
     profile: Mon Profil
     welcome: Bienvenue!
     logout: Déconnection

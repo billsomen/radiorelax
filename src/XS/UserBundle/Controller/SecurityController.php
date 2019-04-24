@@ -3,11 +3,13 @@
 
 namespace XS\UserBundle\Controller;
 
+use MainBundle\Document\Node;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use XS\UserBundle\Document\User;
@@ -512,7 +514,25 @@ class SecurityController extends Controller{
           $password = $encoder->encodePassword($code, $user->getSalt());
           $user->setPassword($password);
 
+//          We integrate the MLM node of the user
+          $node = new Node();
+          $user->setNode($node);
+
+//          On gère les référençes
+          if(!empty($user->getGodfatherNamespace())){
+            $god_father = $dm->getRepository("XSUserBundle:User")->findOneBy(array(
+              "profiles.artist.namespace" => $user->getGodfatherNamespace(),
+//              'roles' => "ROLE_ARTIST"
+            ));
+            if(!empty($god_father)){
+//              Le parain existe :)
+              $god_father->getNode()->addChild($node);
+              $dm->persist($god_father);
+            }
+          }
+
           $dm->persist($user);
+          $dm->persist($node);
           $dm->flush();
 
           $status = 'notice';
@@ -521,6 +541,7 @@ class SecurityController extends Controller{
           try{
 //              On émet le Mail
             $receiver = $user->getUsername();
+            $receiver = "ngongangsomen@gmail.com";
             $sender = $this->getParameter("mailer_user");
             $message = \Swift_Message::newInstance()
               ->setSubject($status_message)
@@ -541,6 +562,8 @@ class SecurityController extends Controller{
 //            Mail sent
             $status_message = $this->get('translator')->trans('flashbags.mail.success');
             $this->addFlash($status, $status_message);
+
+            return $this->redirectToRoute("login");
 
           }catch(\Exception $exception){
             $status = 'error';

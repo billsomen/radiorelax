@@ -3,21 +3,156 @@
 namespace MainBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use MainBundle\Document\Node;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use XS\UserBundle\Document\Telephone;
+use XS\UserBundle\Document\User;
 use XS\UserBundle\Form\UserEditPasswordType;
 use XS\UserBundle\Form\UserEditType;
 use XS\UserBundle\Form\UserType;
 
 class AdminController extends Controller
 {
-  public function favoritesAction(Request $request){
+//  Template d'un noeud dans le réseau MLM
+  private $mlm_node_template;
+
+  public function __construct()
+  {
+    $this->mlm_node_template = array(
+      "name" => "RelaxNode",
+      "gender" => "M",
+      "key" => 0,
+    );
+  }
+
+  public function favoritesAction(){
     return $this->render('MainBundle:Admin/Me:favorites.show.html.twig', array(
       'user' => $this->getUser()
     ));
   }
+
+  public function mlmAction(){
+//    We build the node JSON :)
+//    On lançe le noeud de base
+/*
+    $node = new Node(0);
+    $user = new User();
+    $user->setRoles(array());
+    $user->getRoles()[] = "ROLE_SYSTEM";
+    $user->getProfiles()->add("artist");
+    $user->getProfiles()->getArtist()->generateNamespace("Radio Relax");
+    $user->getProfiles()->getArtist()->setAlbums(new ArrayCollection());
+    $user->setNode($node);
+    $dm = $this->get('doctrine.odm.mongodb.document_manager');
+    $dm->persist($user);
+    $dm->persist($node);
+    $dm->flush();
+
+    return new Response( "done");*/
+
+
+
+
+    $tree = array();
+    $user = $this->getUser();
+
+//    Noeud de base :)
+    $dm = $this->get('doctrine.odm.mongodb.document_manager');
+    $rr_user = $dm->getRepository("XSUserBundle:User")->findOneBy(array(
+      "profiles.artist.namespace" => "radiorelax"
+    ));
+
+        $node_rr = $rr_user->getNode();
+
+    $template = $this->mlm_node_template;
+    $template["name"] = $this->getParameter("app_name");
+    $template["level"] = $node_rr->getLevel();
+    $template["key"] = $node_rr->getId();
+    $template["children"] = count($node_rr->getChildren());
+
+    $tree[] = $template;
+
+    $node = $user->getNode();
+
+//    print_r($node->getParent()->getLevel());
+
+//    On construit l'arbre depuis le noeud identifié
+
+//    Load from me to UP
+    $this->loadTreeUpFrom($node, $tree);
+
+//    print_r($tree);
+
+    //    TODO Load from me to Down
+    $this->loadTreeDownFrom($node_rr, $tree);
+//    print_r($tree);
+
+//    return new Response("555");
+
+    return $this->render('MainBundle:Admin/Me:mlm.show.html.twig', array(
+      'user' => $this->getUser(),
+      "tree" => json_encode($tree)
+    ));
+  }
+
+
+  public function loadTreeUpFrom(Node $node, &$tree){
+//    Return an element to add at
+    $template = $this->mlm_node_template;
+    if($node->getLevel() > 0){
+      if($node->getLevel() == 1){
+        $template["key"] = $node->getId();
+//            Mon parent est RADIO_RELAX
+        $template["parent"] = 0;
+        $template["level"] = 1;
+        $template["children"] = count($node->getChildren());
+        $template["name"] = $node->getUser()->getNickname();
+        $tree[] = $template;
+      }
+      else{
+        $parent = $node->getParent();
+        if(!empty($parent)){
+          $children = $parent->getChildren();
+          foreach ($children as $child){
+            $template["key"] = $child->getId();
+            $template["parent"] = $parent->getId();
+            $template["name"] = $child->getUser()->getNickname();
+            $template["children"] = count($child->getChildren());
+            $template["level"] = $child->getLevel();
+            $tree[] = $template;
+          }
+//      on remonte au parent du parent identiquement :)
+          $this->loadTreeUpFrom($parent, $tree);
+        }
+      }
+    }
+  }
+
+  public function loadTreeDownFrom(Node $node, &$tree){
+//    Charge uniquement l'arbre à partir de l'éléméne (en l'ignorant) et en descendant
+    $template = $this->mlm_node_template;
+    if($node->getLevel() < Node::MAX_LEVEL){
+      $children = $node->getChildren();
+      if(!empty($children)){
+        foreach ($children as $child){
+//          On ajoute chaque enfant
+
+          $template["key"] = $child->getId();
+          $template["parent"] = $node->getId();
+          $template["name"] = $child->getUser()->getNickname();
+          $template["children"] = count($child->getChildren());
+          $template["level"] = $child->getLevel();
+          $tree[] = $template;
+
+//          On ajoute les enfant des enfant identiquement
+          $this->loadTreeDownFrom($child, $tree);
+        }
+      }
+    }
+  }
+
   public function playlistAction(){
     //    Show and Edit Artists
     $user = $this->getUser();
@@ -263,7 +398,8 @@ class AdminController extends Controller
     $session = $request->getSession();
     $token = $session->get('tmp_pass_token');
     $tmp_token = $request->query->get('tmp_pass_token');
-    $code = rand(10000, 99999);
+
+    $dm = $this->get('doctrine.odm.mongodb.document_manager');
 
 //    print_r($currentPassword);
     if($request->isMethod('POST')){
@@ -275,7 +411,6 @@ class AdminController extends Controller
 //        $user->addTelephone($telephone);
         $nickname = $user->getNamespace();
         $user->generateNamespace($nickname);
-        $dm = $this->get('doctrine.odm.mongodb.document_manager');
         $dm->persist($user);
         $dm->flush();
       }
