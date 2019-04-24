@@ -3,15 +3,6 @@
   $(function() {
     "use strict";
     if ($('.audio-player').length) {
-      var myPlayListOption = '' +
-        '<ul class="more_option">' +
-        '<li><a href="#"><span class="opt_icon" title="Add To Favourites"><span class="icon icon_fav"></span></span></a></li>' +
-        '<li><a href="#"><span class="opt_icon" title="Add To Queue"><span class="icon icon_queue"></span></span></a></li>' +
-        '<li><a href="#"><span class="opt_icon" title="Download Now"><span class="icon icon_dwn"></span></span></a></li>' +
-        '<li><a href="#"><span class="opt_icon" title="Add To Playlist"><span class="icon icon_playlist"></span></span></a></li>' +
-        '<li><a href="#"><span class="opt_icon" title="Share"><span class="icon icon_share"></span></span></a></li>' +
-        '</ul>';
-
       myPlaylist = new jPlayerPlaylist({
         jPlayer: "#jquery_jplayer_1",
         cssSelectorAncestor: "#jp_container_1"
@@ -20,11 +11,11 @@
         supplied: "mp3",
         wmode: "window",
         useStateClassSkin: true,
-        autoBlur: false,
+        autoBlur: true,
         smoothPlayBar: true,
         keyEnabled: true,
         playlistOptions: {
-          autoPlay: true
+          autoPlay: false
         }
       });
       $("#jquery_jplayer_1").on($.jPlayer.event.ready + ' ' + $.jPlayer.event.play, function(event) {
@@ -38,7 +29,7 @@
         $('.knob-wrapper').mousedown(function() {
           $(window).mousemove(function(e) {
             var angle1 = getRotationDegrees($('.knob')),
-              volume = angle1 / 270
+              volume = angle1 / 270;
 
             if (volume > 1) {
               $("#jquery_jplayer_1").jPlayer("volume", 1);

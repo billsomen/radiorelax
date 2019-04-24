@@ -17,7 +17,6 @@
     </div>
     <div class="album_inner_list">
       <div class="album_list_wrapper">
-        <div id="paypal-button-container">Results</div>
         <ul class="album_list_name">
           <li>#</li>
           <li>Album</li>
@@ -66,17 +65,35 @@
         {% endfor %}
       </div>
     </div>
-    <div class="ms_view_more padder_bottom20">
-      <a href="#" class="ms_btn">
-        <i class="fa fa-check"></i>
-        Payer | {{ cart.amount | amount_format }}
-      </a>
+    <div class="ms_view_more padder_bottom20" style="display: flex">
+      <div style="margin: auto; display: flex;flex-direction: column;">
+        <div style="padding: 0px">
+          Payer | {{ cart.amount | amount_format }}
+        </div>
+        <div style="padding: 15px">
+          <i class="fa fa-arrow-down"></i>
+        </div>
+        <div id="paypal-button-container"></div>
+      </div>
     </div>
   </div>
   
   {#todo: Paypal integration script#}
   <script>
     paypal.Buttons({
+      style: {
+        size: 'small',
+        height: 55,
+        layout: 'horizontal',
+        label: 'checkout',
+        color: 'blue',
+        // fundingicons: 'false',
+        shape: "rect"
+      }/*,
+      funding: {
+        allowed: [ paypal.FUNDING.CARD ],
+        disallowed: [ paypal.FUNDING.CREDIT ]
+      }*/,
       createOrder: function(data, actions) {
         return actions.order.create({
           purchase_units: [{

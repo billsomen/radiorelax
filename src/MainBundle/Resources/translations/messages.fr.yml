@@ -315,6 +315,7 @@ app:
 button:
   save: Enregistrer
   become_artist: Devenir artiste
+  add_to_cart: Ajouter au panier
 
 form:
   full_name: Nom complet
@@ -327,6 +328,21 @@ locale:
       title: Français
     en:
       title: English
+  localization:
+    country:
+      Canada: Canada
+
+title:
+  contact:
+    us: Nous contacter
+  call:
+    us: Téléphone
+  email:
+    us: Adresse Email
+  walk:
+    in: Adresse
+  follow:
+    us: Nous suivre
 
 menu:
   admin:
@@ -338,6 +354,15 @@ menu:
     logout: Déconnection
     go_visit: Retourner au site
     artist_space: Compte Artiste
+  artists: Artistes
+  cart:
+    tite: Panier
+    phrase: Mon panier
+  profile:
+    title: Profil
+    phrase: Mon Profil
+
+
 
 xs_user:
   login:
@@ -354,7 +379,6 @@ xs_user:
     username: Adresse email
     password: Mot de passe
     nickname: Nom d'utilisateur
-
 
 mail:
   register:
@@ -392,5 +416,7 @@ admin:
     since_launch: depuis le lancement
 
 label:
+  in_cart: Dans le Panier
   music:
     of: Musiques de
+  copyright: Tous droits réservés

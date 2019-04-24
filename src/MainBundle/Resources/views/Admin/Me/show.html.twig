@@ -32,6 +32,7 @@
                   <th scope="col">Nom</th>
                   <th scope="col" title="Date de sortie">Année</th>
                   <th scope="col">Qté Sons</th>
+                  <th scope="col">Download</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -52,6 +53,12 @@
                     </td>
                     <td>
                       {{ album.musics | length }}
+                    </td>
+                    <td>
+                      <button type="button" style="width: auto;" class="btn-icon-clipboard" data-clipboard-text="bold-down" title="" data-original-title="Download Album">
+                        <i class="ni ni-bold-down"></i>
+                        <span>Download</span>
+                      </button>
                     </td>
                   </tr>
                 {% endfor %}

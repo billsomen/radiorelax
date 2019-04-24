@@ -66,20 +66,19 @@
             <small>{{ flashMessage |trans }}</small>
           </div>
         {% endfor %}
-        <div class="ms_top_left">
-          <div class="ms_top_search">
-            <span class="comming_soon_below_logo">{{ 'app.bundle.coming_soon.phrase' |trans }}</span>
-          </div>
-        
-        </div>
         <div class="ms_top_right">
           <div class="ms_top_lang">
 {#            <a href="{{ path('core_artists_homepage', {'_locale': 'en'}) }}"><img src="{{ asset('assets/images/uk.png') }}" width="30" title="{{ "locale.language.en.title"|trans }}"/></a>#}
 {#            <a href="{{ path('core_artists_homepage') }}"><img src="{{ asset('assets/images/fr.png') }}" width="30" title="{{ "locale.language.fr.title"|trans }}"/></a>#}
             {% if app.user %}
+              <a href="{{ path('xs_market_place_cart') }}" title="Mon Panier">
+                <i class="fa fa-shopping-cart"></i>
+                Panier
+              </a>
+{#              <div style="width: 1px; height: 25px; border-right: 1px solid black"></div>#}
               <a href="{{ path('admin_profile') }}">
                 <img src="{{ asset('assets/adminbundle/img/brand/favicon.png') }}" width="30" title="Mon Profil"/>
-{#                <img src="https://forum.affinity.serif.com/uploads/monthly_2018_05/M_member_46298.png" width="30" title="Mon Profil"/>#}
+                {{ app.user.nickname }}
               </a>
             {% else %}
               <a href="{{ path('login', {'_locale': 'fr'}) }}" title="Se connecter">
@@ -138,7 +137,7 @@
               <div class="footer_box footer_contacts">
                 <h1 class="footer_title">{{ 'title.contact.us'|trans }}</h1>
                 <ul class="foo_con_info">
-                  <li>
+                  {#<li>
                     <div class="foo_con_icon">
                       <img src="{{ asset('assets/corebundle/images/svg/phone.svg') }}" alt="">
                     </div>
@@ -146,7 +145,7 @@
                       <span class="con-title">{{ 'title.call.us'|trans }} :</span>
                       <span>(+1) </span>
                     </div>
-                  </li>
+                  </li>#}
                   <li>
                     <div class="foo_con_icon">
                       <img src="{{ asset('assets/corebundle/images/svg/message.svg') }}" alt="">
@@ -162,7 +161,7 @@
                     </div>
                     <div class="foo_con_data">
                       <span class="con-title">{{ 'title.walk.in'|trans }}:</span>
-                      <span>Canada</span>
+                      <span>Québec, Canada</span>
                     </div>
                   </li>
                 </ul>
@@ -190,96 +189,6 @@
     {% block audio_player %}
     
     {% endblock %}
-  </div>
-  <!---Register Modal Start-->
-  <!-- Modal -->
-  <div class="ms_register_popup">
-    <div id="myModal" class="modal  centered-modal" role="dialog">
-      <div class="modal-dialog register_dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-          <button type="button" class="close" data-dismiss="modal">
-            <i class="fa_icon form_close"></i>
-          </button>
-          <div class="modal-body">
-            <div class="ms_register_img">
-              <img src="{{ asset('assets/corebundle/images/register_img.png') }}" alt="" class="img-fluid" />
-            </div>
-            <div class="ms_register_form">
-              <h2>{{ 'button.sign_me'|trans }}</h2>
-              <div class="form-group">
-                <input type="text" placeholder="{{ 'placeholder.name'|trans }}" class="form-control">
-                <span class="form_icon">
-							<i class="fa_icon form-user" aria-hidden="true"></i>
-							</span>
-              </div>
-              <div class="form-group">
-                <input type="text" placeholder="{{ 'placeholder.email'|trans }}" class="form-control">
-                <span class="form_icon">
-							<i class="fa_icon form-envelope" aria-hidden="true"></i>
-						</span>
-              </div>
-              <div class="form-group">
-                <input type="password" placeholder="{{ 'placeholder.password'|trans }}" class="form-control">
-                <span class="form_icon">
-						<i class="fa_icon form-lock" aria-hidden="true"></i>
-						</span>
-              </div>
-              <div class="form-group">
-                <input type="password" placeholder="{{ 'placeholder.confirm_password'|trans }}" class="form-control">
-                <span class="form_icon">
-						<i class=" fa_icon form-lock" aria-hidden="true"></i>
-						</span>
-              </div>
-              <a href="#" class="ms_btn">{{ 'button.im_listener'|trans }}</a>
-              <p>{{ 'content.have_account'|trans }} <a href="#myModal1" data-toggle="modal" class="ms_modal hideCurrentModel">{{ 'button.login'|trans }}</a></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!----Login Popup Start---->
-    <div id="myModal1" class="modal  centered-modal" role="dialog">
-      <div class="modal-dialog login_dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-          <button type="button" class="close" data-dismiss="modal">
-            <i class="fa_icon form_close"></i>
-          </button>
-          <div class="modal-body">
-            <div class="ms_register_img">
-              <img src="{{ asset('assets/corebundle/images/register_img.png') }}" alt="" class="img-fluid" />
-            </div>
-            <div class="ms_register_form">
-              <h2>{{ 'button.login'|trans }}</h2>
-              <div class="form-group">
-                <input type="text" placeholder="{{ 'placeholder.email'|trans }}" class="form-control">
-                <span class="form_icon">
-							<i class="fa_icon form-envelope" aria-hidden="true"></i>
-						</span>
-              </div>
-              <div class="form-group">
-                <input type="password" placeholder="{{ 'placeholder.password'|trans }}" class="form-control">
-                <span class="form_icon">
-						<i class="fa_icon form-lock" aria-hidden="true"></i>
-						</span>
-              </div>
-              <div class="remember_checkbox">
-                <label>{{ 'checkbox.sign'|trans }}
-                  <input type="checkbox">
-                  <span class="checkmark"></span>
-                </label>
-              </div>
-              <a href="" class="ms_btn" target="_blank">{{ 'button.login'|trans }}</a>
-              <div class="popup_forgot">
-                <a href="#">{{ 'button.forgot'|trans }} ?</a>
-              </div>
-              <p> {{ 'content.havent_account'|trans }} <a href="#myModal" data-toggle="modal" class="ms_modal1 hideCurrentModel">{{ 'button.sign_me'|trans }}</a></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 {% endblock %}
 
