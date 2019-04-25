@@ -105,7 +105,7 @@
         <div class="card-header bg-white border-0">
           <div class="row align-items-center">
             <div class="col-8">
-              <h3 class="mb-0">Albums  : {{ albums |length }}</h3>
+              <h3 class="mb-0">{{ 'admin.album.title'|trans }}  : {{ albums |length }}</h3>
             </div>
           </div>
         </div>
@@ -113,10 +113,10 @@
           <table class="table align-items-center table-flush">
             <thead class="thead-light">
             <tr>
-              <th scope="col">#Nom</th>
-              <th scope="col">Année</th>
-              <th scope="col">Sons</th>
-              <th scope="col">Transactions</th>
+              <th scope="col">{{ "table.header.name"|trans }}</th>
+              <th scope="col">{{ "table.header.year"|trans }}</th>
+              <th scope="col">{{ "table.header.songs"|trans }}</th>
+              <th scope="col">{{ "table.header.transactions"|trans }}</th>
             </tr>
             </thead>
             <tbody>
@@ -154,7 +154,7 @@
         <div class="card-header bg-white border-0">
           <div class="row align-items-center">
             <div class="col-8">
-              <h3 class="mb-0">Transactions  : {{ transactions |length }}</h3>
+              <h3 class="mb-0">{{ 'table.header.transactions'|trans }}  : {{ transactions |length }}</h3>
             </div>
           </div>
         </div>
@@ -162,10 +162,10 @@
           <table class="table align-items-center table-flush">
             <thead class="thead-light">
             <tr>
-              <th scope="col">#Code Paypal</th>
-              <th scope="col">Date d'ajout</th>
-              <th scope="col">Auditeur</th>
-              <th scope="col">Montant</th>
+              <th scope="col">{{ "table.header.paypal_code"|trans }}</th>
+              <th scope="col">{{ "table.header.year"|trans }}</th>
+              <th scope="col">{{ "table.header.listener"|trans }}</th>
+              <th scope="col">{{ "table.header.amount"|trans }}</th>
               <th scope="col"></th>
             </tr>
             </thead>
@@ -185,46 +185,6 @@
                 <td>
                   {{ item.amount | amount_short_format }}
                 </td>
-                {#<td>
-                  {{ item.code }}
-                </td>#}
-                {#<th scope="row">
-                  <div class="media align-items-center">
-                    <a href="#" class="avatar rounded-circle mr-3">
-                      <img alt="Image" src="{{ asset('assets/adminbundle/img/brand/favicon.png') }}">
-                    </a>
-                    <div class="media-body" style="width: 150px; word-wrap: normal; height: 50px">
-                      #}{#<a href="{{ path('radio_relax_admin_artists_show', {'id': artist.id}) }}"><span class="mb-0 text-sm">{{ artist.name }}</span></a>#}{#
-                      <span class="mb-0 text-sm">{{ user.nickname }}</span>
-                    </div>
-                  </div>
-                </th>#}
-                {#<td>
-                  {% if user.dateAdd %}
-                    {{ user.dateAdd | date("Y-m-d") }}
-                  {% else %}
-                    -
-                  {% endif %}
-                </td>
-                #}{# <td>
-                       <span class="badge badge-dot mr-4">
-                         <i class="bg-warning"></i> en attente
-                       </span>
-                 </td>#}{#
-                <td>
-                  <a href="mailto:{{ user.username }}" target="_top" title="Mail">{{ user.username }}</a>
-                </td>
-                <td class="text-right">
-                  <div class="dropdown">
-                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-ellipsis-v"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                      <a class="dropdown-item" href="{{ path('admin_users_make_artist', {'id': user.id}) }}" title="Valider la demande et rendre Artiste"><i class="fa fa-check"></i> Rendre artiste</a>
-                      <a class="dropdown-item" href="{{ path('admin_users_remove_request_artist', {'id': user.id}) }}" title="Annuler la demande"><i class="fa fa-times"></i> Annuler la demande</a>
-                    </div>
-                  </div>
-                </td>#}
               </tr>
             {% endfor %}
             </tbody>

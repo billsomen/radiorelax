@@ -1,8 +1,27 @@
-edu:
-  title: Tutoriels
-  tools:
-    title: Outils
-    phrase: Tous les outils
-  material:
-    title: Médiathèque
-    phrase: Toutes les vidéos que j'ai sur ma chaîne
+xs_user:
+  login:
+    welcome: Bienvenue
+    title: Connectez-vous pour accéder à votre compte
+    action: Se connecter
+    hint: Se connecter maintenant
+    flashbag:
+      bad_credentials: Adresse email ou mot de passe invalides
+  signin:
+    hint: S'incrire maintenant
+    welcome: Bienvenue
+    title: Créer un nouveau compte
+    action: S'inscrire
+    flashbag:
+      mail:
+        complete: Inscription terminée
+#  user:
+#    username: Adresse Email
+#    password: Mot de passe
+#    nickname: Nom d'utilisateur
+#    email: Adresse email
+#      password: Mot de passe
+#      link: Link
+#      is:
+#        already_exist: Un utilisateur possède déjà cette adresse Email
+#      _message:
+#        signin: Salut <b>%nickname%</b>, Bienvenue chez %app_name%. Vos paramètres de connexion sont les suivants

@@ -19,7 +19,7 @@
               <div class="card-profile-stats d-flex justify-content-center mt-md-5">
                 <div>
                   <span class="heading">{{ user.profiles.listener.albums | length }}</span>
-                  <span class="description">Albums</span>
+                  <span class="description">{{ 'admin.album.title'|trans }}</span>
                 </div>
               </div>
             </div>
@@ -29,10 +29,10 @@
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                 <tr>
-                  <th scope="col">Nom</th>
-                  <th scope="col" title="Date de sortie">Année</th>
-                  <th scope="col">Qté Sons</th>
-                  <th scope="col">Download</th>
+                  <th scope="col">{{ 'table.header.name'|trans }}</th>
+                  <th scope="col">{{ 'table.header.date_add'|trans }}</th>
+                  <th scope="col">{{ 'table.header.songs'|trans }}</th>
+                  <th scope="col">{{ 'table.header.download'|trans }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -57,7 +57,7 @@
                     <td>
                       <button type="button" style="width: auto;" class="btn-icon-clipboard" data-clipboard-text="bold-down" title="" data-original-title="Download Album">
                         <i class="ni ni-bold-down"></i>
-                        <span>Download</span>
+                        <span>{{ 'table.header.download'|trans }}</span>
                       </button>
                     </td>
                   </tr>

@@ -79,7 +79,7 @@
           {% if is_granted('ROLE_ADMIN') %}
             <li class="nav-item">
               <a class="nav-link" href="{{ path('admin_dashboard') }}">
-                <i class="ni ni-tv-2 text-blue"></i> Tableau de bord
+                <i class="ni ni-tv-2 text-blue"></i> {{ 'admin.dashboard.title'|trans }}
               </a>
             </li>
             <li class="nav-item">
@@ -96,7 +96,7 @@
           {% if is_granted('ROLE_ARTIST') %}
             <li class="nav-item">
               <a class="nav-link" href="{{ path('admin_artists_dashboard', {'id':app.user.id}) }}">
-                <i class="ni ni-tv-2 text-blue"></i> Tableau de bord
+                <i class="ni ni-tv-2 text-blue"></i> {{ 'admin.dashboard.title'|trans }}
               </a>
             </li>
             <li class="nav-item">

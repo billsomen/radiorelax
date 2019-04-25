@@ -24,8 +24,6 @@
         </div>
         <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
           <div class="d-flex justify-content-between">
-            {#<a href="#" class="btn btn-sm btn-info mr-4">Connect</a>#}
-            {#<a href="#" class="btn btn-sm btn-default float-right">Message</a>#}
           </div>
         </div>
         <div class="card-body pt-0 pt-md-2">
@@ -34,22 +32,14 @@
               <div class="card-profile-stats d-flex justify-content-center mt-md-0">
                 <div>
                   <span class="heading">{{ user.profiles.artist.albums | length }}</span>
-                  <span class="description">Albums</span>
+                  <span class="description">{{ 'admin.album.title'|trans }}</span>
                 </div>
-                {# <div>
-                   <span class="heading">X</span>
-                   <span class="description">Musiques</span>
-                 </div>
-                 <div>
-                   <span class="heading">X</span>
-                   <span class="description">Minutes</span>
-                 </div>#}
               </div>
             </div>
           </div>
           <div class="text-center">
             <h3>
-              {{ user.nickname }}{#<span class="font-weight-light"></span>#}
+              {{ user.nickname }}
             </h3>
             <div class="h5 font-weight-300">
               <i class="ni location_pin mr-2"></i>
@@ -59,10 +49,10 @@
           </div>
           <div style="display: flex">
             <div style="margin: auto; width: 50%">
-              <h3 class="mb-0">Mes Albums</h3>
+              <h3 class="mb-0">{{ 'admin.album.title'|trans }}</h3>
             </div>
             <div style="margin: auto; width: 50%;" class="text-right">
-              <a href="{{ path('admin_albums_new', {"id_artist":user.id}) }}" class="btn btn-sm btn-primary">Ajouter</a>
+              <a href="{{ path('admin_albums_new', {"id_artist":user.id}) }}" class="btn btn-sm btn-primary">{{ 'label.add'|trans }}</a>
             </div>
           </div>
           <div class="row mt-2">
@@ -70,9 +60,9 @@
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                 <tr>
-                  <th scope="col">Nom</th>
-                  <th scope="col" title="Date de sortie">Date</th>
-                  <th scope="col">Sons</th>
+                  <th scope="col">{{ 'table.header.name'|trans }}</th>
+                  <th scope="col">{{ 'table.header.date_add'|trans }}</th>
+                  <th scope="col">{{ 'table.header.songs'|trans }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -83,12 +73,12 @@
                         <img alt="Image placeholder" src="{{ asset('assets/adminbundle/img/theme/team-4-800x800.jpg') }}">
                       </a>
                       <div class="media-body">
-                        <a href="#"><span class="mb-0 text-sm">#Musiques sans albums</span></a>
+                        <a href="#"><span class="mb-0 text-sm">#{{ 'label.no_albums_musics'|trans }}</span></a>
                       </div>
                     </div>
                   </th>
-                  <td>dernier ajouté</td>
-                  <td>4</td>
+                  <td>-</td>
+                  <td>-</td>
                 </tr>
                 {% for album in user.profiles.artist.albums %}
                   <tr>
@@ -108,19 +98,6 @@
                     <td>
                       {{ album.musics | length }}
                     </td>
-                    {#<td class="text-right">
-                      <div class="dropdown">
-                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="fas fa-ellipsis-v"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                          <a class="dropdown-item" href="#">Editer</a>
-                          <a class="dropdown-item" href="#">Supprimer</a>
-                          <a class="dropdown-item" href="#">Ajouter Album</a>
-                          <a class="dropdown-item" href="#">Réinitialiser le Compte</a>
-                        </div>
-                      </div>
-                    </td>#}
                   </tr>
                 {% endfor %}
                 </tbody>
@@ -135,7 +112,7 @@
         <div class="card-header bg-white border-0">
           <div class="row align-items-center">
             <div class="col-8">
-              <h3 class="mb-0">Compte Artiste</h3>
+              <h3 class="mb-0">{{ 'label.artist_account'|trans }}</h3>
             </div>
             <div class="col-4 text-right">
               <button form="artist_form" type="submit" class="btn btn-sm btn-primary">{{ 'button.save'|trans }}</button>
@@ -145,21 +122,20 @@
         <div class="card-body">
           <form method="post" action="{{ path('admin_artists_show', {'id': user.id}) }}" name="artist_form" id="artist_form" enctype="multipart/form-data">
             {{ form_row(form._token) }}
-            <h6 class="heading-small text-muted mb-4">Information Utilisateur</h6>
+            <h6 class="heading-small text-muted mb-4">{{ 'form.informations'|trans }}</h6>
             <div class="pl-lg-4">
               <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-username">Nom d'artiste</label>
+                    <label class="form-control-label" for="input-username">{{ 'table.header.name'|trans }}</label>
                     {{ form_widget(form.name) }}
-                    {#<input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" value="lucky.jesse">#}
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-genre">Genre</label>
+                    <label class="form-control-label" for="input-genre">{{ 'form.gender'|trans }}</label>
                     {% set current_genre = user.profiles.artist.genre %}
                     <select name="genre" id="input-genre" class="form-control form-control-alternative">
                       {% if current_genre %}
@@ -179,34 +155,20 @@
               <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-email">Addresse Email</label>
+                    <label class="form-control-label" for="input-email">{{ 'form.email_address'|trans }}</label>
                     {{ form_widget(form.email) }}
                   </div>
                 </div>
               </div>
-              {#<div class="row">
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-first-name">First name</label>
-                    <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="First name" value="Lucky">
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-last-name">Last name</label>
-                    <input type="text" id="input-last-name" class="form-control form-control-alternative" placeholder="Last name" value="Jesse">
-                  </div>
-                </div>
-              </div>#}
               <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
                     <label class="form-control-label" for="input-first-name">
-                      Photo de profil
+                      {{ 'form.picture'|trans }}
                       {% if user.profiles.artist.profilePic %}
-                        (Modifier)
+                        ({{ 'label.add'|trans }})
                       {% else %}
-                        (Ajouter)
+                        (({{ 'label.edit'|trans }}))
                       {% endif %}
                     </label>
                     <input type="file" id="input-first-name" name="profile" class="form-control form-control-alternative">
@@ -216,40 +178,31 @@
             </div>
             <hr class="my-4" />
             <!-- Address -->
-            <h6 class="heading-small text-muted mb-4">Information de Contact</h6>
+            <h6 class="heading-small text-muted mb-4">{{ 'form.informations'|trans }}</h6>
             <div class="pl-lg-4">
               <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-city">Ville</label>
-                    {#{{ form_widget(form.gmaps.lnLocality) }}#}
+                    <label class="form-control-label" for="input-city">{{ 'form.town'|trans }}</label>
                     {{ form_widget(form.gmaps.town) }}
-                    {#<input type="text" id="input-city" class="form-control form-control-alternative" placeholder="City" value="New York">#}
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-country">Pays</label>
-                    {#{{ form_widget(form.gmaps.lnCountry) }}#}
+                    <label class="form-control-label" for="input-country">{{ 'form.gender'|trans }}</label>
                     {{ form_widget(form.gmaps.country) }}
                   </div>
                 </div>
-                {#<div class="col-lg-4">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-country">Postal code</label>
-                    <input type="number" id="input-postal-code" class="form-control form-control-alternative" placeholder="Postal code">
-                  </div>
-                </div>#}
               </div>
             </div>
             <hr class="my-4" />
             <!-- Description -->
-            <h6 class="heading-small text-muted mb-4">A propos de moi</h6>
+            <h6 class="heading-small text-muted mb-4">{{ 'form.about_me'|trans }}</h6>
             <div class="pl-lg-4">
               <div class="form-group">
-                <label>A propos de moi</label>
+                <label>{{ 'form.about_me'|trans }}</label>
                 {{ form_widget(form.description) }}
               </div>
             </div>
