@@ -48,10 +48,31 @@
               <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-email">Addresse Email</label>
+                    <label class="form-control-label" for="input-email">{{ "form.email_address"|trans }}</label>
                     {{ form_widget(form.username) }}
                   </div>
                 </div>
+              </div>
+              <div class="row">
+                <h4>Langue</h4>
+              </div>
+              <div class="row">
+                {% for data in  form.locale.language %}
+                  <div class="col-md-6">
+                    <div class="custom-control custom-control-alternative custom-radio">
+                      {{ form_widget(data, {
+                        "attr":{
+                          "class": "custom-control-input"
+                        }
+                      }) }}
+                      <label class="custom-control-label" for="{{ data.vars.id }}">
+                        <div class="text-muted">
+                          <img src="{{ asset('assets/images/'~data.vars.value~'.png') }}" width="20" title="{{ data.vars.label|trans }}"/> {{ data.vars.label|trans }}
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                {% endfor %}
               </div>
             </div>
           </form>

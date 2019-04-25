@@ -442,7 +442,9 @@ class AdminController extends Controller
         }
         $this->addFlash('notice', 'Modifications enregistrées !');
       }
-      return $this->redirectToRoute('admin_profile');
+      return $this->redirectToRoute('admin_profile', array(
+        "_locale" => $user->getLocale()->getLanguage()
+      ));
     }
     return $this->render('@Main/Admin/Artist/my_profile.html.twig', array(
       'user' => $user,

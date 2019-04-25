@@ -50,6 +50,9 @@ class UserType extends AbstractType
           'placeholder' => "xs_user.user.username"
         )
       ))
+      ->add('locale', LocaleType::class, array(
+        'required' => true
+      ))
     ;
   }
   

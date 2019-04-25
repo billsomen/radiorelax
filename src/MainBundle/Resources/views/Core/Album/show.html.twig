@@ -50,14 +50,14 @@
                 Acheter
               </a>#}
               {% if app.user.profiles.listener.hasFavoriteAlbumId(album.id) %}
-                <a href="{{ path('admin_profile_favorites_remove_album', {'id': album.id}) }}" class="ms_btn" title="Retirer des favoris">
+                <a href="{{ path('admin_profile_favorites_remove_album', {'id': album.id}) }}" class="ms_btn" title="{{ 'menu.admin.favorites'|trans }}">
                   <span class="fa fa-heart"></span>
-                  Favorites
+                  {{ 'menu.admin.favorites'|trans }}
                 </a>
               {% else %}
-                <a href="{{ path('admin_profile_favorites_add_album', {'id': album.id}) }}" class="ms_btn ms_btn_white" title="Ajouter aux favoris">
+                <a href="{{ path('admin_profile_favorites_add_album', {'id': album.id}) }}" class="ms_btn ms_btn_white" title="{{ 'menu.admin.favorites'|trans }}">
                   <span class="fa fa-heart-o"></span>
-                  Favorites
+                  {{ 'menu.admin.favorites'|trans }}
                 </a>
               {% endif %}
             {% else %}

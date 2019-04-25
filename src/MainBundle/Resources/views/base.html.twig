@@ -68,29 +68,29 @@
         {% endfor %}
         <div class="ms_top_right">
           <div class="ms_top_lang">
-{#            <a href="{{ path('core_artists_homepage', {'_locale': 'en'}) }}"><img src="{{ asset('assets/images/uk.png') }}" width="30" title="{{ "locale.language.en.title"|trans }}"/></a>#}
-{#            <a href="{{ path('core_artists_homepage') }}"><img src="{{ asset('assets/images/fr.png') }}" width="30" title="{{ "locale.language.fr.title"|trans }}"/></a>#}
             {% if app.user %}
               <a href="{{ path('xs_market_place_cart') }}" title="Mon Panier">
                 <i class="fa fa-shopping-cart"></i>
                 Panier
               </a>
-{#              <div style="width: 1px; height: 25px; border-right: 1px solid black"></div>#}
+              {#              <div style="width: 1px; height: 25px; border-right: 1px solid black"></div>#}
               <a href="{{ path('admin_profile') }}">
                 <img src="{{ asset('assets/adminbundle/img/brand/favicon.png') }}" width="30" title="Mon Profil"/>
                 {{ app.user.nickname }}
               </a>
             {% else %}
-              <a href="{{ path('login', {'_locale': 'fr'}) }}" title="Se connecter">
+              <a href="{{ path('core_artists_homepage', {'_locale': 'en'}) }}"><img src="{{ asset('assets/images/uk.png') }}" width="30" title="{{ "locale.language.en.title"|trans }}"/></a>
+              <a href="{{ path('core_artists_homepage', {'_locale': 'fr'}) }}"><img src="{{ asset('assets/images/fr.png') }}" width="30" title="{{ "locale.language.fr.title"|trans }}"/></a>
+              <a href="{{ path('login') }}" title="{{ 'xs_user.login.hint'|trans }}">
                 <span class="fa fa-sign-in"></span>
-                Se connecter
+                {{ 'xs_user.login.hint'|trans }}
               </a>
             {% endif %}
           </div>
-          <div class="ms_top_btn">
-{#            <a href="javascript:;" class="ms_btn reg_btn" data-toggle="modal" data-target="#myModal"><span>{{ 'button.im_listener_short'|trans }}</span></a>#}
-            {#<a href="javascript:;" class="ms_btn login_btn" data-toggle="modal" data-target="#myModal1"><span>{{ 'button.im_artist_short'|trans }}</span></a>#}
-          </div>
+          {# <div class="ms_top_btn">
+             <a href="javascript:;" class="ms_btn reg_btn" data-toggle="modal" data-target="#myModal"><span>{{ 'button.im_listener_short'|trans }}</span></a>
+             <a href="javascript:;" class="ms_btn login_btn" data-toggle="modal" data-target="#myModal1"><span>{{ 'button.im_artist_short'|trans }}</span></a>
+           </div>#}
         </div>
       </div>
       

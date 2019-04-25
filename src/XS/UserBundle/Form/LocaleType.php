@@ -3,6 +3,7 @@
 namespace XS\UserBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -13,10 +14,16 @@ class LocaleType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
-      ->add('language', HiddenType::class,  array(
-        'required' => false
+      ->add('language', ChoiceType::class, array(
+        'choices'   => array(
+          'locale.language.fr.title' => "fr",
+          'locale.language.en.title' => "en",
+        ),
+        'required' => true,
+        'multiple'  => false,
+        'expanded'  => true,
       ))
-      ->add('timeZoneId', HiddenType::class,  array(
+      /*->add('timeZoneId', HiddenType::class,  array(
         'required' => false
       ))
       ->add('timeZoneName', HiddenType::class,  array(
@@ -30,7 +37,7 @@ class LocaleType extends AbstractType
       ))
       ->add('currency', HiddenType::class,  array(
         'required' => false
-      ))
+      ))*/
     ;
   }
   
