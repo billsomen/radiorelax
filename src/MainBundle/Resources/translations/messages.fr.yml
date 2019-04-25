@@ -10,6 +10,7 @@ button:
   save: Enregistrer
   become_artist: Devenir artiste
   add_to_cart: Ajouter au panier
+  delete: Supprimer
 
 
 profile:
@@ -102,6 +103,8 @@ label:
   copyright: Tous droits réservés
   no_albums_musics: Misoqies sans albums
   artist_account: Compte artiste
+  signin_prefix: En vous inscrivant, vous approuvez notre
+  service_contract: contrat de services
 
 form:
   full_name: Nom complet

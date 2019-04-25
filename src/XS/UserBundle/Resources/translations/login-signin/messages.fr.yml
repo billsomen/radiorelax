@@ -14,14 +14,14 @@ xs_user:
     flashbag:
       mail:
         complete: Inscription terminée
-#  user:
-#    username: Adresse Email
-#    password: Mot de passe
-#    nickname: Nom d'utilisateur
-#    email: Adresse email
-#      password: Mot de passe
-#      link: Link
-#      is:
-#        already_exist: Un utilisateur possède déjà cette adresse Email
-#      _message:
-#        signin: Salut <b>%nickname%</b>, Bienvenue chez %app_name%. Vos paramètres de connexion sont les suivants
+  user:
+    username: Adresse Email
+    password: Mot de passe
+    nickname: Nom d'utilisateur
+    email: Adresse email
+    godfather_namespace: Code du Parrain
+    link: Link
+    is:
+      already_exist: Un utilisateur possède déjà cette adresse Email
+    _message:
+      signin: Salut <b>%nickname%</b>, Bienvenue chez %app_name%. Vos paramètres de connexion sont les suivants

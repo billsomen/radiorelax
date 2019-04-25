@@ -19,6 +19,7 @@ xs_user:
     username: Email address
     email: Email address
     password: Password
+    godfather_namespace: Godfather code
     link: Link
     is:
       already_exist: A user with the same credantials already exists.

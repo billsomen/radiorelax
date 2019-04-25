@@ -31,4 +31,9 @@
       {{ form_widget(form.godfatherNamespace) }}
     </div>
   </div>
+  <div class="form-group">
+    <div style="font-size: small">
+      {{ "label.signin_prefix"|trans }} <a href="{{ asset('files/contract-'~_locale~'.pdf') }}">{{ "label.service_contract"|trans }}</a>.
+    </div>
+  </div>
 {% endblock %}

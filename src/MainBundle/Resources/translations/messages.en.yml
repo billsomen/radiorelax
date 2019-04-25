@@ -37,6 +37,7 @@ button:
   save: Save
   send_message: Send message
   book_now: Book Now
+  delete: Delete
 
 admin:
   my_account: Account
@@ -113,6 +114,8 @@ label:
   artist_account: Artist account
   edit: Edit
   add: Add
+  signin_prefix: By signing in you approve to concede to our
+  service_contract: contract of services
 
 form:
   full_name: Full Name

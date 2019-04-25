@@ -591,6 +591,7 @@ class SecurityController extends Controller{
     return $this->render('@XSUser/Security/signin.html.twig', array(
       'form' => $form->createView(),
       'page' => 'signin',
+      '_locale' => $_locale,
       'error' => $error
     ));
   }
