@@ -79,7 +79,7 @@
           {% if is_granted('ROLE_ADMIN') %}
             <li class="nav-item">
               <a class="nav-link" href="{{ path('admin_dashboard') }}">
-                <i class="ni ni-tv-2 text-blue"></i> Tableau de bord
+                <i class="ni ni-tv-2 text-blue"></i> {{ 'admin.dashboard.title'|trans }}
               </a>
             </li>
             <li class="nav-item">
@@ -95,6 +95,11 @@
           {% endif %}
           {% if is_granted('ROLE_ARTIST') %}
             <li class="nav-item">
+              <a class="nav-link" href="{{ path('admin_artists_dashboard', {'id':app.user.id}) }}">
+                <i class="ni ni-tv-2 text-blue"></i> {{ 'admin.dashboard.title'|trans }}
+              </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="{{ path('admin_artists_show', {'id': app.user.id}) }}">
                 <i class="ni ni-sound-wave text-blue"></i> {{ 'menu.admin.artist_space'|trans }}
               </a>
@@ -109,6 +114,11 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ path('admin_profile_favorites') }}">
               <i class="ni ni-favourite-28 text-red"></i> {{ 'menu.admin.favorites'|trans }}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('admin_profile_mlm_network') }}">
+              <i class="ni ni-atom text-black-50"></i> {{ 'menu.admin.mlm_network'|trans }}
             </a>
           </li>
         </ul>
@@ -195,18 +205,18 @@
         {% block footer %}
           <footer class="footer">
             <div class="row align-items-center justify-content-xl-between">
-              <div class="col-xl-6">
+              <div class="col-xl-12">
                 <div class="copyright text-center text-xl-left text-muted">
                   &copy; 2018 Design by <a href="{{ path('main_homepage', {'_locale': 'fr'}) }}" class="font-weight-bold ml-1" target="_blank">{{ app_name }}</a>
                 </div>
               </div>
-              <div class="col-xl-6">
+              {#<div class="col-xl-6">
                 <ul class="nav nav-footer justify-content-center justify-content-xl-end">
                   <li class="nav-item">
                     <a href="#" class="nav-link" target="_blank">{{ app_name }}</a>
                   </li>
                 </ul>
-              </div>
+              </div>#}
             </div>
           </footer>
         {% endblock %}

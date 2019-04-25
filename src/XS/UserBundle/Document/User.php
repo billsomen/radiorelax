@@ -8,6 +8,7 @@
 
 namespace XS\UserBundle\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use MainBundle\Document\Node;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Bundle\MongoDBBundle\Validator\Constraints\Unique as MongoDBUnique;
@@ -48,6 +49,10 @@ class User implements AdvancedUserInterface
   
   /** @MongoDB\Field(type="string") */
   protected $first_name;
+
+  /** @MongoDB\Field(type="string") */
+//  nom d'utilisateur du parain
+  protected $godfather_namespace;
 
   /** @MongoDB\Field(type="date") */
   protected $date_connection; //Date de connexion...? Permet de definir le statut de l'utilisateur
@@ -137,6 +142,10 @@ class User implements AdvancedUserInterface
 //  Date de demande d'accès au profil artiste
   protected $date_artist_request;
 
+  /** @MongoDB\ReferenceOne(targetDocument="MainBundle\Document\Node") */
+//  Mon noeud MLM
+  protected $node;
+
   /**
    * User constructor.
    */
@@ -144,6 +153,7 @@ class User implements AdvancedUserInterface
   {
 //        On remplit les champs par defaut...
     $this->confirmed = true;
+//    $this->node = new Node(0);
     $this->roles = array();
 //        On ajoute le genre
     $this->gender = 'Male';
@@ -721,5 +731,70 @@ class User implements AdvancedUserInterface
   public function removeRequestArtistAccess(){
 //    demande d'accès au profil artist
     $this->artist_request = false;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getArtistRequest()
+  {
+    return $this->artist_request;
+  }
+
+  /**
+   * @param mixed $artist_request
+   */
+  public function setArtistRequest($artist_request): void
+  {
+    $this->artist_request = $artist_request;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getDateArtistRequest()
+  {
+    return $this->date_artist_request;
+  }
+
+  /**
+   * @param mixed $date_artist_request
+   */
+  public function setDateArtistRequest($date_artist_request): void
+  {
+    $this->date_artist_request = $date_artist_request;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getNode()
+  {
+    return $this->node;
+  }
+
+  /**
+   * @param Node $node
+   */
+  public function setNode(Node $node): void
+  {
+    $this->node = $node;
+    $node->setUser($this);
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getGodfatherNamespace()
+  {
+    return $this->godfather_namespace;
+  }
+
+  /**
+   * @param mixed $godfather_namespace
+   */
+  public function setGodfatherNamespace($godfather_namespace): void
+  {
+    $this->godfather_namespace = $godfather_namespace;
   }
 }

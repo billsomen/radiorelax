@@ -15,6 +15,7 @@ class CartController extends Controller
 {
   public function indexAction()
   {
+    return $this->redirectToRoute("xs_afrobank_paypal_homepage");
     $cart = $this->getUser()->getCart();
     return $this->render('@XSMarketPlace/Cart/index.html.twig', array(
       'cart' => $cart

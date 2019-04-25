@@ -5,355 +5,58 @@ app:
   about:
     title: A propos
     phrase: Salut, voici un aperçu de qui je suis
-    profile:
-      intro: Je suis un ingénieur en informatique, indépendant avec des compétences élevées en gestion
-      desc_1: "Je suis bilingue et j'apprends vite, j'ai de l'expérience en développement backend (Symfony, SQL, Heroku,…) et Gestion de projet. Je suis très professionnel et je m'améliore tous les jours. J'ai été retenu à Défi Montréal : L’incubateur de Montréal (CRIM) pour mettre en œuvre mon projet personnel Edutools et pour construire le Vortex (un ERP) pour les entrepreneurs."
-      desc_2: "" #Later :)
-      age:
-        title: Âge
-      residence:
-        title: Domicile
-      address:
-        title: Adresse
-        content: Canada
-        line1: NGONGANG SOMEN BILL DIEGO
-        line2: 213-355 Rue de la Montagne
-        line3: Montréal QC H3C 0L7
-        line4: CANADA
-        model_from: https://www.canadapost.ca/tools/pg/manual/PGaddress-e.asp?ecid=murl10006450#1416996
-      email_service:
-        title: E-mail de Service
-        content: service@billsomen.com # etsmtl & billsomen
-      email_perso:
-        title: E-mail Personelle
-        content: bill-diego.ngongang-somen.1@etsmtl.net # etsmtl & billsomen
-      phone:
-        title: Phone
-        content: +1 (438) 832 4484
-      freelance:
-        title: Freelance
-        content: Disponible | 24/7
-      consulting:
-        title: Consulting
-        content: Disponible Lun - Ven | 08:30 - 13:30
-    services:
-      title: Services
-      web:
-        title: Web
-        content: ""
-      ecommerce:
-        title: Commerce électronique
-        content: ""
-      cofounding:
-        title:
-        content: ""
-      consulting:
-        title: Consultation
-        content: ""
-      investment:
-        title: Investissement
-        content: ""
-      marketing:
-        title: Marketing
-        content: ""
-      copywriter:
-        title: Rédacteur publicitaire
-        content: ""
-      analysis:
-        title: Analyse & stratégie
-        content: ""
-    clients:
-      title: Clients
-      array:
-        client1:
-          title: Défi MTL
-    testimonials:  #en faire au moins 3 + ref.
-      title: Témoignages
-      array:
-        1:
-          title: 4
-          content: Bill is very professional. He's smart and makes great communications. For sure, I'll hit him for future consultations.
-          author:
-            name: Bill Gates
-            job: Microsoft
-    fun_facts:
-      title: Fun Facts
-      happy_clients:
-        title: Clients heureux
-        content: 20
-      working_hours:
-        title: Heures travaillées
-        content: 24 980
-      awards_won:
-        title: Médailles gagnées
-        content: 5
-      coffee_consumed:
-        title: Cafés consommés
-        content: 1 986
-      country_visited:
-        title: Prix gagnés
-        content: 3
-      language_spoken:
-        title: Langues Parlées
-        content: 4
-      kilometers_traveled:
-        title: Kilomètres Parcourus
-        content: 32 588
-  resume:
-    title: Mon CV
-    phrase: 15 ans d'Experience
-    education:
-      title: Education
-      array:
-        1:
-          period: Septembre 2019
-          title: Maîtrise en ingénierie - IT
-          sub_title: Ecole de technologie supérieure - Montréal, CA
-          content: Gestion de projet informatique, gestion de service, sécurité Internet, ERP et intelligence d'affaires, qualité du code
-        2:
-          period: Février 2016
-          title: Maîtrise en ingénierie - MEC
-          sub_title: Ecole Nationale Supérieure Polytechnique - Yaoundé, CM
-          content: Supply chain, modélisation 3D, vibration, résilience, thermodynamique
-        3:
-          period: Juillet 2010
-          title: V DES
-          sub_title: COLLEGE DES LAUREATS – DOUALA, CM
-          content: ""
-        4:
-          period: Juin 2009
-          title: 2ème année
-          sub_title: Lycée Classique de Bafoussam - Bafoussam, CM
-          content: ""
-    experience:
-      title: Experience
-      array:
-        1:
-          period: Novembre 2018 - Maintenant
-          title: Co-Fondateur / Développeur principal
-          sub_title: 9308-5785 Quebec inc. - Maria, QC
-          content: "Mon objectif principal est de construire une station de radio en ligne pour «9308-5785 QUEBEC INC». En bref, les gens s'abonnent au site Web pour avoir accès au marché des médias musicaux et pour suivres les stations en direct. L'Animateur via son tableau de bord diffuse ce qui se passe en studio ou tout simplement en poussant de la musique en direct. - Le projet est encore en phase de conception et sera bientôt disponible en ligne."
-          ref: www.radiorelax.io
-        2:
-          period: Juillet 2018 - Maintenant
-          title: Développeur principal
-          sub_title: DEFI Montréal (CRIM) – Montréal, QC
-          content: "À «Défi-Montréal», je travaille sur une application de gestion de startups: les entrepreneurs peuvent créer leur profils, gérer leurs startups, embaucher des personnes et faire du marketing média; d'autre part, Defi Montréal »(l’incubateur) peut gérer ses activités, ses équipes, ses projets, ses événements et manager ses entrepreneurs."
-          ref: vortex.defimtl.com
-        3:
-          period: AOÛT 2018 – MAINTENANT
-          title: Co-Fondateur / Développeur Web
-          sub_title: GGEM TUTORING – Montréal, QC
-          content: "GGEM Tutoring est une plate-forme Web pour l'entreprise du même nom. Mon travail ici était de créer toute l'application Web et l'héberger dans le Nuage. Les gens utilisent GGEM Tutoring pour engager des tuteurs pour leurs enfants."
-          ref: www.ggem.academy
-        4:
-          period: MAY 2018 – MAINTENANT
-          title: Co-Fondateur / Développeur Web
-          sub_title: MBOADJOSS.COM – Yaoundé, CM
-          content: "Mboadjoss est un réseau social pour les étrangers du Cameroun. Il est construit avec WebRTC, MongoDB, Symfony et hôte sur Heroku. Nous travaillons sur l'application mobile en ce moment!"
-          ref: www.mboadjoss.com
-        5:
-          period: FÉVRIER 2018 – MAINTENANT
-          title: Co-Fondateur / Développeur Web
-          sub_title: KAMIX.IO – PARIS, FR
-          content: "Nous sommes en mission pour développer un service de remise qui optimise le flux annuel de 65 milliards de dollar envoyés par la diaspora africaine à près de 120 millions de membres de la famille. J'ai construit la plate-forme Web de Kamix en utilisant Symfony et MongDB."
-          ref: www.kamix.io
-        6:
-          period: DECEMBRE 2017 – MAINTENANT
-          title: Co-Fondateur / Développeur Web
-          sub_title: EDUTOOL.CA – Yaoundé, CM
-          content: "Edutools est l'outil pour l'éducation. Je l'ai conçu et construit avec Symfony3 et MongoDB. C’est un réseau social pour l’éducation. Nous avons des outils comme: marché digital, tutorat, gestion d’école, Messagerie. "
-          ref: www.edutool.ca
-        7:
-          period: Novembre 2017 – MAINTENANT
-          title: Co-Fondateur – Manageur Régional
-          sub_title: AFRORELIC.COM – PARIS, FR
-          content: "Chez AfroRelic, nous produisons du contenu numérique pour / sur l’Afrique avec des drones!"
-          ref: www.afrorelic.com
-        8:
-          period: JUIN 2017 – Novembre 2018
-          title: Fondateur - Gérant / Développeur Web
-          sub_title: INNOVAFACTROY.XYZ – Yaoundé, CM
-          content: "J'ai construit le site principal de mon entreprise (Cameroun) pour présenter nos services et nos produits. Chez innovaFactory, nous aidons les gens à se connecter aux réseaux de fibres optiques."
-          ref: www.innovafactory.xyz
-        9:
-          period: FÉVRIER 2017 – MAINTENANT
-          title: Développeur Web
-          sub_title: GEN3.XYZ – PARIS, FR
-          content: "Construit pour un client en France. C’est une application Web d’arbre généalogique. Les gens peuvent créer leur arbre généalogique en ligne, le partager et le connecter à d’autres."
-          ref: www.gen3.xyz
-        10:
-          period: JUN 2016 – MARS 2017
-          title: Ingénieur de Conception
-          sub_title: HUAWEI TECHNOLOGIES – Yaoundé, CM
-          content: "J'ai travaillé sur la maintenance du réseau par fibre optique à Yaoundé, j'ai dirigé une équipe de 15 personnes et corrigé  125 km de réseau de fibres optiques (45 km à Yaoundé et 80 km à Douala). J'ai également réalisé des enquêtes sur site et rédigé des rapports techniques."
-          ref: 0
-        11:
-          period: FÉVRIER 2015 – JUIN 2015
-          title: INGÉNIEUR LOGICIEL - Stagiaire
-          sub_title: COMETAL – DOUALA, CM
-          content: "J'ai conçu un logiciel de suivi avec des modules pour la surveillance des stocks, la gestion de la relation client, l'administration du personnel et la génération de rapports. J’ai également collaboré avec les employés de la société pour créer des applications répondant aux exigences du client."
-          ref: 0
-        12:
-          period: JUL 2014 – Aôut 2014
-          title: Ingénieur Projet - Stagiaire
-          sub_title: COMETAL – DOUALA, CM
-          content: "J'ai co-dirigé l'installation d'une industrie alimentaire à Bekoko (Douala) pour le Groupe OLAM. Mes tâches principales: Discuter avec le client de ses besoins, Planifier l’exploitation des ressources du projet et développer des processus internes et des plans pour le suivi du projet."
-          ref: 0
-        13:
-          period: FÉVRIER 2008 – MAINTENANT
-          title: Développeur Backend / TUTEUR
-          sub_title: Autres Projets, A travers le Monde
-          content: "J'ai travaillé en tant que Freelance, j'ai créé une application e-commerce, une application d'impression dans le nuage, un logiciel de gestion de contenu et une application de gestion de ferme. Je donne généralement des sessions de tutorat en développement Web, mathématiques et physique"
-          ref: 0
-    skills:
-      title:
-      array:
-        #        ratio are refined in custom file. 1=20, 2=40, 3=60, 4=70, 5=80, 6=85, 7=90, 8=95
-        it:
-          title: Compétences informatiques
-          array:
-            1:
-              title: TOGAF
-              ratio: 4
-            2:
-              title: ITIL Foundation v3
-              ratio: 8
-            3:
-              title: Salesforce & DevOps
-              ratio: 8
-            4:
-              title: Agile & Intelligence d'Affaires
-              ratio: 8
-            5:
-              title: Big Datas & Forage de données
-              ratio: 8
-            6:
-              title: Sécurité d'Internet
-              ratio: 8
-        management:
-          title: Compétences de gestion
-          array:
-            1:
-              title: PMBOOK v6
-              ratio: 8
-            2:
-              title: Gestion de la clientèle
-              ratio: 8
-            3:
-              title: Gestion de projet
-              ratio: 8
-            4:
-              title: Développement rapide d'applications
-              ratio: 8
-            5:
-              title: Gestion des services informatiques
-              ratio: 8
-        design:
-          title: Compétences de conception
-          array:
-            1:
-              title: Esquisse
-              ratio: 4
-            2:
-              title: UX & UI
-              ratio: 4
-        coding:
-          title: Compétences de programmation
-          array:
-            1:
-              title: HTML 5 & JSON
-              ratio: 8
-            2:
-              title: CSS 3 & BOOTSTRAP
-              ratio: 7
-            3:
-              title: SYMFONY & PHP
-              ratio: 7
-            4:
-              title: Bludfire & Code Quality
-              ratio: 7
-            5:
-              title: NodeJS & MeteoJS
-              ratio: 5
-            6:
-              title: ReactJS & AngularJS
-              ratio: 5
-            7:
-              title: GraphQL & Apollo
-              ratio: 5
-            8:
-              title: MongoDB & SQL
-              ratio: 5
-        hobbies:
-          title: Divertissements
-          array:
-            1:
-              title: Voyage, aventures et musique
-              ratio: 8
-            2:
-              title: Nourriture, cinéma et café
-              ratio: 6
-            3:
-              title: Lecture, Modélisation 3D et Affaires
-              ratio: 7
-
-  portfolio:
-    #    TODO : For another day, or later
-    title: Portfolio
-    phrase: 45
-
-  contact:
-    #    How to reach me
-    title: Contact
-    phrase: Entrer en contact
-    desc: Mes contacts et localisation...
-    form_title: Formulaire de contact
-    calendy_title: Sélectionnez une entrevue de 30min ci-dessous
-    soon: Bientôt disponible :)
 
 button:
   save: Enregistrer
   become_artist: Devenir artiste
+  add_to_cart: Ajouter au panier
+  delete: Supprimer
 
-form:
-  full_name: Nom complet
-  email_address: Adresse électronique
-  message: Message pour moi
+
+profile:
+  user_profile: Profil Utilisateur
+  security: Sécurité
 
 locale:
   language:
+    title: Langue
     fr:
       title: Français
     en:
       title: English
+  localization:
+    country:
+      Canada: Canada
+
+title:
+  contact:
+    us: Nous contacter
+  call:
+    us: Téléphone
+  email:
+    us: Adresse Email
+  walk:
+    in: Adresse
+  follow:
+    us: Nous suivre
 
 menu:
   admin:
     playlist: Ma Playlist
     favorites: Mes Favoris
+    mlm_network: Mon réseau MLM
     profile: Mon Profil
     welcome: Bienvenue!
     logout: Déconnection
     go_visit: Retourner au site
     artist_space: Compte Artiste
-
-xs_user:
-  login:
-    welcome: Bienvenue
-    title: Connectez-vous pour accéder à votre compte
-    action: Se connecter
-    hint: Se connecter maintenant
-  signin:
-    hint: S'incrire maintenant
-    welcome: Bienvenue
-    title: Créer un nouveau compte
-    action: S'inscrire
-  user:
-    username: Adresse email
-    password: Mot de passe
-    nickname: Nom d'utilisateur
-
+  artists: Artistes
+  cart:
+    tite: Panier
+    phrase: Mon panier
+  profile:
+    title: Profil
+    phrase: Mon Profil
 
 mail:
   register:
@@ -375,6 +78,9 @@ admin:
   dashboard:
     title: Tableau de bord
     phrase: Espace de gestion intégré
+  users:
+    title: Utilisateurs
+    phrase: Gestion des utilisateurs
   listener:
     title: Auditeur
   artist:
@@ -389,3 +95,53 @@ admin:
     total: Total ajouts
   phrases:
     since_launch: depuis le lancement
+
+label:
+  in_cart: Dans le Panier
+  music:
+    of: Musiques de
+  copyright: Tous droits réservés
+  no_albums_musics: Misoqies sans albums
+  artist_account: Compte artiste
+  signin_prefix: En vous inscrivant, vous approuvez notre
+  service_contract: contrat de services
+
+form:
+  full_name: Nom complet
+  email_address: Adresse électronique
+  message: Message pour moi
+  password:
+    current: Mot de passe actuel
+    new: Nouveau mot de passe
+    confirm: Confirmer le mot de passe
+  company_logo: Company Logo
+  phone_number: Phone number
+  phone_number_one: "Téléphone  #1"
+  phone_number_two: "Téléphone  #2"
+  logo_or_picture: "Logo ou photo (url)"
+  address: "Addressz"
+  name: Nom
+  picture: Photo
+  gender: Genre
+  town: Ville
+  country: Pays
+  about_me: A propos de moi
+  description: Description
+  mucics: Musiques
+  new_music: Nouvelle musique
+  file: Fichier
+  informations: Informations
+
+table:
+  header:
+    name: Nom
+    year: Année
+    songs: Sons
+    transactions: Transactions
+    paypal_code: Code PayPal
+    date_add: Date
+    listener: Auditeur
+    amount: Montant
+    download: Télécharger
+    order: Order
+    title: Titre

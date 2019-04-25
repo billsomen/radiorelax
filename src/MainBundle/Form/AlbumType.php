@@ -19,14 +19,14 @@ class AlbumType extends AbstractType
         'required' => true,
         'attr' => array(
           'class' => "form-control form-control-alternative",
-          'placeholder' => "Nom d'utilisateur"
+          'placeholder' => ""
         )
       ))
       ->add('desc', TextareaType::class, array(
         'required' => false,
         'attr' => array(
           'class' => "form-control form-control-alternative",
-          'placeholder' => "Description de l'album"
+          'placeholder' => ""
         )
       ))
       ->add('dateRelease', DateType::class, array(

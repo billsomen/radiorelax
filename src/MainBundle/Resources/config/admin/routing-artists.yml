@@ -26,6 +26,11 @@ admin_artists_show:
   path:     /{id}
   defaults: { _controller: MainBundle:Artist:show }
 
+admin_artists_dashboard:
+  #  Un artiste : Tableau de bord
+  path:     /{id}/dashboard
+  defaults: { _controller: MainBundle:Artist:dashboard }
+
 admin_artists_remove:
   #  Un artiste : Delete
   path:     /{id}/delete

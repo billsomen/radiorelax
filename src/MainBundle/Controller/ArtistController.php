@@ -2,11 +2,13 @@
 
 namespace MainBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use MainBundle\Document\Artist;
 use MainBundle\Form\ArtistType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use XS\UserBundle\Document\User;
 
 class ArtistController extends Controller
@@ -105,6 +107,99 @@ class ArtistController extends Controller
     return $this->redirectToRoute('admin_artists_homepage');
   }
 
+  public function dashboardAction($id){
+    //Tableau de bord de l'artiste
+    $dm = $this->get('doctrine.odm.mongodb.document_manager');
+//    1. Stats
+    /*
+     * 1.1. Listeners
+     * 1.2. Albums
+     * 1.3. Musics
+     * 1.4. Artists
+     * 1.5. Transactions & Sales
+     */
+
+    $user = $dm->getRepository("XSUserBundle:User")->findOneBy(array(
+      "id" => $id
+    ));
+
+    $artist_profile = $user->getProfiles()->getArtist();
+
+    $transactions = new ArrayCollection();
+
+    $albums = $artist_profile->getAlbums();
+
+    $charts = array();
+    $labels = [];
+    foreach ($albums as $item){
+      /*if(isset($labels[date_format($music->getDateAdd(), "Y-M")])){
+        $labels[date_format($music->getDateAdd(), "Y-M")] = 0;
+      }*/
+      if(!empty($item->getAccount())){
+        foreach ($item->getAccount()->getTransactions() as $item_transaction){
+          $transactions->add($item_transaction);
+        }
+      }
+      $labels[date_format($item->getDateAdd(), "Y-m")][] = 1;
+//      $charts["musics"]["labels"][""] = 1;
+    }
+
+    foreach ($labels as $key => $label){
+//      $charts["albums"]["labels"][] = explode('-', $key)[2];
+      $charts["albums"]["labels"][] = $key;
+      //        TODO: remove something below : *1000
+      $charts["albums"]["data"][] = count($label)*1000;
+    }
+
+    $charts["albums"]["datasets"][0] = array(
+      "label" => "Ajouts",
+      "data" => $charts["albums"]["data"]
+    );
+
+    unset($charts["albums"]["data"]);
+
+//Gestion des ventes
+    $labels = array();
+    foreach ($transactions as $item){
+      $labels[date_format($item->getDateAdd(), "Y-m")][] = $item->getAmount()->getValue();
+    }
+
+    foreach ($labels as $key => $label){
+      $charts["sales"]["labels"][] = $key;
+      $total = 0;
+      foreach ($label as $val){
+//        TODO: remove something below
+        $total += 500*rand(1, 9)+$val;
+      }
+      $charts["sales"]["data"][] = $total;
+    }
+
+    $charts["sales"]["datasets"][0] = array(
+      "label" => "Ajouts",
+      "data" => $charts["sales"]["data"]
+    );
+
+    unset($charts["sales"]["data"]);
+
+    $charts["albums"] = json_encode($charts["albums"]);
+    $charts["sales"] = json_encode($charts["sales"]);
+
+
+
+    $total_income = 0;
+    foreach ($transactions as $transaction){
+      $total_income += $transaction->getAmount()->getValue();
+    }
+
+    return $this->render('@Main/Admin/Artist/dashboard.html.twig', array(
+      "albums" => $albums,
+      "charts" => $charts,
+      "total_income" => $total_income,
+      "transactions" => $transactions
+    ));
+
+  }
+
   public function showAction($id, Request $request)
   {
     //    Show and Edit Artists
@@ -114,7 +209,7 @@ class ArtistController extends Controller
     ));
     if(!empty($user)){
       $artist = $user->getProfiles()->getArtist();
-      if(empty($artist)){
+      /*if(empty($artist)){
         //
         $user->getProfiles()->add("artist");
         $artist = $user->getProfiles()->getArtist();
@@ -124,10 +219,10 @@ class ArtistController extends Controller
         $user->getProfiles()->setArtist($artist);
 
         $dm->flush();
-      }
+      }*/
 //      $artist = !empty($user->getArtist())?$user->getArtist():new Artist();
       $form = $this->createForm(ArtistType::class, $artist);
-
+      $genres = json_decode(file_get_contents("genres.json"));
       if($request->isMethod('post')){
         $form->handleRequest($request);
         if($form->isValid()){
@@ -159,13 +254,26 @@ class ArtistController extends Controller
               $this->addFlash("error", "CDN non Disponible!");
             }
           }
+//          genre management
+          $genre = $request->get("genre");
+
+//          print_r($genre);
+
+          if(!empty($genre)){
+            $artist->setGenre($genre);
+            $user->getProfiles()->setArtist($artist);
+          }
+
+          /*print_r($user->getProfiles()->getArtist()->getGenre());
+          return new Response("");*/
+
 //          else{
-            $this->addFlash("notice", "Mise à jour du profil de l'artiste terminée!");
-            $dm->persist($user);
-            $dm->flush();
-            return $this->redirectToRoute("admin_artists_show", array(
-              "id" => $id
-            ));
+          $this->addFlash("notice", "Mise à jour du profil de l'artiste terminée!");
+          $dm->persist($user);
+          $dm->flush();
+          return $this->redirectToRoute("admin_artists_show", array(
+            "id" => $id
+          ));
 //          }
         }
         else{
@@ -175,6 +283,7 @@ class ArtistController extends Controller
 
       return $this->render('MainBundle:Admin/Artist:show.html.twig', array(
         'user' => $user,
+        'genres' => $genres,
         'form' => $form->createView()
       ));
     }

@@ -35,12 +35,12 @@
         <div class="card-body">
           <form method="post" action="{{ path('admin_profile') }}" name="artist_form" id="artist_form" enctype="multipart/form-data">
             {{ form_row(form._token) }}
-            <h6 class="heading-small text-muted mb-4">Profil Utilisateur</h6>
+            <h6 class="heading-small text-muted mb-4">{{ 'profile.user_profile'|trans }}</h6>
             <div class="pl-lg-4">
               <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-username">Nom d'utilisateur</label>
+                    <label class="form-control-label" for="input-username">{{ "xs_user.user.nickname"|trans }}</label>
                     {{ form_widget(form.nickname) }}
                   </div>
                 </div>
@@ -48,10 +48,31 @@
               <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-email">Addresse Email</label>
+                    <label class="form-control-label" for="input-email">{{ "form.email_address"|trans }}</label>
                     {{ form_widget(form.username) }}
                   </div>
                 </div>
+              </div>
+              <div class="row">
+                <h4>{{ 'locale.language.title'|trans }}</h4>
+              </div>
+              <div class="row">
+                {% for data in  form.locale.language %}
+                  <div class="col-md-6">
+                    <div class="custom-control custom-control-alternative custom-radio">
+                      {{ form_widget(data, {
+                        "attr":{
+                          "class": "custom-control-input"
+                        }
+                      }) }}
+                      <label class="custom-control-label" for="{{ data.vars.id }}">
+                        <div class="text-muted">
+                          <img src="{{ asset('assets/images/'~data.vars.value~'.png') }}" width="20" title="{{ data.vars.label|trans }}"/> {{ data.vars.label|trans }}
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                {% endfor %}
               </div>
             </div>
           </form>
@@ -80,12 +101,12 @@
               {{ form_errors(formPassword) }}
             </div>
             {{ form_row(formPassword._token) }}
-            <h6 class="heading-small text-muted mb-4">Sécurité</h6>
+            <h6 class="heading-small text-muted mb-4">{{ 'admin.security'|trans }}</h6>
             <div class="pl-lg-4">
               <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-username">Mot de passe actuel</label>
+                    <label class="form-control-label" for="input-username">{{ 'form.password.current'|trans }}</label>
                     {{ form_widget(formPassword.oldPassword) }}
                   </div>
                 </div>
@@ -93,7 +114,7 @@
               <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-username">Nouveau mot de passe</label>
+                    <label class="form-control-label" for="input-username">{{ 'form.password.new'|trans }}</label>
                     {{ form_widget(formPassword.password.first) }}
                   </div>
                   {% if form_errors(formPassword.password.first) is not empty %}
@@ -104,7 +125,7 @@
               <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-username">Confirmation de mot de passe</label>
+                    <label class="form-control-label" for="input-username">{{ 'form.password.confirm'|trans }}</label>
                     {{ form_widget(formPassword.password.second) }}
                   </div>
                 </div>

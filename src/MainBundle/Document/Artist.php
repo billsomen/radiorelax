@@ -54,6 +54,10 @@ class Artist
 //  Informations sur l'artiste :)
   protected $description;
 
+  /** @MongoDB\Field(type="string")*/
+//  Informations sur l'artiste :)
+  protected $genre;
+
   /**
    * Artist constructor.
    */
@@ -270,4 +274,19 @@ class Artist
     $this->music_type = $music_type;
   }
 
+  /**
+   * @return mixed
+   */
+  public function getGenre()
+  {
+    return $this->genre;
+  }
+
+  /**
+   * @param mixed $genre
+   */
+  public function setGenre($genre): void
+  {
+    $this->genre = $genre;
+  }
 }

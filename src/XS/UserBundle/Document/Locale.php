@@ -57,7 +57,8 @@ class Locale
    */
   public function __construct()
   {
-    $this->time_zone_id = "America/New_York";
+    $this->language = "fr";
+    $this->time_zone_id = "America/Nipigon";
     $this->location = new GMaps();
   }
   

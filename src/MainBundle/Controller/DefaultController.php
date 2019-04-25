@@ -11,7 +11,12 @@ class DefaultController extends Controller
 {
   public function indexAction($_locale)
   {
-
+    $user = $this->getUser();
+    if(!empty($user)){
+      return $this->redirectToRoute("core_artists_homepage", array(
+        "_locale" => $user->getLocale()->getLanguage()
+      ));
+    }
     return $this->redirectToRoute("core_artists_homepage");
     $dm = $this->get("doctrine.odm.mongodb.document_manager");
     $user = new TempUser();

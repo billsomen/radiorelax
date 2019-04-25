@@ -342,7 +342,7 @@ class MainExtension extends \Twig_Extension
     return $url;
   }
 
-  public function cloudinaryFile($public_id, $type="video"){
+  public function cloudinaryFile($public_id, $duration="short", $type="video"){
 //    Echo the image according to some params
     \Cloudinary::config(array(
       "cloud_name" => "glpi-ifactory",
@@ -350,14 +350,28 @@ class MainExtension extends \Twig_Extension
       "api_secret" => "ImMHuMMK7VMRUjAsXktKuLRCJeg"
     ));
 
-    $options = array(
-      "secure"=>true,
-      "resource_type"=>$type,
+//    print_r($duration);
+
+    if($duration=="short"){
+      $options = array(
+        "secure"=>true,
+        "resource_type"=>$type,
 //      Starts at 10% of the audio :)
-      "start_offset"=>"10p",
+        "start_offset"=>"10p",
 //      PLay 30seçonds of the audio
-      "duration"=>"30"
-    );
+        "duration"=>"30"
+      );
+    }
+
+    else{
+      $options = array(
+        "secure"=>true,
+        "resource_type"=>$type,
+        //      PLay 30seçonds of the audio
+        "duration"=>"".$duration
+      );
+    }
+
 
     $url = null;
 
@@ -366,6 +380,7 @@ class MainExtension extends \Twig_Extension
     }catch(\Exception $exception){
 
     }
+//    return $duration;
     return $url;
   }
 
