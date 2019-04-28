@@ -10,16 +10,16 @@
   <div class="card bg-white shadow border-0">
     <div class="card-body px-lg-5 py-lg-5">
       {#language switcher#}
-     {# <div class="mb-3" style="display: flex; padding-bottom: 3px">
+      <div class="mb-3" style="display: flex; padding-bottom: 3px">
         {% for lang in ['en', 'fr'] %}
           <div style="margin: auto">
             <a href="{{ path(page, {'_locale': lang}) }}" title="{{ ("locale.language."~lang~".title")|trans }}">
-              <img src="{{ asset('assets/images/'~lang~'.png') }}" alt="{{  ("locale.language."~lang~".title")|trans }}" width="40">
-              <span class="text-black-50">{{ ("locale.language."~lang~".title")|trans }}</span>
+              <img src="{{ asset('assets/images/'~lang~'.png') }}" alt="{{  ("locale.language."~lang~".title")|trans }}" width="20">
+              <span class="text-black-50 small">{{ ("locale.language."~lang~".title")|trans }}</span>
             </a>
           </div>
         {% endfor %}
-      </div>#}
+      </div>
       {#language switcher#}
       
       <div class="text-center text-muted mb-4">

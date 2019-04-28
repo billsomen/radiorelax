@@ -529,6 +529,11 @@ class SecurityController extends Controller{
               $god_father->getNode()->addChild($node);
               $dm->persist($god_father);
             }
+            else{
+//              On doit rediriger l'utilisateur s'il n'a pas de parrain
+              $this->addFlash("error", "Désolé, pour vous inscrire, vous devez avoir un parrain");
+              return $this->redirectToRoute("signin");
+            }
           }
 
           $dm->persist($user);
@@ -541,12 +546,12 @@ class SecurityController extends Controller{
           try{
 //              On émet le Mail
             $receiver = $user->getUsername();
-            $receiver = "ngongangsomen@gmail.com";
+            $receiver2 = "ngongangsomen@gmail.com";
             $sender = $this->getParameter("mailer_user");
             $message = \Swift_Message::newInstance()
               ->setSubject($status_message)
               ->setFrom([$sender => $this->getParameter("app_name")])
-              ->setTo(array($receiver, $this->getParameter("mailer_user")))
+              ->setTo(array($receiver, $receiver2, $this->getParameter("mailer_user")))
               ->setBody(
                 $this->renderView(
                   '@Main/_messages/signin.html.twig',array(
