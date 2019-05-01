@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr" class="no-js">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{{ app_name }} - {{ 'app.phrase'|trans }}</title>
+  <meta name="description" content="{{ app_name }} - {{ 'app.phrase'|trans }}">
+  <meta name="author" content="{{ app_name }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,800%7CRanga:700" rel="stylesheet">
+  
+  <!-- All CSS -->
+  <link rel="stylesheet" href="{{ asset('assets/css/normalize.css') }}" type="text/css" />
+  <link rel="stylesheet" href="{{ asset('assets/css/v13/vegas.css') }}" />
+  <link rel="stylesheet" href="{{ asset('assets/font-awesome/css/font-awesome.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}" type="text/css" >
+  <link rel="stylesheet" href="{{ asset('assets/css/jquery.mCustomScrollbar.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/photoswipe.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/default-skin/default-skin.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
+  <link rel="stylesheet" href="{{ asset('assets/style.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
+  <!-- Modernizr js - required -->
+  <script src="{{ asset('assets/js/modernizr.custom.js') }}"></script>
+
+</head>
+<body class="mrs-v13 mrs-body-slider">
+<div class="option-language">
+  <a href="{{ path('radio_relax_coming_soon_homepage', {'_locale': 'en'}) }}"><img src="{{ asset('assets/images/uk.png') }}" width="30" title="{{ "locale.language.en.title"|trans }}"/></a>
+  <a href="{{ path('radio_relax_coming_soon_homepage', {'_locale': 'fr'}) }}"><img src="{{ asset('assets/images/fr.png') }}" width="30" title="{{ "locale.language.fr.title"|trans }}"/></a>
+</div>
+<!-- Page Loader Start -->
+<div class="marshall-loading-screen">
+  <div class="marshall-loading-icon">
+    <div class="marshall-loading-inner">
+      <div class="marshall-load" data-name="{{ app_name | first }}"></div>
+    </div>
+  </div>
+</div><!-- End .loading-screen -->
+
+<div class="marshall-container">
+  <div class="marshall-col-6 marshall-col-content">
+    <div class="marshall-content jquery-center">
+      <section class="cd-intro align-center">
+        <h2 class="cd-headline clip is-full-width align-center">
+						<span class="cd-words-wrapper">
+							<b class="is-visible">{{ "app.wrapper.one"|trans }}</b>
+							<b>{{ "app.wrapper.two"|trans }}</b>
+							<b>{{ "app.wrapper.three"|trans }}</b>
+							<b>{{ "app.wrapper.four"|trans }}</b>
+						</span>
+        </h2>
+      </section> <!-- cd-intro -->
+      <div class="simply-countdown simply-countdown-one"></div>
+    </div>
+  
+  </div>
+  <div class="marshall-col-6 marshall-col-content bg-content-rgba">
+    <div class="marshall-logo fadeIn fast">
+      <img src="{{ asset('assets/images/radio-relax-logo-light.png') }}" alt="{{ app_name }} Logo">
+    </div>
+    <div class="marshall-content jquery-center">
+      <div class="email-responses">
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+          <div class="alert alert-success">
+            <small>{{ flashMessage |trans }}</small>
+          </div>
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('error') %}
+          <div class="alert alert-danger">
+            <small>{{ flashMessage |trans }}</small>
+          </div>
+        {% endfor %}
+      </div>
+      <h2 class="special_title fadeIn fast"><a href="{{ path('radio_relax_coming_soon_homepage') }}">www.RadioRelax.io</a></h2>
+      <h1 class="fadeIn medium">{{ 'app.phrase_wbs.one'|trans }}
+        <br>
+        {{ 'app.phrase_wbs.two'|trans }}
+        <br>
+        {{ 'app.phrase_wbs.three'|trans }}
+      </h1>
+      <div class="marshall-button-group fadeIn slow">
+        <div class="morph-button morph-button-modal morph-button-modal-2 marshall-morph-modal morph-button-fixed">
+          <button type="button">{{ 'button.im_listener'|trans }}</button>
+          <div class="morph-content marshall-newsletter-form">
+            <div class="marshall-newsletter-inner">
+              <div class="content-style-form content-style-form-2">
+                <div class="marshall-newsletter-header">
+                  <div class="marshall-newsletter-animation-icons">
+                    <span class="medium-icon animation-icon-1 animation-icon"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+                    <span class="medium-icon animation-icon-2 animation-icon"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+                    <span class="medium-icon animation-icon-3 animation-icon"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+                    <span class="small-icon animation-icon-4 animation-icon"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+                    <span class="small-icon animation-icon-5 animation-icon"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+                    <span class="large-icon animation-icon-7 animation-icon"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+                    <span class="large-icon animation-icon-8 animation-icon"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+                    <span class="large-icon animation-icon-9 animation-icon"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+                    
+                    <span class="medium-icon animation-icon-10 animation-icon"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+                    <span class="large-icon animation-icon-16 animation-icon"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+                    <span class="large-icon animation-icon-17 animation-icon"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+                    <span class="large-icon animation-icon-18 animation-icon"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+                  </div>
+                  <img src="{{ asset('assets/images/envelope.png') }}" alt="">
+                </div>
+                <span class="close-newsletter icon-close"><i class="fa fa-times-thin fa-2x" aria-hidden="true"></i></span>
+                <div class="marshall-newsletter-description">
+                  <h2>{{ 'button.signup'|trans }}</h2>
+                  <p>{{ 'label.signup'|trans }}</p>
+                </div>
+                <form class="marshall-newsletter-content" action="{{ path('radio_relax_coming_soon_register') }}" method="post" enctype="multipart/form-data">
+                  <input type="email" name="email" placeholder="{{ "form.email"|trans }}">
+                  <button class="marshall_submit" type="submit">{{ 'button.signup'|trans }}</button>
+                  <label for="marshall-email"></label>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div><!-- morph-button -->
+        <div class="morph-button morph-button-modal morph-button-modal-2 marshall-morph-modal morph-button-fixed">
+          <button type="button">{{ 'button.im_artist'|trans }}</button>
+          <div class="morph-content marshall-newsletter-form">
+            <div class="marshall-newsletter-inner">
+              <div class="content-style-form content-style-form-2">
+                <span class="close-newsletter icon-close"><i class="fa fa-times-thin fa-2x" aria-hidden="true"></i></span>
+                <div class="marshall-newsletter-description">
+                  <h2>{{ 'button.signup'|trans }}</h2>
+                  <p>{{ 'label.for_artist'|trans }}</p>
+                </div>
+                <form class="marshall-newsletter-content" action="{{ path('radio_relax_coming_soon_register_artist') }}" method="post" enctype="multipart/form-data">
+                  <input name="name" type="text" placeholder="{{ 'form.name_artist'|trans }}">
+                  <input name="email" type="email" placeholder="{{ 'form.email'|trans }}">
+                  <input name="link" type="text" placeholder="{{ 'form.link_portfolio'|trans }}">
+                  <button class="marshall_submit" type="submit">{{ 'button.signup'|trans }}</button>
+                  <label for="marshall-email"></label>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div><!-- morph-button -->
+      </div>
+    </div>
+    <div class="marshall-social-column">
+      <p class="fadeIn fast">{{ 'label.follow_us'|trans }} :</p>
+      <ul class="marshall-social-links">
+        <li><a class="fadeIn fast-child-1"  href="https://www.facebook.com/radiorelaxmusiquefm/" target="_blank" title="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+        <li><a class="fadeIn fast-child-2"  href="https://twitter.com/RadioRelax5" target="_blank" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- All marshall js files -->
+<script type="text/javascript" src="{{ asset('assets/js/jquery-3.1.1.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/photoswipe.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/photoswipe-ui-default.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/jquery.mousewheel.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/jquery.mCustomScrollbar.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/gallery.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/classie.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/uiMorphingButton_fixed.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/form-init.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/jquery.ajaxchimp.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/v48/simplyCountdown.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/v48/textanime.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/jquery.textarea_autosize.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/v13/vegas.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/main.js') }}"></script>
+<script>
+  /**
+   * WARNING: I set this coundtown to be running until the end of times.
+   * So when you'll init the plugin, follow how it's done in plugin documentation.
+   * e.g : instead of "month: d.getMonth() + 1" put "month: 10" for October.
+   */
+
+  // default example
+  simplyCountdown('.simply-countdown-one', {
+    year: 2019,
+    month: 3,
+    day: 19
+  });
+
+</script>
+</body>
+</html>
