@@ -394,5 +394,4 @@ class MainExtension extends \Twig_Extension
     return $address;
   }
 
-
 }

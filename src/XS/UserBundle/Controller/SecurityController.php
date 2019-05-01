@@ -71,7 +71,7 @@ class SecurityController extends Controller{
   public function loginAction(Request $request){
 //    $user = new User();
     if($this->getUser() != null){
-      return $this->redirectToRoute('radio_relax_coming_soon_homepage');
+      return $this->redirectToRoute('admin_profile');
     }
 
     $dm = $this->get('doctrine.odm.mongodb.document_manager');
@@ -505,7 +505,7 @@ class SecurityController extends Controller{
       if($form->isValid()){
         if(!$this->isUserExist($user)){
           $user->setConfirmed(false);
-          $code = rand(10000, 99999);
+          $code = rand(100, 999);
           $user->setConfirmationCode($code);
           $user->setEmail($user->getUsername());
 

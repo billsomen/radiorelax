@@ -1,5 +1,104 @@
-<form class="marshall-newsletter-content" action="{{ path('radio_relax_coming_soon_register') }}" method="post" enctype="multipart/form-data">
-  <input type="email" name="email" placeholder="{{ "form.email"|trans }}">
-  <button class="marshall_submit" type="submit">{{ 'button.signup'|trans }}</button>
-  <label for="marshall-email"></label>
-</form>
+<div class="card bg-secondary shadow">
+  <div class="card-header bg-white border-0">
+    <div class="row align-items-center">
+      <div class="col-8">
+        <h3 class="mb-0">{{ 'label.artist_account'|trans }}</h3>
+{#        <h3 class="mb-0">Création de compte</h3>#}
+      </div>
+      <div class="col-4 text-right">
+        {% include "@Main/components/Artist/btn.delete.html.twig" %}
+        <button form="artist_form" type="submit" class="btn btn-sm btn-primary">{{ 'button.save'|trans }}</button>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <form method="post" action="{{ path('admin_artists_create', {'id': user.id, '_target': _target}) }}" name="artist_form" id="artist_form" enctype="multipart/form-data">
+      {{ form_row(form._token) }}
+      <input type="hidden" name="_target" value="{{ _target }}">
+      <h6 class="heading-small text-muted mb-4">{{ 'form.informations'|trans }}</h6>
+      <div class="pl-lg-4">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="form-group">
+              <label class="form-control-label" for="input-username">{{ 'table.header.name'|trans }}</label>
+              {{ form_widget(form.name) }}
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            {#<div class="form-group">
+              <label class="form-control-label" for="input-genre">{{ 'form.gender'|trans }}</label>
+              {% set current_genre = user.profiles.artist.genre %}
+              <select name="genre" id="input-genre" class="form-control form-control-alternative">
+                {% if current_genre %}
+                  <option value="{{ current_genre }}" selected>> {{ current_genre | capitalize }} </option>
+                  {% for genre in genres if genre != current_genre %}
+                    <option value="{{ genre }}">{{ genre | capitalize }}</option>
+                  {% endfor %}
+                {% else %}
+                  {% for genre in genres if genre != current_genre %}
+                    <option value="{{ genre }}">{{ genre | capitalize }}</option>
+                  {% endfor %}
+                {% endif %}
+              </select>
+            </div>#}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="form-group">
+              <label class="form-control-label" for="input-email">{{ 'form.email_address'|trans }}</label>
+              {{ form_widget(form.email) }}
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="form-group">
+              <label class="form-control-label" for="input-first-name">
+                {{ 'form.picture'|trans }}
+                {% if user.profiles.artist.profilePic %}
+                  ({{ 'label.add'|trans }})
+                {% else %}
+                  (({{ 'label.edit'|trans }}))
+                {% endif %}
+              </label>
+              <input type="file" id="input-first-name" name="profile" class="form-control form-control-alternative">
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="my-4" />
+      <!-- Address -->
+      <h6 class="heading-small text-muted mb-4">{{ 'form.informations'|trans }}</h6>
+      <div class="pl-lg-4">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="form-group">
+              <label class="form-control-label" for="input-city">{{ 'form.town'|trans }}</label>
+              {{ form_widget(form.gmaps.town) }}
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="form-group">
+              <label class="form-control-label" for="input-country">{{ 'form.gender'|trans }}</label>
+              {{ form_widget(form.gmaps.country) }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="my-4" />
+      <!-- Description -->
+      <h6 class="heading-small text-muted mb-4">{{ 'form.about_me'|trans }}</h6>
+      <div class="pl-lg-4">
+        <div class="form-group">
+          <label>{{ 'form.about_me'|trans }}</label>
+          {{ form_widget(form.description) }}
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

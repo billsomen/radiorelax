@@ -23,6 +23,8 @@ use XS\MarketPlaceBundle\Document\Cart;
 
 class User implements AdvancedUserInterface
 {
+  const ENCODER_SALT_NAME = "sha512";
+
   /** @MongoDB\Id() */
   protected $id;
 
@@ -157,6 +159,8 @@ class User implements AdvancedUserInterface
     $this->roles = array();
 //        On ajoute le genre
     $this->gender = 'Male';
+    $this->locale = new Locale();
+    $this->salt = self::ENCODER_SALT_NAME;
     //        On ajoute la localisation
     $this->addTelephone(new Telephone());
     $this->birth_date = new \DateTime('1990-01-01');
@@ -164,7 +168,6 @@ class User implements AdvancedUserInterface
     $this->addRole('ROLE_USER');
     $this->profiles = new Profiles();
     $this->cart = new Cart();
-
   }
   
   public function __toString() {

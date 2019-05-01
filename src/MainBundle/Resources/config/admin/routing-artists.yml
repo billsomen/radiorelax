@@ -16,10 +16,25 @@ admin_artists_reject_temp:
   path:     /tmp/{id}/reject
   defaults: { _controller: MainBundle:Artist:rejectTemp }
 
+admin_artists_manage:
+#  Un artiste : New
+  path:     /manage
+  defaults: { _controller: MainBundle:Artist:manage }
+
 admin_artists_new:
 #  Un artiste : New
   path:     /new
   defaults: { _controller: MainBundle:Artist:new }
+
+admin_artists_create:
+#  Un artiste : New
+  path:     /create/{id}/{_target}
+  defaults: { _controller: MainBundle:Artist:create }
+
+admin_artists_admin_artists_delete:
+#  Retirer le profil artits : RAZ!
+  path:     /delete/{id}/{_target}
+  defaults: { _controller: MainBundle:Artist:delete }
 
 admin_artists_show:
   #  Un artiste : View and Edit

@@ -7,6 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use XS\UserBundle\Document\User;
 
 class UserEditPasswordType extends AbstractType
 {
@@ -19,22 +20,26 @@ class UserEditPasswordType extends AbstractType
         )
       ))
       ->add('password', RepeatedType::class, array(
-       'type' => PasswordType::class,
-       'invalid_message' => 'Les deux mots de passe doivent correspondre',
-       'options' => array(
-         'required' => true,
-         "attr" => array(
-           "class" => "form-control"
-         )
-       ),
-     ))
+        'type' => PasswordType::class,
+        'invalid_message' => 'Les deux mots de passe doivent correspondre',
+        'options' => array(
+          'required' => true,
+          "attr" => array(
+            "class" => "form-control"
+          )
+        ),
+      ))
+      ->remove('nickname')
+      ->remove('godfatherNamespace')
+      ->remove('username')
+      ->remove('locale')
     ;
   }
-  
+
   public function getParent() {
     return UserType::class;
   }
-  
+
   public function getName()
   {
     return 'xsuser_bundle_user_edit_password_type';

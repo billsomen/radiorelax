@@ -3,6 +3,7 @@
 namespace MainBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use MainBundle\Document\Album;
 use MainBundle\Document\Artist;
 use MainBundle\Form\ArtistType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -15,17 +16,8 @@ class ArtistController extends Controller
 {
   public function indexAction()
   {
-//    All the artists to Manage
-    $dm = $this->get("doctrine_mongodb");
-    $tmp_artists = $dm->getRepository("RadioRelaxComingSoonBundle:TempUser")->findBy(array(
-      "type" => "artist"
-    ));
-
-    $artists = $dm->getRepository("XSUserBundle:User")->findAll();
-
-    return $this->render('RadioRelaxAdminBundle:Artist:index.html.twig', array(
-      'tmp_artists' => $tmp_artists,
-      'artists' => $artists,
+    return $this->render('MainBundle:Artist:index.html.twig', array(
+      'user' => $this->getUser()
     ));
   }
 
@@ -200,6 +192,110 @@ class ArtistController extends Controller
 
   }
 
+  public function deleteAction($id, $_target){
+    $dm = $this->get('doctrine.odm.mongodb.document_manager');
+    $user = $dm->getRepository("XSUserBundle:User")->findOneBy(array(
+      'id' => $id
+    ));
+
+    return $this->render('@Main/Artist/manage.html.twig', array(
+      'user' => $this->getUser()
+    ));
+  }
+
+  public function createAction($id, $_target, Request $request)
+  {
+    //    Show and Edit Artists
+    $dm = $this->get('doctrine.odm.mongodb.document_manager');
+    $user = $dm->getRepository("XSUserBundle:User")->findOneBy(array(
+      'id' => $id
+    ));
+    if(!empty($user)){
+      $artist = $user->getProfiles()->getArtist();
+      /*if(empty($artist)){
+        //
+        $user->getProfiles()->add("artist");
+        $artist = $user->getProfiles()->getArtist();
+        $album = $artist->getAlbums()->get(0);
+        $album->setArtist($user);
+        $dm->persist($album);
+        $user->getProfiles()->setArtist($artist);
+
+        $dm->flush();
+      }*/
+//      $artist = !empty($user->getArtist())?$user->getArtist():new Artist();
+      $form = $this->createForm(ArtistType::class, $artist);
+      $genres = json_decode(file_get_contents("genres.json"));
+      if($request->isMethod('post')){
+        $form->handleRequest($request);
+        if($form->isValid()){
+//          Si le namespaçe n'existe pas, on le génère
+          $user->getProfiles()->getArtist()->generateNamespace();
+//          On enregistre et push l'image
+          $tmp_name = $_FILES['profile']['tmp_name'];
+          $params_clnry = array(
+            'api_key' => $this->getParameter('cloudinary_api_key'),
+            'cloud_name' => $this->getParameter('cloudinary_cloud_name'),
+            'api_secret' => $this->getParameter('cloudinary_api_secret'),
+//            'preset' => $this->getParameter('cloudinary_preset'),
+//            "resource_type" => "raw",
+          );
+
+          $res["url"] = 0;
+          if(!empty($tmp_name)){
+            try{
+              $filename = time();
+              \Cloudinary::config($params_clnry);
+              $res = \Cloudinary\Uploader::upload($tmp_name, array(
+                "resource_type" => "auto",
+                "public_id" => "TEST_RR/".$user->getId()."/images/".$filename
+              ));
+              unlink($tmp_name);
+              $artist->setProfilePic($res['public_id']);
+            }
+            catch(\Exception $exception){
+              $this->addFlash("error", "CDN non Disponible!");
+            }
+          }
+//          genre management
+          $genre = $request->get("genre");
+
+//          print_r($genre);
+
+          if(!empty($genre)){
+            $artist->setGenre($genre);
+            $user->getProfiles()->setArtist($artist);
+          }
+
+          /*print_r($user->getProfiles()->getArtist()->getGenre());
+          return new Response("");*/
+
+//          else{
+          $this->addFlash("notice", "Mise à jour du profil de l'artiste terminée!");
+          $dm->persist($user);
+          $dm->flush();
+
+
+          $target = $request->get("_target");
+          return $this->redirect(urldecode($_target));
+        }
+        else{
+          $this->addFlash("error", "Formulaire mal défini");
+        }
+      }
+
+      return $this->render('MainBundle:components/Artist:create.html.twig', array(
+        'user' => $user,
+        '_target' => $_target,
+        'genres' => $genres,
+        'form' => $form->createView()
+      ));
+    }
+
+    $this->addFlash('error', $this->get("translator")->trans('flashbags.artist.not_found'));
+    return $this->redirectToRoute('admin_artists_homepage');
+  }
+
   public function showAction($id, Request $request)
   {
     //    Show and Edit Artists
@@ -296,5 +392,24 @@ class ArtistController extends Controller
   {
 //    Ajout d'un artiste
     return $this->render('RadioRelaxAdminBundle:Artist:new.html.twig', array('artists' => 0));
+  }
+
+  public function manageAction()
+  {
+//    Ajout d'un artiste
+    /*$dm = $this->get('doctrine.odm.mongodb.document_manager');
+    $user = $this->getUser();
+    $artist = new Artist();
+    $album =  $artist->getSoloAlbum();
+    $user->getProfiles()->setArtist($artist);
+
+
+    $dm->persist($album);
+//    $dm->persist($artist);
+    $dm->persist($user);
+    $dm->flush();*/
+    return $this->render('@Main/Artist/manage.html.twig', array(
+      'user' => $this->getUser()
+    ));
   }
 }
