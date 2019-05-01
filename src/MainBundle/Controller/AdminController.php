@@ -391,13 +391,9 @@ class AdminController extends Controller
   public function indexAction(Request $request){
 //        Profil de l'utilisateur actuel
     $user = $this->getUser();
-    $user2 = $user;
     $currentPassword = $user->getPassword();
     $form = $this->createForm(UserEditType::class, $user);
-    $formPassword = $this->createForm(UserEditPasswordType::class, $user2);
-    $session = $request->getSession();
-    $token = $session->get('tmp_pass_token');
-    $tmp_token = $request->query->get('tmp_pass_token');
+    $formPassword = $this->createForm(UserEditPasswordType::class, $user);
 
     $dm = $this->get('doctrine.odm.mongodb.document_manager');
 
@@ -413,35 +409,35 @@ class AdminController extends Controller
         $user->generateNamespace($nickname);
         $dm->persist($user);
         $dm->flush();
+        $this->addFlash('notice', 'Modifications enregistrées !');
+      }
+      else{
+//        Erreur ?
       }
 
       $formPassword->handleRequest($request);
       if($formPassword->isValid()){
 //              On definit l'username comme premier contact telephonique de l'utilisateur
         $factory = $this->get('security.encoder_factory');
-        $encoder = $factory->getEncoder($user2);
-        $oldPassword = $encoder->encodePassword($user2->getOldPassword(), $user2->getSalt());
-//        print_r($oldPassword);
-//        print_r($currentPassword);
-        if($token == $tmp_token and !empty($user->getTmpPass())){
-          $currentPassword = $user->getTmpPass();
-        }
-//        print_r($currentPassword);
+        $encoder = $factory->getEncoder($user);
 //                On verifie si les mot de passe sont identiques.
-        if(hash_equals($currentPassword, $oldPassword)){
-          $password = $encoder->encodePassword($user2->getPassword(), $user2->getSalt());
-          $user2->setPassword($password);
+        if($encoder->isPasswordValid($currentPassword, $user->getOldPassword(), $user->getSalt())){
+          $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
+          $user->setPassword($password);
 //                Tout est bon, on peut continuer
           $dm = $this->get('doctrine.odm.mongodb.document_manager');
-          $dm->persist($user2);
+          $dm->persist($user);
           $dm->flush();
-          $session->set('tmp_pass_token', null);
+          $this->addFlash('notice', 'Modifications enregistrées !');
         }
         else{
-          $this->addFlash('error', 'Le mot de passe actuel ne correspond pas.');
+          $this->addFlash('error', 'Le mot de passe est invalide.');
         }
-        $this->addFlash('notice', 'Modifications enregistrées !');
       }
+      else{
+        $this->addFlash("error", "Erreur lors de la modification du mot de passe");
+      }
+      
       return $this->redirectToRoute('admin_profile', array(
         "_locale" => $user->getLocale()->getLanguage()
       ));

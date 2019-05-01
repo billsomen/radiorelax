@@ -132,16 +132,7 @@
       <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
         <div class="container-fluid">
           {#Messages d'erreurs :)#}
-          {% for flashMessage in app.session.flashbag.get('notice') %}
-            <div class="alert alert-success text-center">
-              <small>{{ flashMessage }}</small>
-            </div>
-          {% endfor %}
-          {% for flashMessage in app.session.flashbag.get('error') %}
-            <div class="alert alert-danger text-center">
-              <small>{{ flashMessage }}</small>
-            </div>
-          {% endfor %}
+         
           <!-- Brand -->
           {#<a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="{{ path('admin_homepage') }}">#}
           <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="#">
@@ -187,7 +178,8 @@
       </nav>
     {% endblock %}
     <!-- Header -->
-    {% block inner_header %}
+       {% block inner_header %}
+      
       <div class="header bg-gradient-primary pb-2 pt-2 pt-md-6">
         <div class="container-fluid">
           <div class="header-body">
@@ -199,6 +191,18 @@
     <!-- Page content -->
     {% block page_content %}
       <div class="container-fluid mt-2">
+        <div class="flash-message">
+          {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert alert-success text-center">
+              <small>{{ flashMessage }}</small>
+            </div>
+          {% endfor %}
+          {% for flashMessage in app.session.flashbag.get('error') %}
+            <div class="alert alert-danger text-center">
+              <small>{{ flashMessage }}</small>
+            </div>
+          {% endfor %}
+        </div>
         {% block body_inner_main %}
         {% endblock %}
         <!-- Footer -->

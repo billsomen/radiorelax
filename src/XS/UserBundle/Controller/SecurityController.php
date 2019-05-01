@@ -71,7 +71,7 @@ class SecurityController extends Controller{
   public function loginAction(Request $request){
 //    $user = new User();
     if($this->getUser() != null){
-      return $this->redirectToRoute('radio_relax_coming_soon_homepage');
+      return $this->redirectToRoute('admin_profile');
     }
 
     $dm = $this->get('doctrine.odm.mongodb.document_manager');
@@ -505,7 +505,7 @@ class SecurityController extends Controller{
       if($form->isValid()){
         if(!$this->isUserExist($user)){
           $user->setConfirmed(false);
-          $code = rand(10000, 99999);
+          $code = rand(100, 999);
           $user->setConfirmationCode($code);
           $user->setEmail($user->getUsername());
 
@@ -529,6 +529,11 @@ class SecurityController extends Controller{
               $god_father->getNode()->addChild($node);
               $dm->persist($god_father);
             }
+            else{
+//              On doit rediriger l'utilisateur s'il n'a pas de parrain
+              $this->addFlash("error", "Désolé, pour vous inscrire, vous devez avoir un parrain");
+              return $this->redirectToRoute("signin");
+            }
           }
 
           $dm->persist($user);
@@ -541,12 +546,12 @@ class SecurityController extends Controller{
           try{
 //              On émet le Mail
             $receiver = $user->getUsername();
-            $receiver = "ngongangsomen@gmail.com";
+            $receiver2 = "ngongangsomen@gmail.com";
             $sender = $this->getParameter("mailer_user");
             $message = \Swift_Message::newInstance()
               ->setSubject($status_message)
               ->setFrom([$sender => $this->getParameter("app_name")])
-              ->setTo(array($receiver, $this->getParameter("mailer_user")))
+              ->setTo(array($receiver, $receiver2, $this->getParameter("mailer_user")))
               ->setBody(
                 $this->renderView(
                   '@Main/_messages/signin.html.twig',array(

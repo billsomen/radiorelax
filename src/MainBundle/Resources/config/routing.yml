@@ -7,8 +7,6 @@ gtag_artist:
   path:     /artists
   defaults: { _controller: MainBundle:Core\Artist:index }
 
-
-
 main_homepage:
     path:     /{_locale}
     defaults: { _controller: MainBundle:Default:index, _locale: fr  }

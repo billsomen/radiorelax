@@ -20,6 +20,8 @@ use XS\CoreBundle\Document\GMaps;
 //Propriétés et fonçtionnalité d'un artiste, injeçtées dans la grande çlasse User :)
 class Artist
 {
+  const SOLO_ALBUM = "__radio__";
+
   /** @MongoDB\Field(type="string") */
   protected $name;
 
@@ -58,16 +60,19 @@ class Artist
 //  Informations sur l'artiste :)
   protected $genre;
 
+  /** @MongoDB\ReferenceOne(targetDocument="Album") */
+  protected $solo_album;
+
   /**
    * Artist constructor.
    */
   public function __construct()
   {
 //    On çrée l'album par défaut qui çontient les musiques hors album : __relax
-    $solo_album = new Album("__radio__");
+    $this->solo_album = new Album(self::SOLO_ALBUM);
     $this->albums = new ArrayCollection();
     $this->namespace = time();
-    $this->albums->add($solo_album);
+//    $this->albums->add($solo_album);
     $this->setGmaps(new GMaps());
   }
 
@@ -288,5 +293,21 @@ class Artist
   public function setGenre($genre): void
   {
     $this->genre = $genre;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getSoloAlbum()
+  {
+    return $this->solo_album;
+  }
+
+  /**
+   * @param mixed $solo_album
+   */
+  public function setSoloAlbum($solo_album): void
+  {
+    $this->solo_album = $solo_album;
   }
 }
